@@ -33,7 +33,7 @@ include('sidebar.php');
   <div class="card-header">Renter Gender Segmentation</div>
 
   
-        <div id="chart"></div>
+        <div id="chart"> </div>
  
   
   </div>
