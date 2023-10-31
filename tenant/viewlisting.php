@@ -1,302 +1,513 @@
 <?php
 include('sidebar.php');
    $listing_id = $_GET['listing_id'];
-if (isset($_POST['user_id']) && isset($_POST['verify'])) {
-    $user_id = $_POST['user_id'];
-    $verify = $_POST['verify'];
-
-    // Update isVerify in the credentials table
-    $sql_update = "UPDATE credentials SET isVerify = '$verify' WHERE user_id = '$user_id'";
-
-    if ($conn->query($sql_update) === TRUE) {
-        echo "Record updated successfully";
-    } else {
-        echo "Error updating record: " . $conn->error;
-    }
-}
 ?>
-<div class="contents">
-  <div class="container-fluid">
-    <div class="social-dash-wrap">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="breadcrumb-main">
-            <h4 class="text-capitalize breadcrumb-title">Application</h4>
-            <div class="breadcrumb-action justify-content-center flex-wrap">
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#"><i class="uil uil-estate"></i>Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">View Application</li>
-                </ol>
-              </nav>
+<?php
+if (isset($_POST['add'])) {
+    $type = $_POST['type'];
+    $gender = $_POST['gender'];
+    $price = $_POST['price'];
+    $reservation = $_POST['reservation'];
+    $name = $_POST['name'];
+    $address1 = $_POST['address1'];
+    $address2 = $_POST['address2'];
+    $address3 = $_POST['address3'];
+    $address4 = $_POST['address4'];
+    $desc = $_POST['desc'];
+    $no_bed = $_POST['no_bed'];
+    $no_bath = $_POST['no_bath'];
+    $house_rules = $_POST['house_rules'];
+   $lat = $_POST['lat'];
+      $lng = $_POST['lng'];
+    $sql = "INSERT INTO listing (listing_name, address1, address2, address3, address4, description, n_bedroom, n_bathroom, house_rules, rentprice, reservationfee, owner_id, gender_req,lat,lng) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param(
+        "ssssssissssisss",
+        $name,
+        $address1,
+        $address2,
+        $address3,
+        $address4,
+        $desc,
+        $no_bed,
+        $no_bath,
+        $house_rules,
+        $price,
+        $reservation,
+        $id,
+        $gender,
+          $lat,
+        $lng
+    );
+
+    if ($stmt->execute()) {
+        $last_id = $stmt->insert_id;
+        if (!empty($_POST['amenities'])) {
+            foreach ($_POST['amenities'] as $amenity) {
+                $amenitySql = "INSERT INTO amenities (listing_id, amenity) VALUES (?, ?)";
+                $amenityStmt = $conn->prepare($amenitySql);
+                $amenityStmt->bind_param("is", $last_id, $amenity);
+                $amenityStmt->execute();
+                $amenityStmt->close();
+            }
+        }
+
+         if (!empty($_FILES['images']['name'])) {
+        // Handle image upload
+        $targetDir = "../uploads/";
+        $fileName11 = basename($_FILES["images"]["name"]);
+        $targetFilePath =  $targetDir.$fileName11;
+
+        if (move_uploaded_file($_FILES["images"]["tmp_name"], $targetFilePath)) {
+            // File successfully uploaded
+            $image_sql = "UPDATE listing SET image_url=? WHERE listing_id=?";
+            $imageStmt = $conn->prepare($image_sql);
+            $imageStmt->bind_param("si", $targetFilePath, $last_id);
+            if (!$imageStmt->execute()) {
+                echo "Error updating record: " . $imageStmt->error;
+            }
+            $imageStmt->close();
+        } else {
+            // Failed to upload file
+            echo "Failed to upload image file";
+        }
+    }
+
+    if (!empty($_FILES['documents']['name'])) {
+        // Handle document upload
+        $titleOfDocument = $_POST['titleOfDocument'];
+        $file = $_FILES['documents'];
+        $fileName = $file['name'];
+        $fileTmpName = $file['tmp_name'];
+        $fileType = $file['type'];
+
+        // Read the file data
+        $fileData = file_get_contents($fileTmpName);
+
+        $document_sql = "UPDATE listing SET data=?, mime=?, title=?, name=? WHERE listing_id=?";
+        $documentStmt = $conn->prepare($document_sql);
+        $documentStmt->bind_param("ssssi", $fileData, $fileType, $titleOfDocument, $fileName, $last_id);
+
+        if ($documentStmt->execute()) {
+            // File data inserted successfully
+            echo "File data inserted successfully";
+        } else {
+            // Error inserting file data
+            echo "Error inserting file data: " . $documentStmt->error;
+        }
+        $documentStmt->close();
+    }
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+// SELECT LISTING
+
+$sql = "SELECT * FROM listing where listing_id = '$listing_id'";
+$result = $conn->query($sql);
+$rating = "";
+$rating_count = "";
+if ($result->num_rows > 0) {
+    /// Review ///
+    while ($row = $result->fetch_assoc()) {
+        $sql = "SELECT 
+                    *, 
+                    COUNT(*) AS review_count, 
+                    AVG(rating) AS average_rating 
+                FROM review 
+                WHERE listing_id = '$listing_id'";
+        $result_review = $conn->query($sql);
+        if ($result_review->num_rows > 0) {
+            while ($row_review = $result_review->fetch_assoc()) {
+                $rating = $row_review['average_rating'];
+                $rating_count = $row_review['review_count'];
+            }
+        } else {
+            $rating = "No Rating Yet";
+            $rating_count = "0";
+        }
+        /// Review ///
+        $listing_id = $row["listing_id"];
+        $owner_id = $row["owner_id"];
+        $listing_name = $row["listing_name"];
+        $address1 = $row["address1"];
+        $address2 = $row["address2"];
+        $address3 = $row["address3"];
+        $address4 = $row["address4"];
+        $description = $row["description"];
+        $rentprice = $row["rentprice"];
+        $reservationfee = $row["reservationfee"];
+        $image_url = $row["image_url"];
+        $gender_req = $row["gender_req"];
+        $created_at = $row["created_at"];
+        $updated_at = $row["updated_at"];
+        $status = $row["status"];
+        $isVerify = $row["isVerify"];
+        $mime = $row["mime"];
+        $data = $row["data"];
+        $title = $row["title"];
+        $name = $row["name"];
+        $n_bedroom = $row["n_bedroom"];
+        $n_bathroom = $row["n_bathroom"];
+        $house_rules = $row["house_rules"];
+        $lat = $row["lat"];
+        $lng = $row["lng"];
+        $fullAddress = $address1 . ", " . $address2 . ", " . $address3 . ", " . $address4;
+    }
+} else {
+    echo "0 results";
+}
+
+?>
+
+  <div class="contents">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="shop-breadcrumb">
+                <div class="breadcrumb-main">
+                  <h4 class="text-capitalize breadcrumb-title">See Place</h4>
+                  <div class="breadcrumb-action justify-content-center flex-wrap">
+                    <nav aria-label="breadcrumb">
+                      <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#"><i class="uil uil-estate"></i>Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">See Place</li>
+                      </ol>
+                    </nav>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-          <div class="card-body">
-  <div class="userDatatable adv-table-table global-shadow border-light-0 w-100 adv-table">
-    <div class="table-responsive">
-      <div class="adv-table-table__header">
-        <h4>application</h4>
-      </div>
-      <div id="filter-form-container"></div>
-      <table class="table mb-0 table-borderless adv-table1"  data-filter-container="#filter-form-container" data-paging-current="1" data-paging-position="right" data-paging-size="10">
-        <thead>
-          <tr class="userDatatable-header">
-        
-            <th>
-              <span class="userDatatable-title">NAME</span>
-            </th>
-            <th>
-              <span class="userDatatable-title">Email  </span>
-            </th>
-          
-         
-            <th data-type="html" data-name="status">
-              <span class="userDatatable-title">status</span>
-            </th>
-            <th>
-              <span class="userDatatable-title float-end">action</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-    <?php
+        <div class="products mb-30">
+          <div class="container-fluid">
+            <div class="card product-details h-100 border-0">
+              <div class="product-item p-sm-50 p-20">
+                <div class="row">
+                  <div class="col-lg-5">
+                    <div class="product-item__image">
+                      <div class="wrap-gallery-article carousel slide carousel-fade" id="carouselExampleCaptions" data-bs-ride="carousel">
+                        <div>
+                          <div class="carousel-inner">
+                            <div class="carousel-item active">
+                              <img class="img-fluid d-flex bg-opacity-primary " src="../uploads/<?php echo $image_url;?>" alt="Card image cap" title>
+                            </div>
+                            <div class="carousel-item">
+                              <img class="img-fluid d-flex bg-opacity-primary" src="../uploads/<?php echo $image_url;?>" alt="Card image cap" title>
+                            </div>
+                            <div class="carousel-item">
+                              <img class="img-fluid d-flex bg-opacity-primary" src="../uploads/<?php echo $image_url;?>"alt="Card image cap" title>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="overflow-hidden">
+                          <ul class="reset-ul d-flex flex-wrap list-thumb-gallery">
+                            <li>
+                              <a href="#" class="thumbnail active" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1">
+                                <img class="img-fluid d-flex" src="../uploads/<?php echo $image_url;?>" alt>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#" class="thumbnail " data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2">
+                                <img class="img-fluid d-flex"  src="../uploads/<?php echo $image_url;?>" alt>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#" class="thumbnail " data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3">
+                                <img class="img-fluid d-flex" src="../uploads/<?php echo $image_url;?>"alt>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class=" col-lg-7">
+                    <div class=" b-normal-b mb-25 pb-sm-35 pb-15 mt-lg-0 mt-15">
+                      <div class="product-item__body">
+                        <div class="product-item__title">
+                          <a href="#">
+                            <h1 class="card-title">
+                            <?php echo $listing_name;?>
+                            </h1>
+                          </a>
+                        </div>
+                        <div class="product-item__content text-capitalize">
+                    <div class="product-item__content text-capitalize">
+<div class="product-item__content text-capitalize">
+    <div class="stars-rating d-flex align-items-center">
+        <?php
+            $numStars = intval($rating); // Get the integer part of the rating
+            $decimal = $rating - $numStars; // Get the decimal part
 
+            for ($i = 0; $i < 5; $i++) {
+                if ($i < $numStars) {
+                    echo '<span class="star-icon las la-star active"></span>';
+                } else {
+                    if ($decimal > 0) {
+                        echo '<span class="star-icon las la-star-half-alt active"></span>';
+                        $decimal = 0; // Set the decimal part to 0 after using it
+                    } else {
+                        echo '<span class="star-icon las la-star"></span>';
+                    }
+                }
+            }
+        ?>
+        <span class="stars-rating__point">
+            <?php echo $rating == intval($rating) ? number_format($rating, 0) : number_format($rating, 1); ?>
+        </span>
+        <span class="stars-rating__review">
+            <span><?php echo $rating_count ?></span> Reviews
+        </span>
+    </div>
+</div>
 
-$sql = "SELECT 
-            c.email,
-            a.tenant_id,
-            t.name AS tenant_name,
-            c.email AS tenant_email,
-            a.status as status,
-            l.listing_id
-        FROM application a
-        LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
-        LEFT JOIN credentials c ON t.user_id = c.user_id
-        LEFT JOIN listing l ON l.listing_id = a.listing_id
-        WHERE a.listing_id = $listing_id";
+</div>
 
+                      
+                          <span class="product-desc-price">
+                          ₱     <?php echo $rentprice;?></span>
+                          <div class="d-flex align-items-center mb-2">
+                           
+                            <span class="product-discount">Reservation Fee : ₱     <?php echo $reservationfee;?></span>
+                          </div>
+                          <p class=" product-deatils-pera"><?php echo $description;?></p>
+                          <div class="product-details__availability">
+                            <div class="title">
+                              <p>Amenities: </p>
+                           
+                              <?php 
+                              
+$sql = "SELECT * FROM amenities where listing_id = '$listing_id'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    // output data of each row
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td><div class='userDatatable-content'>" . $row["email"] . "</div></td>";
-        echo "<td><div class='userDatatable-content'>" . $row["tenant_name"] . "</div></td>";
-        if ($row["status"] == 'pending') {
-            echo "<td><div class='userDatatable-content d-inline-block'><span class='bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active'>pending</span></div></td>";
-        } else {
-            echo "<td><div class='userDatatable-content d-inline-block'><span class='bg-opacity-success  color-success rounded-pill userDatatable-content-status active'>approved</span></div></td>";
-        }
-        echo "<td>
-        <ul class='orderDatatable_actions mb-0 d-flex flex-wrap'>
-          
-            <li>
-                <form action='' method='post'>
-                    <input type='hidden' name='listing_id' value='" . $row["listing_id"] . "'>
-                    <button type='submit' name='verify' value='1' class='edit'><i class='uil uil-edit'></i></button>
-                </form>
-            </li>
-        
-        </ul>
-    </td>";
+    // Output data of each row
+    while($row = $result->fetch_assoc()) {
+         ?>
 
-        echo "</tr>";
+   <span class="stock"><?php echo  $row["amenity"];?></span>
+  <?php
     }
-} 
-
-?>
-
-        </tbody>
-      </table>
-    </div>
-  </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
- <footer class="footer-wrapper">
-        <div class="footer-wrapper__inside">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="footer-copyright">
-                  <p><span>© 2023</span><a href="#">Rentalytics</a>
-                  </p>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="footer-menu text-end">
-                  <ul>
-                    <li>
-                      <a href="#">About</a>
-                    </li>
-                    <li>
-                      <a href="#">Team</a>
-                    </li>
-                    <li>
-                      <a href="#">Contact</a>
-                    </li>
-                  </ul>
+} else {
+    echo "  No Amenities";
+}
+                              
+                              ?>
+                          
+                            </div>
+                            
+                              <div class="title">
+                              <p>Bed Rooms:</p>
+                              <span class="stock"> <?php echo  $n_bedroom;?></span>
+                            </div>
+                             <div class="title">
+                              <p>Bath Rooms:</p>
+                              <span class="stock"> <?php echo  $n_bathroom;?></span>
+                            </div>
+                            <div class="title">
+                              <p>Address:</p>
+                              <span class="free"> <?php echo  $fullAddress;?></span>
+                            </div>
+                            <div class="title">
+                        <p>House Rules:</p>
+                        <span style="color:red;"><?php echo  $house_rules;?></span>
+                      </div>
+                          </div>
+                     
+                        
+                        </div>
+                      </div>
+                    </div>
+                    <div class="product-details__availability">
+                      <!-- <div class="title">
+                        <p>Category:</p>
+                        <span class="free">Furniture</span>
+                      </div>
+                      <div class="title">
+                        <p>Tags:</p>
+                        <span class="free"> Blue, Green, Light</span>
+                      </div> -->
+                        <div class="product-item__button mt-lg-30 mt-sm-25 mt-20 d-flex flex-wrap">
+                            <div class=" d-flex flex-wrap product-item__action align-items-center">
+                              <button class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2">Rent Now</button>
+                              <button class="btn btn-secondary btn-default btn-squared border-0 px-25 my-sm-0 my-2 me-10">
+                                <img src="img/svg/shopping-bag.svg" alt="shopping-bag" class="svg">
+                                Add To Go</button>
+                             
+                             
+                            </div>
+                           
+                          </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </footer>
-    </main>
-    <div id="overlayer">
-      <div class="loader-overlay">
-        <div class="dm-spin-dots spin-lg">
-          <span class="spin-dot badge-dot dot-primary"></span>
-          <span class="spin-dot badge-dot dot-primary"></span>
-          <span class="spin-dot badge-dot dot-primary"></span>
-          <span class="spin-dot badge-dot dot-primary"></span>
-        </div>
       </div>
-    </div>
-    <div class="overlay-dark-sidebar"></div>
-    <div class="customizer-overlay"></div>
-    <div class="customizer-wrapper">
-      <div class="customizer">
-        <div class="customizer__head">
-          <h4 class="customizer__title">Customizer</h4>
-          <span class="customizer__sub-title">Customize your overview page layout</span>
-          <a href="#" class="customizer-close">
-            <img class="svg" src="img/svg/x2.svg" alt>
-          </a>
+<footer class="footer-wrapper">
+  <div class="footer-wrapper__inside">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="footer-copyright">
+
+          
+            </p>
+          </div>
         </div>
-        <div class="customizer__body">
-          <div class="customizer__single">
-            <h4>Layout Type</h4>
-            <ul class="customizer-list d-flex layout">
-              <li class="customizer-list__item">
-                <a href="http://demo.dashboardmarket.com/hexadash-html/ltr" class="active">
-                  <img src="img/ltr.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
+        <div class="col-md-6">
+          <div class="footer-menu text-end">
+            <ul>
+              <li>
+                <a href="#">About</a>
               </li>
-              <li class="customizer-list__item">
-                <a href="http://demo.dashboardmarket.com/hexadash-html/rtl">
-                  <img src="img/rtl.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
+              <li>
+                <a href="#">Team</a>
               </li>
-            </ul>
-          </div>
-          <div class="customizer__single">
-            <h4>Sidebar Type</h4>
-            <ul class="customizer-list d-flex l_sidebar">
-              <li class="customizer-list__item">
-                <a href="#" data-layout="light" class="dark-mode-toggle active">
-                  <img src="img/light.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
+              <li>
+                <a href="#">Contact</a>
               </li>
-              <li class="customizer-list__item">
-                <a href="#" data-layout="dark" class="dark-mode-toggle">
-                  <img src="img/dark.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="customizer__single">
-            <h4>Navbar Type</h4>
-            <ul class="customizer-list d-flex l_navbar">
-              <li class="customizer-list__item">
-                <a href="#" data-layout="side" class="active">
-                  <img src="img/side.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-              <li class="customizer-list__item top">
-                <a href="#" data-layout="top">
-                  <img src="img/top.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-              <li class="colors"></li>
             </ul>
           </div>
         </div>
       </div>
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
-    <script src="js/plugins.min.js"></script>
-    <script src="js/script.min.js"></script>
+  </div>
+</footer>
+</main>
+<div id="overlayer">
+  <div class="loader-overlay">
+    <div class="dm-spin-dots spin-lg">
+      <span class="spin-dot badge-dot dot-primary"></span>
+      <span class="spin-dot badge-dot dot-primary"></span>
+      <span class="spin-dot badge-dot dot-primary"></span>
+      <span class="spin-dot badge-dot dot-primary"></span>
+    </div>
+  </div>
+</div>
+
+<script src="js/plugins.min.js"></script>
+<script src="js/script.min.js"></script>
+
 <script>
-    $((function() {
-        $(".adv-table1").footable({
-            filtering: {
-                enabled: !0
-            },
-            paging: {
-                enabled: !0,
-                current: 1
-            },
-            strings: {
-                enabled: !1
-            },
-            filtering: {
-                enabled: !0
-            },
-            components: {
-                filtering: FooTable.MyFiltering
-            }
-        })
-    })),
-    FooTable.MyFiltering = FooTable.Filtering.extend({
-        construct: function(t) {
-            this._super(t);
-            this.jobTitles = ["Active", "Pending", "Rejected"];
-            this.jobTitleDefault = "All";
-            this.$jobTitle = null;
-        },
-        $create: function() {
-            this._super();
-            var t = this,
-                s = $("<div/>", {
-                    class: "form-group dm-select d-flex align-items-center adv-table-searchs__status my-xl-25 my-15 mb-0 me-sm-30 me-0"
-                }).append($("<label/>", {
-                    class: "d-flex align-items-center mb-sm-0 mb-2",
-                    text: "Status"
-                })).prependTo(t.$form);
-            t.$jobTitle = $("<select/>", {
-                class: "form-control ms-sm-10 ms-0"
-            }).on("change", {
-                self: t
-            }, t._onJobTitleDropdownChanged).append($("<option/>", {
-                text: t.jobTitleDefault
-            })).appendTo(s);
-            $.each(t.jobTitles, (function(e, s) {
-                t.$jobTitle.append($("<option/>").text(s));
-            }));
-        },
-        _onJobTitleDropdownChanged: function(t) {
-            var e = t.data.self,
-                s = $(this).val();
-            s !== e.jobTitleDefault ? e.addFilter("status", s, ["status"]) : e.removeFilter("status");
-            e.filter();
-        },
-        draw: function() {
-            this._super();
-            var e = this.find("status");
-            e instanceof FooTable.Filter ? this.$jobTitle.val(e.query.val()) : this.$jobTitle.val(this.jobTitleDefault);
-        }
-    });
+  document.getElementById('uploadInput').addEventListener('change', handleFileSelect, false);
+
+  function handleFileSelect(event) {
+    const files = event.target.files;
+    const list = document.getElementById('imageList');
+    list.innerHTML = '';
+    for (let i = 0; i < Math.min(files.length, 5); i++) {
+      const file = files[i];
+      const listItem = document.createElement('li');
+      const fileName = document.createElement('span');
+      fileName.textContent = file.name;
+      const deleteBtn = document.createElement('a');
+      deleteBtn.className = 'btn-delete';
+      deleteBtn.innerHTML = '<i class="la la-trash"></i>';
+      deleteBtn.addEventListener('click', function () {
+        listItem.remove();
+      });
+      listItem.appendChild(fileName);
+      listItem.appendChild(deleteBtn);
+      list.appendChild(listItem);
+    }
+  }
 </script>
+<script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 15.4755, lng: 120.5963},
+          zoom: 13
+        });
+        var marker = new google.maps.Marker({
+      map: map,
+      anchorPoint: new google.maps.Point(0, -29),
+      draggable: true // Make the marker draggable
+    });
+   marker.addListener('dragend', function() {
+      var latLng = marker.getPosition();
+      document.getElementById("latitude").value = latLng.lat();
+      document.getElementById("longitude").value = latLng.lng();
+    });
+
+        var input = document.getElementById('search-box');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+
+        autocomplete.addListener('place_changed', function() {
+          marker.setVisible(false);
+         // Get the place object
+var place = autocomplete.getPlace();
+
+// Get the address components
+var addressComponents = place.address_components;
+
+// Initialize variables for the city, province, and barangay
+var city = "";
+var province = "";
+var barangay = "";
+
+// Iterate through the address components and extract the city, province, and barangay
+for (var i = 0; i < addressComponents.length; i++) {
+  if (addressComponents[i].types[0] == "locality") {
+    city = addressComponents[i].long_name;
+  } else if (addressComponents[i].types[0] == "administrative_area_level_2") {
+    province = addressComponents[i].long_name;
+  } else if (addressComponents[i].types[0] == "neighborhood") {
+    barangay = addressComponents[i].long_name;
+  }
+}
+
+// Display the city, province, and barangay in the HTML
+document.getElementById("city").value = city;
+document.getElementById("province").value = province;
+document.getElementById("barangay").value = barangay;
+
+
+          if (!place.geometry) {
+            // Place was not found
+            return;
+          }
+
+          // If the place has a geometry, then present it on a map
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);  // Why 17? Because it looks good.
+          }
+          marker.setPosition(place.geometry.location);
+          marker.setVisible(true);
+
+          // Get the latitude and longitude of the marked place
+          var latLng = marker.getPosition();
+
+          // Display the latitude and longitude in the HTML
+          document.getElementById("latitude").value = latLng.lat();
+          document.getElementById("longitude").value = latLng.lng();
+        });
+      }
+    </script>
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        
+
+        
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDo6VqHn6BDlQ4PWMTPsHo1fDai1xQgHEQ&libraries=places&callback=initMap"
+    async defer></script>
 
 
 
-  </body>
 
-  
+
+
+
+
+</body>
 </html>

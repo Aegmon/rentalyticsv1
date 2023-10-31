@@ -18,12 +18,13 @@ if (isset($_POST['add'])) {
     $no_bed = $_POST['no_bed'];
     $no_bath = $_POST['no_bath'];
     $house_rules = $_POST['house_rules'];
-
-    $sql = "INSERT INTO listing (listing_name, address1, address2, address3, address4, description, n_bedroom, n_bathroom, house_rules, rentprice, reservationfee, owner_id, gender_req) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+   $lat = $_POST['lat'];
+      $lng = $_POST['lng'];
+    $sql = "INSERT INTO listing (listing_name, address1, address2, address3, address4, description, n_bedroom, n_bathroom, house_rules, rentprice, reservationfee, owner_id, gender_req,lat,lng) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(
-        "ssssssissssis",
+        "ssssssissssisss",
         $name,
         $address1,
         $address2,
@@ -36,7 +37,9 @@ if (isset($_POST['add'])) {
         $price,
         $reservation,
         $id,
-        $gender
+        $gender,
+          $lat,
+        $lng
     );
 
     if ($stmt->execute()) {
@@ -55,7 +58,7 @@ if (isset($_POST['add'])) {
         // Handle image upload
         $targetDir = "../uploads/";
         $fileName11 = basename($_FILES["images"]["name"]);
-        $targetFilePath =  $fileName11;
+        $targetFilePath =  $targetDir.$fileName11;
 
         if (move_uploaded_file($_FILES["images"]["tmp_name"], $targetFilePath)) {
             // File successfully uploaded
@@ -142,6 +145,7 @@ if (isset($_POST['add'])) {
                             <option value="apartment">Apartment</option>
                             <option value="dormitory">Dormitory</option>
                             <option value="bedspace">Bedspace</option>
+                            
                           </select>
                         </div>
                       </div>
@@ -173,30 +177,7 @@ if (isset($_POST['add'])) {
                           <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" name="reservation" placeholder="Enter Price">
                         </div>
                       </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label for="a4" class="il-gray fs-14 fw-500 align-center mb-10">House No/Street/Block</label>
-                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" name="address1" placeholder="House No/Street/Block">
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label for="a5" class="il-gray fs-14 fw-500 align-center mb-10">Barangay</label>
-                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" name="address2" placeholder="Barangay">
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label for="a6" class="il-gray fs-14 fw-500 align-center mb-10">City</label>
-                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" name="address3" placeholder="City">
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label for="a7" class="il-gray fs-14 fw-500 align-center mb-10">Province</label>
-                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" name="address4" placeholder="Province">
-                        </div>
-                      </div>
+                
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="a8" class="il-gray fs-14 fw-500 align-center mb-10">Description</label>
@@ -309,6 +290,47 @@ if (isset($_POST['add'])) {
                            
                         </div>
                       </div>
+<hr style="margin: 5px 0; padding: 0;">
+<h3 class="text-center m-3">Address</h3>
+   <div class="row">
+       <div class="col-md-12">
+          <label for="a4" class="il-gray fs-14 fw-500 align-center mb-10">Search</label>
+                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15"  id="search-box" placeholder="Search....">
+          </div>
+        <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="a4" class="il-gray fs-14 fw-500 align-center mb-10">House No/Street/Block</label>
+                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" name="address1"  placeholder="House No/Street/Block">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="a5" class="il-gray fs-14 fw-500 align-center mb-10">Barangay</label>
+                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="barangay" name="address2" placeholder="Barangay">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="a6" class="il-gray fs-14 fw-500 align-center mb-10">City</label>
+                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="city" name="address3" placeholder="City">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="a7" class="il-gray fs-14 fw-500 align-center mb-10">Province</label>
+                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="province"name="address4" placeholder="Province">
+                        </div>
+                      </div>
+ </div>
+                          <div class="col-md-12">
+                              <div class="form-group">
+                         <label for="a8" class="il-gray fs-14 fw-500 align-center mb-10">Pin Location</label>
+                                   <input type="hidden" class="form-control" placeholder="lat" name="lat" id="latitude">
+                                    <input type="hidden" class="form-control" placeholder="lng" name="lng" id="longitude">
+                                           
+										  	<div id="map" style="width: 100%; height: 50vh;"></div>
+                         </div>
+                               </div>
                       <div class="col-md-12">
   <div class="form-group">
     <button type="submit" name="add" class="btn btn-primary">Submit</button>
@@ -333,7 +355,7 @@ if (isset($_POST['add'])) {
         <div class="col-md-6">
           <div class="footer-copyright">
 
-            <!-- <p><span>© 2023</span><a href="#">Sovware</a> -->
+          
             </p>
           </div>
         </div>
@@ -367,7 +389,7 @@ if (isset($_POST['add'])) {
     </div>
   </div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
+     
 <script src="js/plugins.min.js"></script>
 <script src="js/script.min.js"></script>
 
@@ -395,8 +417,87 @@ if (isset($_POST['add'])) {
     }
   }
 </script>
-This version of the code ensures that the JavaScript function handles up to five uploaded images. Adjust the code as needed to fit your specific requirements.
+       
+<script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 15.4755, lng: 120.5963},
+          zoom: 13
+        });
+        var marker = new google.maps.Marker({
+      map: map,
+      anchorPoint: new google.maps.Point(0, -29),
+      draggable: true // Make the marker draggable
+    });
+   marker.addListener('dragend', function() {
+      var latLng = marker.getPosition();
+      document.getElementById("latitude").value = latLng.lat();
+      document.getElementById("longitude").value = latLng.lng();
+    });
 
+        var input = document.getElementById('search-box');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+
+        autocomplete.addListener('place_changed', function() {
+          marker.setVisible(false);
+         // Get the place object
+var place = autocomplete.getPlace();
+
+// Get the address components
+var addressComponents = place.address_components;
+
+// Initialize variables for the city, province, and barangay
+var city = "";
+var province = "";
+var barangay = "";
+
+// Iterate through the address components and extract the city, province, and barangay
+for (var i = 0; i < addressComponents.length; i++) {
+  if (addressComponents[i].types[0] == "locality") {
+    city = addressComponents[i].long_name;
+  } else if (addressComponents[i].types[0] == "administrative_area_level_2") {
+    province = addressComponents[i].long_name;
+  } else if (addressComponents[i].types[0] == "neighborhood") {
+    barangay = addressComponents[i].long_name;
+  }
+}
+
+// Display the city, province, and barangay in the HTML
+document.getElementById("city").value = city;
+document.getElementById("province").value = province;
+document.getElementById("barangay").value = barangay;
+
+
+          if (!place.geometry) {
+            // Place was not found
+            return;
+          }
+
+          // If the place has a geometry, then present it on a map
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);  // Why 17? Because it looks good.
+          }
+          marker.setPosition(place.geometry.location);
+          marker.setVisible(true);
+
+          // Get the latitude and longitude of the marked place
+          var latLng = marker.getPosition();
+
+          // Display the latitude and longitude in the HTML
+          document.getElementById("latitude").value = latLng.lat();
+          document.getElementById("longitude").value = latLng.lng();
+        });
+      }
+    </script>
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        
+
+        
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDo6VqHn6BDlQ4PWMTPsHo1fDai1xQgHEQ&libraries=places&callback=initMap"
+    async defer></script>
 
 
 

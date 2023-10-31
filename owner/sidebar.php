@@ -11,15 +11,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/plugin.min.css">
     <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon.png">
     <link rel="stylesheet" href="unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <style>
+    
+
+<style>
     .image-hover-effect {
         transition: transform 0.3s;
+        transform-origin: center;
     }
 
     .image-hover-effect:hover {
-        transform: scale(1.6);
+        transform: scale(1.03);
     }
 </style>
 
@@ -104,6 +108,13 @@
                 <a href="index.php" class>
                      <span class="nav-icon uil uil-create-dashboard"></span>
                   <span class="menu-text">Dashboard</span>
+                 
+                </a>
+               </li>
+                 <li>
+                <a href="analytics.php" class>
+                      <span class="nav-icon uil uil-arrow-growth"></span>
+                  <span class="menu-text">Analytics</span>
                  
                 </a>
                </li>

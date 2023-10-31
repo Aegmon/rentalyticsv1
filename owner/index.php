@@ -215,28 +215,34 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-    echo '<div class="col-md-6 col-sm-12 mb-25">
+
+    echo '
+        
+    <div  class="col-md-6 col-sm-12 mb-20 image-hover-effect">
+     
         <div class="media py-30 ps-30 pe-20 bg-white radius-xl users-list"> 
-           <a href="viewlisting.php?listing_id='.$row["listing_id"].'">
-        <img class="me-20 rounded-circle wh-80 bg-opacity-primary image-hover-effect" src="../uploads/'.$row["image_url"].'" alt="Generic placeholder image">
-      </a>
+    
+        <img class="me-20 rounded-circle wh-80 bg-opacity-primary " src="../uploads/'.$row["image_url"].'" alt="Generic placeholder image">
+   
             <div class="media-body d-xl-flex users-list-body">
                 <div class="flex-1 pe-xl-30 users-list-body__title">
                     <h6 class="mt-0 fw-500">'.$row["listing_name"].'</h6>
                     <span>'.$row["address3"].','.$row["address4"].'</span>
+                    
                     <p class="mb-0">'.$row["description"].'</p>
                     <div class="users-list-body__bottom">
                         <span><span class="fw-600">Price:</span>
                         <span><span class="fw-600">₱'.$row["rentprice"].'</span></span>
-                             <span class="ms-15"><span class="fw-600"> Reservation Fee: </span>₱'.$row["reservationfee"].'</span>
+                        <br>
+                  <span class="fw-600"> Reservation Fee: </span>₱'.$row["reservationfee"].'
                     </div>
                     
                 </div>
                 <div class="users-list__button mt-xl-0 mt-15">
-                    <button class="btn btn-primary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow" data-bs-toggle="modal" data-bs-target="#editModal'.$row["listing_id"].'">Edit</button>
+                    <a  href="viewlisting.php?listing_id='.$row["listing_id"].'"class="btn btn-primary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow">View Place</a>
                     <form action="" method="post">
                         <input type="hidden" name="listing_id" value="'.$row["listing_id"].'">
-                        <button type="submit" name="delete_listing" class="border text-capitalize px-25 color-gray transparent shadow2 follow my-xl-0 radius-md">Delete</button>
+                        
                     </form>
                 </div>
             </div>
@@ -246,7 +252,8 @@ if ($result->num_rows > 0) {
     } else {
         echo '<span class="bg-opacity-danger color-danger rounded-pill userDatatable-content-status active">Unverified</span>';
     }
-echo '</div>';
+    
+echo ' </div>  ';
 
 
 
