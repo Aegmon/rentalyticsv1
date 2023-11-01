@@ -2,977 +2,497 @@
 include('sidebar.php');
 
 ?>
-      <div class="contents">
-        <div class="crm demo6 mb-25">
-          <div class="container-fluid">
-            <div class="row ">
-              <div class="col-lg-12">
+     <div class="contents">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="shop-breadcrumb">
                 <div class="breadcrumb-main">
-                  <h4 class="text-capitalize breadcrumb-title">Analytics</h4>
+                  <h4 class="text-capitalize breadcrumb-title">Product Lists</h4>
                   <div class="breadcrumb-action justify-content-center flex-wrap">
                     <nav aria-label="breadcrumb">
                       <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="uil uil-estate"></i>Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Analytics</li>
+                        <li class="breadcrumb-item active" aria-current="page">Product Lists</li>
                       </ol>
                     </nav>
                   </div>
                 </div>
               </div>
-              <div class="col-xxl-3 col-sm-6 mb-25">
-                <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
-                  <div class="overview-content w-100">
-                    <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
-                      <div class="ap-po-details__titlebar">
-                        <h1>20</h1>
-                        <p>Total Rented</p>
+            </div>
+            <div class="col-lg-12 mb-xxl-50 mb-30">
+              <div class="row justify-content-center">
+                <div class="col-md-8">
+                  <div class="search-style-2 global-shadow ">
+                    <form action="http://demo.dashboardmarket.com/" class="d-flex align-items-center">
+                      <div class="job-search">
+                        <img src="img/svg/search.svg" alt="search" class="svg">
+                        <input class="form-control border-0 box-shadow-none" type="search" placeholder="Products" aria-label="Search">
                       </div>
-                      <div class="ap-po-details__icon-area">
-                        <div class="svg-icon order-bg-opacity-primary color-primary">
-                          <i class="uil uil-home"></i>
-                        </div>
+                      <div class="location-search">
+                        <img src="img/svg/map-pin.svg" alt="map-pin" class="svg">
+                        <input class="form-control border-0 box-shadow-none" type="search" placeholder="Location" aria-label="Search">
                       </div>
-                    </div>
-                    <div class="ap-po-details-time">
-                      <span class="color-success"><i class="las la-arrow-up"></i>
-<strong>25.36%</strong></span>
-                      <small>Since last month</small>
-                    </div>
+                      <button class="btn btn-primary"><img src="img/svg/search.svg" alt="search" class="svg">search</button>
+                    </form>
                   </div>
                 </div>
               </div>
-              <div class="col-xxl-3 col-sm-6 mb-25">
-                <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
-                  <div class="overview-content w-100">
-                    <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
-                      <div class="ap-po-details__titlebar">
-                        <h1>30,825</h1>
-                        <p>Total Orders</p>
-                      </div>
-                      <div class="ap-po-details__icon-area">
-                        <div class="svg-icon order-bg-opacity-info color-info">
-                          <i class="uil uil-shopping-cart-alt"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="ap-po-details-time">
-                      <span class="color-success"><i class="las la-arrow-up"></i>
-<strong>25.36%</strong></span>
-                      <small>Since last month</small>
-                    </div>
-                  </div>
+            </div>
+          </div>
+        </div>
+        <div class="products_page product_page--grid mb-30">
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="columns-1 col-lg-8 col-sm-10 mb-lg-0 mb-30">
+          <div class="widget mb-lg-30">
+            <div class="widget-header-title px-20 py-15">
+              <h6 class="d-flex align-content-center fw-500">
+                <img src="img/svg/sliders.svg" alt="sliders" class="svg"> Filters
+              </h6>
+            </div>
+            <div class="category_sidebar">
+              <!-- <aside class="product-sidebar-widget mb-30">
+                <div class="widget_title nocollapse">
+                  <h6>Price Range</h6>
                 </div>
-              </div>
-              <div class="col-xxl-3 col-sm-6 mb-25">
-                <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
-                  <div class="overview-content w-100">
-                    <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
-                      <div class="ap-po-details__titlebar">
-                        <h1>₱30,825</h1>
-                        <p>Total Sales</p>
-                      </div>
-                      <div class="ap-po-details__icon-area">
-                        <div class="svg-icon order-bg-opacity-secondary color-secondary">
-                          <i class="uil uil-money-bill"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="ap-po-details-time">
-                      <span class="color-danger"><i class="las la-arrow-down"></i>
-<strong>25.36%</strong></span>
-                      <small>Since last month</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xxl-3 col-sm-6 mb-25">
-                <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
-                  <div class="overview-content w-100">
-                    <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
-                      <div class="ap-po-details__titlebar">
-                        <h1>30,825</h1>
-                        <p>New Customers</p>
-                      </div>
-                      <div class="ap-po-details__icon-area">
-                        <div class="svg-icon order-bg-opacity-warning color-warning">
-                          <i class="uil uil-users-alt"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="ap-po-details-time">
-                      <span class="color-success"><i class="las la-arrow-up"></i>
-<strong>25.36%</strong></span>
-                      <small>Since last month</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xxl-4 col-lg-6 mb-25">
-                <div class="card border-0 chartLine-po-details h-100">
-                  <div class="card-header border-0 px-25 pt-25 pb-30">
-                    <div class="chartLine-po-details__overview-content w-100">
-                      <div class=" chartLine-po-details__content d-flex flex-wrap justify-content-between">
-                        <div class="chartLine-po-details__titlebar">
-                          <h1>Total Sales</h1>
-                          <p>(Last 10 months)</p>
-                        </div>
-                      </div>
-                      <div class="chartLine-po-details__time">
-                        <h5>₱8,550</h5>
-                        <span class="color-success"><i class="fas fa-arrow-up"></i>
-<strong>25.36%</strong></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="wp-chart">
-                      <div class="parentContainer">
-                        <div>
-                          <canvas id="totalSaleMonth"></canvas>
-                        </div>
+                <div class="card border-0 shadow-none mt-10">
+                  <div class="product-price-ranges">
+                    <div id="price-range" class="mb-0">
+                      <div class="section price">
+                        <div class="price-slider"></div>
+                        <p class="price-value"></p>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-xxl-4 col-lg-6 mb-25">
-                <div class="card border-0 chartLine-po-details h-100">
-                  <div class="card-header border-bottom-0 px-25 pt-25 pb-30">
-                    <div class="chartLine-po-details__overview-content w-100">
-                      <div class=" chartLine-po-details__content d-flex flex-wrap justify-content-between">
-                        <div class="chartLine-po-details__titlebar">
-                          <h1>Total Sales</h1>
-                          <p>(Last 10 months)</p>
+              </aside> -->
+              <aside class="product-sidebar-widget mb-30">
+                <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" role="button" aria-expanded="true">
+                  <h6>Category</h6>
+                </div>
+                <div class="card border-0 shadow-none multi-collapse mt-10 collapse show" id="multiCollapseExample2">
+                  <div class="product-category limit-list-item">
+                    <ul>
+                      <li>
+                            <a href="">
+                        <div class="w-100">
+                          <span class="fs-14 color-gray">Apartment<span class="item-numbers">25</span></span>
                         </div>
-                      </div>
-                      <div class="chartLine-po-details__time">
-                        <h5>₱8,550</h5>
-                        <span class="color-success"><i class="fas fa-arrow-up"></i>
-<strong>25.36%</strong></span>
-                      </div>
-                    </div>
+                           </a> 
+                      </li>
+                      <li>
+                         <a href="">
+                        <div class="w-100">
+                        <span class="fs-14 color-gray">Bed Space<span class="item-numbers">54</span></span>
+                        </div>
+                        </a> 
+                      </li>
+                      <li>
+                           <a href="">
+                        <div class="w-100">
+                          <span class="fs-14 color-gray">Dormitory<span class="item-numbers">78</span></span>
+                        </div>
+                             </a> 
+                      </li>
+                      <li>
+                              <a href="">
+                        <div class="w-100">
+                          <span class="fs-14 color-gray">Boarding House<span class="item-numbers">42</span></span>
+                        </div>
+                            </a> 
+                      </li>
+                    
+                    
+                
+                    </ul>
                   </div>
-                  <div class="card-body">
-                    <div class="wp-chart">
-                      <div class="parentContainer">
-                        <div>
-                          <canvas id="totalSaleDay"></canvas>
+                </div>
+              </aside>
+              <aside class="product-sidebar-widget mb-30">
+                <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" role="button" aria-expanded="true">
+                  <h6>Bed Rooms</h6>
+                </div>
+                <div class="card border-0 shadow-none multi-collapse mt-10 collapse show" id="multiCollapseExample3">
+                  <div class="product-brands limit-list-item">
+                    <ul>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="check-1">
+                          <label for="check-1">
+                            <span class="checkbox-text">
+1
+<span class="item-numbers">25</span>
+                            </span>
+                          </label>
                         </div>
+                      </li>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="check-2">
+                          <label for="check-2">
+                            <span class="checkbox-text">
+2
+<span class="item-numbers">54</span>
+                            </span>
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="check-3">
+                          <label for="check-3">
+                            <span class="checkbox-text">
+3
+<span class="item-numbers">78</span>
+                            </span>
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="check-4">
+                          <label for="check-4">
+                            <span class="checkbox-text">
+5
+<span class="item-numbers">42</span>
+                            </span>
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="check-5">
+                          <label for="check-5">
+                            <span class="checkbox-text">
+5+
+<span class="item-numbers">35</span>
+                            </span>
+                          </label>
+                        </div>
+                      </li>
+               
+                    </ul>
+                  </div>
+                </div>
+              </aside>
+                  <aside class="product-sidebar-widget mb-30">
+                <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" role="button" aria-expanded="true">
+                  <h6>Bath Rooms</h6>
+                </div>
+                <div class="card border-0 shadow-none multi-collapse mt-10 collapse show" id="multiCollapseExample3">
+                  <div class="product-brands limit-list-item">
+                    <ul>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="check-1">
+                          <label for="check-1">
+                            <span class="checkbox-text">
+1
+<span class="item-numbers">25</span>
+                            </span>
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="check-2">
+                          <label for="check-2">
+                            <span class="checkbox-text">
+2
+<span class="item-numbers">54</span>
+                            </span>
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="check-3">
+                          <label for="check-3">
+                            <span class="checkbox-text">
+3
+<span class="item-numbers">78</span>
+                            </span>
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="check-4">
+                          <label for="check-4">
+                            <span class="checkbox-text">
+5
+<span class="item-numbers">42</span>
+                            </span>
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="check-5">
+                          <label for="check-5">
+                            <span class="checkbox-text">
+5+
+<span class="item-numbers">35</span>
+                            </span>
+                          </label>
+                        </div>
+                      </li>
+                 
+                    </ul>
+                  </div>
+                </div>
+              </aside>
+              <aside class="product-sidebar-widget">
+                <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample4" role="button" aria-expanded="true">
+                  <h6>Ratings</h6>
+                </div>
+                <div class="card border-0 shadow-none multi-collapse mt-10 collapse show" id="multiCollapseExample4">
+                  <div class="product-ratings">
+                    <ul>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="rating-1">
+                          <label for="rating-1">
+                            <span class="stars-rating d-flex align-items-center">
+<span class="star-icon las la-star active"></span>
+                            <span class="star-icon las la-star active"></span>
+                            <span class="star-icon las la-star active"></span>
+                            <span class="star-icon las la-star active"></span>
+                            <span class="star-icon las la-star active"></span>
+                            <span class="checkbox-text">
+and up
+<span class="item-numbers">42</span>
+                            </span>
+                            </span>
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="rating-3">
+                          <label for="rating-3">
+                            <span class="stars-rating d-flex align-items-center">
+<span class="star-icon las la-star active"></span>
+                            <span class="star-icon las la-star active"></span>
+                            <span class="star-icon las la-star active"></span>
+                            <span class="star-icon las la-star active"></span>
+                            <span class="star-icon las la-star inactive"></span>
+                            <span class="checkbox-text">
+and up
+<span class="item-numbers">54</span>
+                            </span>
+                            </span>
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="rating-4">
+                          <label for="rating-4">
+                            <span class="stars-rating d-flex align-items-center">
+<span class="star-icon las la-star active"></span>
+                            <span class="star-icon las la-star active"></span>
+                            <span class="star-icon las la-star active"></span>
+                            <span class="star-icon las la-star inactive"></span>
+                            <span class="star-icon las la-star inactive"></span>
+                            <span class="checkbox-text">
+and up
+<span class="item-numbers">78</span>
+                            </span>
+                            </span>
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="rating-5">
+                          <label for="rating-5">
+                            <span class="stars-rating d-flex align-items-center">
+<span class="star-icon las la-star active"></span>
+                            <span class="star-icon las la-star active"></span>
+                            <span class="star-icon las la-star inactive"></span>
+                            <span class="star-icon las la-star inactive"></span>
+                            <span class="star-icon las la-star inactive"></span>
+                            <span class="checkbox-text">
+and up
+<span class="item-numbers">42</span>
+                            </span>
+                            </span>
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="checkbox-theme-default custom-checkbox ">
+                          <input class="checkbox" type="checkbox" id="rating-6">
+                          <label for="rating-6">
+                            <span class="stars-rating d-flex align-items-center">
+<span class="star-icon las la-star active"></span>
+                            <span class="star-icon las la-star inactive"></span>
+                            <span class="star-icon las la-star inactive"></span>
+                            <span class="star-icon las la-star inactive"></span>
+                            <span class="star-icon las la-star inactive"></span>
+                            <span class="checkbox-text">
+and up
+<span class="item-numbers">35</span>
+                            </span>
+                            </span>
+                          </label>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+              <div class="columns-2 col-lg-12">
+                <div class="shop_products_top_filter">
+                  <div class="project-top-wrapper d-flex flex-wrap align-items-center">
+               
+                    <div class="project-top-right d-flex flex-wrap align-items-center">
+                      <div class="project-category flex-wrap d-flex align-items-center">
+                        <p class="fs-14 color-gray text-capitalize">sort by:</p>
+                        <div class="project-tap">
+                          <div class="dm-select ">
+                            <select name="select-search" class="select-search form-control">
+                              <option value="01">All</option>
+                              <option value="02">Old</option>
+                              <option value="03" selected>Latest</option>
+                              <option value="04">New</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="project-icon-selected content-center mt-lg-0 mt-25">
+                     
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-xxl-4 col-lg-6 mb-25">
-                <div class="card border-0 chartLine-po-details h-100">
-                  <div class="card-header border-bottom-0 px-25 pt-25 pb-30">
-                    <div class="chartLine-po-details__overview-content w-100">
-                      <div class=" chartLine-po-details__content d-flex flex-wrap justify-content-between">
-                        <div class="chartLine-po-details__titlebar">
-                          <h1>Profit Growth</h1>
-                        </div>
-                      </div>
-                      <div class="chartLine-po-details__time">
-                        <h5>₱8,550</h5>
-                        <span class="color-danger"><i class="fas fa-arrow-down"></i>
-<strong>25.36%</strong></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="wp-chart">
-                      <div class="parentContainer">
-                        <div>
-                          <canvas id="totalSaleYear"></canvas>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xxl-4 col-lg-6 mb-25">
-                <div class="card revenueChartTwo border-0">
-                  <div class="card-header">
-                    <h6>Sales Overview</h6>
-                    <div class="card-extra">
-                      <div class="dropdown dropleft">
-                        <a href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <img src="img/svg/more-horizontal.svg" alt="more-horizontal" class="svg">
-                        </a>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body px-sm-50 pb-sm-30 pt-sm-50 px-30 pb-30 pt-25">
-                    <div class="parentContainer position-relative">
-                      <div class="storage color-primary">
-                        <div class="storage"></div>
-                      </div>
-                    </div>
-                    <div class="sales-target d-flex justify-content-around mt-20">
-                      <div class="sales-target__single">
-                        <span>Completed</span>
-                        <h3>123,456</h3>
-                      </div>
-                      <div class="sales-target__single">
-                        <span>In progress</span>
-                        <h3>12,498</h3>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xxl-8 mb-25">
-                <div class="card border-0 h-100">
-                  <div class="card-header">
-                    <h6>Sales by Location</h6>
-                    <div class="card-extra">
-                      <ul class="card-tab-links nav-tabs nav" role="tablist">
-                        <li>
-                          <a href="#se_region-today" class="active" data-bs-toggle="tab" id="se_region-today-tab" role="tab" aria-selected="true">Today</a>
-                        </li>
-                        <li>
-                          <a href="#se_region-week" data-bs-toggle="tab" id="se_region-week-tab" role="tab" aria-selected="false">Week</a>
-                        </li>
-                        <li>
-                          <a href="#se_region-month" data-bs-toggle="tab" id="se_region-month-tab" role="tab" aria-selected="false">Month</a>
-                        </li>
-                        <li>
-                          <a href="#se_region-year" data-bs-toggle="tab" id="se_region-year-tab" role="tab" aria-selected="false">Year</a>
-                        </li>
-                      </ul>
-                      <div class="dropdown dropleft">
-                        <a href="#" role="button" id="else" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <img src="img/svg/more-horizontal.svg" alt="more-horizontal" class="svg">
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="else">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body pt-sm-30 pb-sm-50 pb-30">
-                    <div class="tab-content">
-                      <div class="tab-pane active show" id="se_region-today" role="tabpanel" aria-labelledby="se_region-today-tab">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="table-responsive table-top-regions">
-                              <table class="table table--default table-borderless">
-                                <thead>
-                                  <tr>
-                                    <th>Top region</th>
-                                    <th>order</th>
-                                    <th>Revenue</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>United States</td>
-                                    <td>90</td>
-                                    <td>₱536</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Australia</td>
-                                    <td>70</td>
-                                    <td>₱573</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Canada</td>
-                                    <td>30</td>
-                                    <td>₱457</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Japan</td>
-                                    <td>50</td>
-                                    <td>₱524</td>
-                                  </tr>
-                                  <tr>
-                                    <td>India</td>
-                                    <td>20</td>
-                                    <td>₱354</td>
-                                  </tr>
-                                </tbody>
-                              </table>
+                <div class="row product-page-list">
+       
+                 <?php
+$sql = "SELECT * FROM listing WHERE status = 'active'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) { 
+      $listing_id = $row['listing_id'];
+          $sql = "SELECT 
+                    *, 
+                    COUNT(*) AS review_count, 
+                    AVG(rating) AS average_rating 
+                FROM review 
+                WHERE listing_id = '$listing_id'";
+        $result_review = $conn->query($sql);
+        if ($result_review->num_rows > 0) {
+            while ($row_review = $result_review->fetch_assoc()) {
+                $rating = $row_review['average_rating'];
+                $rating_count = $row_review['review_count'];
+            }
+        } else {
+            $rating = "No Rating Yet";
+            $rating_count = "0";
+        }
+      ?>
+      
+                  <div class="col-12 mb-30 px-10">
+                    <div class="card product product--list">
+                      <div class="h-100">
+                        <div class="product-item">
+                          <div class="product-item__image">
+                            <img  src="../uploads/<?php echo $row['image_url'];?>" alt="digital-chair">
+                          </div>
+                          <div class="product-item__body  mt-0 position-relative" >
+                          
+                            <div class="product-item__title">
+                              <a href="#">
+                                <h6 class="card-title"><?php echo $row['listing_name'];?></h6>
+                              </a>
+                              <p class="mb-0"><?php echo $row['description'];?></p>
+                              
+                            </div>
+                            <div class="product-item__content text-capitalize " style=" margin-left: 400px;">
+                              <div class="d-flex align-items-left mb-2 flex-wrap">
+                                <span class="product-desc-price ">₱<?php echo $row['rentprice'];?></span>
+                              
+                              
+                              </div>
+                              <div class="stars-rating d-flex align-items-center flex-wrap">
+                                  <?php
+            $numStars = intval($rating); // Get the integer part of the rating
+            $decimal = $rating - $numStars; // Get the decimal part
+
+            for ($i = 0; $i < 5; $i++) {
+                if ($i < $numStars) {
+                    echo '<span class="star-icon las la-star active"></span>';
+                } else {
+                    if ($decimal > 0) {
+                        echo '<span class="star-icon las la-star-half-alt active"></span>';
+                        $decimal = 0; // Set the decimal part to 0 after using it
+                    } else {
+                        echo '<span class="star-icon las la-star"></span>';
+                    }
+                }
+            }
+        ?>
+                                <span class="stars-rating__point"> <?php echo $rating == intval($rating) ? number_format($rating, 0) : number_format($rating, 1); ?></span>
+                                <span class="stars-rating__review">
+                                <span><?php echo $rating_count ?></span> Reviews</span>
+                              </div>
+                              <div class="product-item__button d-xl-block d-flex flex-wrap">
+                                <button class="btn btn-default btn-squared color-light btn-outline-light ms-lg-0 ms-0 me-2 mb-lg-10"><img src="img/svg/shopping-bag.svg" alt="shopping-bag" class="svg">
+                                  Add To Go
+                                </button>
+                                <button class="btn btn-primary btn-default btn-squared border-0 ms-0">rent now
+                                </button>
+                              </div>
                             </div>
                           </div>
-                          <div class="col-md-6 d-flex align-items-center justify-content-center">
-                            <div class="regions-svg">
-                              <div id="s_region-map_T"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="tab-pane" id="se_region-week" role="tabpanel" aria-labelledby="se_region-week-tab">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="table-responsive table-top-regions">
-                              <table class="table table--default table-borderless">
-                                <thead>
-                                  <tr>
-                                    <th>Top region</th>
-                                    <th>order</th>
-                                    <th>Revenue</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>United States</td>
-                                    <td>90</td>
-                                    <td>₱536</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Australia</td>
-                                    <td>70</td>
-                                    <td>₱573</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Canada</td>
-                                    <td>30</td>
-                                    <td>₱457</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Japan</td>
-                                    <td>50</td>
-                                    <td>₱524</td>
-                                  </tr>
-                                  <tr>
-                                    <td>India</td>
-                                    <td>20</td>
-                                    <td>₱354</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                          <div class="col-md-6 d-flex align-items-center justify-content-center">
-                            <div class="regions-svg">
-                              <div id="s_region-map_W"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="tab-pane" id="se_region-month" role="tabpanel" aria-labelledby="se_region-month-tab">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="table-responsive table-top-regions">
-                              <table class="table table--default table-borderless">
-                                <thead>
-                                  <tr>
-                                    <th>Top region</th>
-                                    <th>order</th>
-                                    <th>Revenue</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>United States</td>
-                                    <td>90</td>
-                                    <td>₱536</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Australia</td>
-                                    <td>70</td>
-                                    <td>₱573</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Canada</td>
-                                    <td>30</td>
-                                    <td>₱457</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Japan</td>
-                                    <td>50</td>
-                                    <td>₱524</td>
-                                  </tr>
-                                  <tr>
-                                    <td>India</td>
-                                    <td>20</td>
-                                    <td>₱354</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                          <div class="col-md-6 d-flex align-items-center justify-content-center">
-                            <div class="regions-svg">
-                              <div id="s_region-map_M"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="tab-pane" id="se_region-year" role="tabpanel" aria-labelledby="se_region-year-tab">
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="table-responsive table-top-regions">
-                              <table class="table table--default table-borderless">
-                                <thead>
-                                  <tr>
-                                    <th>Top region</th>
-                                    <th>order</th>
-                                    <th>Revenue</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td>United States</td>
-                                    <td>90</td>
-                                    <td>₱536</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Australia</td>
-                                    <td>70</td>
-                                    <td>₱573</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Canada</td>
-                                    <td>30</td>
-                                    <td>₱457</td>
-                                  </tr>
-                                  <tr>
-                                    <td>Japan</td>
-                                    <td>50</td>
-                                    <td>₱524</td>
-                                  </tr>
-                                  <tr>
-                                    <td>India</td>
-                                    <td>20</td>
-                                    <td>₱354</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                          <div class="col-md-6 d-flex align-items-center justify-content-center">
-                            <div class="regions-svg">
-                              <div id="s_region-map_Y"></div>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
+<?php   }
+}else {
+    echo "0 results";
+}?>
+
+
+
+
                 </div>
-              </div>
-              <div class="col-xxl-6 col-lg-6 mb-25">
-                <div class="card border-0 px-25">
-                  <div class="card-header px-0 border-0">
-                    <h6>Top Selling Products</h6>
-                    <div class="card-extra">
-                      <ul class="card-tab-links nav-tabs nav" role="tablist">
-                        <li>
-                          <a class="active" href="#t_selling-today" data-bs-toggle="tab" id="t_selling-today-tab" role="tab" aria-selected="true">Today</a>
-                        </li>
-                        <li>
-                          <a href="#t_selling-week" data-bs-toggle="tab" id="t_selling-week-tab" role="tab" aria-selected="true">Week</a>
-                        </li>
-                        <li>
-                          <a href="#t_selling-month" data-bs-toggle="tab" id="t_selling-month-tab" role="tab" aria-selected="true">Month</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="card-body p-0">
-                    <div class="tab-content">
-                      <div class="tab-pane fade active show" id="t_selling-today" role="tabpanel" aria-labelledby="t_selling-today-tab">
-                        <div class="selling-table-wrap">
-                          <div class="table-responsive">
-                            <table class="table table--default table-borderless">
-                              <thead>
-                                <tr>
-                                  <th>PRDUCTS NAME</th>
-                                  <th>Price</th>
-                                  <th>Sold</th>
-                                  <th>Revenue</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="radius-xs img-fluid order-bg-opacity-primary" src="img/premium-clock.png" alt="img">
-                                      <span>Premium Clock</span>
-                                    </div>
-                                  </td>
-                                  <td>₱280</td>
-                                  <td>339</td>
-                                  <td>₱38,536</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="radius-xs img-fluid order-bg-opacity-primary" src="img/t-shirt.png" alt="img">
-                                      <span>Boys T-Shirt</span>
-                                    </div>
-                                  </td>
-                                  <td>₱25</td>
-                                  <td>80</td>
-                                  <td>₱20,573</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="radius-xs img-fluid order-bg-opacity-primary" src="img/nike.png" alt="img">
-                                      <span>Nike Shoes</span>
-                                    </div>
-                                  </td>
-                                  <td>₱32</td>
-                                  <td>58</td>
-                                  <td>₱17,457</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="radius-xs img-fluid order-bg-opacity-primary" src="img/cup-glass.png" alt="img">
-                                      <span>Smart Glass</span>
-                                    </div>
-                                  </td>
-                                  <td>₱9,50</td>
-                                  <td>36</td>
-                                  <td>₱15,354</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="radius-xs img-fluid order-bg-opacity-primary" src="img/women-bag.png" alt="img">
-                                      <span>Women Bag</span>
-                                    </div>
-                                  </td>
-                                  <td>₱32</td>
-                                  <td>40</td>
-                                  <td>₱12,354</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="tab-pane fade" id="t_selling-week" role="tabpanel" aria-labelledby="t_selling-week-tab">
-                        <div class="selling-table-wrap">
-                          <div class="table-responsive">
-                            <table class="table table--default table-borderless">
-                              <thead>
-                                <tr>
-                                  <th>PRDUCTS NAME</th>
-                                  <th>Price</th>
-                                  <th>Sold</th>
-                                  <th>Revenue</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="me-15 wh-34 img-fluid order-bg-opacity-primary" src="img/287.png" alt="img">
-                                      <span>Samsung Galaxy S8 256GB</span>
-                                    </div>
-                                  </td>
-                                  <td>₱289</td>
-                                  <td>339</td>
-                                  <td>₱60,258</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="me-15 wh-34 img-fluid" src="img/165.png" alt="img">
-                                      <span>Half Sleeve Shirt</span>
-                                    </div>
-                                  </td>
-                                  <td>₱29</td>
-                                  <td>136</td>
-                                  <td>₱2,483</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="me-15 wh-34 img-fluid order-bg-opacity-primary" src="img/166.png" alt="img">
-                                      <span>Marco Shoes</span>
-                                    </div>
-                                  </td>
-                                  <td>₱59</td>
-                                  <td>448</td>
-                                  <td>₱19,758</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="me-15 wh-34 img-fluid order-bg-opacity-primary" src="img/315.png" alt="img">
-                                      <span>15" Mackbook Pro</span>
-                                    </div>
-                                  </td>
-                                  <td>₱1,299</td>
-                                  <td>159</td>
-                                  <td>₱197,458</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="me-15 wh-34 img-fluid order-bg-opacity-primary" src="img/506.png" alt="img">
-                                      <span>Apple iPhone X</span>
-                                    </div>
-                                  </td>
-                                  <td>₱899</td>
-                                  <td>146</td>
-                                  <td>115,254</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="tab-pane fade" id="t_selling-month" role="tabpanel" aria-labelledby="t_selling-month-tab">
-                        <div class="selling-table-wrap">
-                          <div class="table-responsive">
-                            <table class="table table--default table-borderless">
-                              <thead>
-                                <tr>
-                                  <th>PRDUCTS NAME</th>
-                                  <th>Price</th>
-                                  <th>Sold</th>
-                                  <th>Revenue</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="me-15 wh-34 img-fluid order-bg-opacity-primary" src="img/287.png" alt="img">
-                                      <span>Samsung Galaxy S8 256GB</span>
-                                    </div>
-                                  </td>
-                                  <td>₱149</td>
-                                  <td>389</td>
-                                  <td>₱60,278</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="me-15 wh-34 img-fluid" src="img/165.png" alt="img">
-                                      <span>Half Sleeve Shirt</span>
-                                    </div>
-                                  </td>
-                                  <td>₱59</td>
-                                  <td>136</td>
-                                  <td>₱2,483</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="me-15 wh-34 img-fluid order-bg-opacity-primary" src="img/166.png" alt="img">
-                                      <span>Marco Shoes</span>
-                                    </div>
-                                  </td>
-                                  <td>₱89</td>
-                                  <td>448</td>
-                                  <td>₱19,758</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="me-15 wh-34 img-fluid order-bg-opacity-primary" src="img/315.png" alt="img">
-                                      <span>15" Mackbook Pro</span>
-                                    </div>
-                                  </td>
-                                  <td>₱1,29</td>
-                                  <td>15</td>
-                                  <td>₱197,8</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <img class="me-15 wh-34 img-fluid order-bg-opacity-primary" src="img/506.png" alt="img">
-                                      <span>Apple iPhone X</span>
-                                    </div>
-                                  </td>
-                                  <td>₱99</td>
-                                  <td>16</td>
-                                  <td>1154</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xxl-6 col-lg-6 mb-25">
-                <div class="card border-0 px-25 browser-states">
-                  <div class="card-header px-0 border-0">
-                    <h6>Browser States</h6>
-                    <div class="card-extra">
-                      <ul class="card-tab-links nav-tabs nav" role="tablist">
-                        <li>
-                          <a class="active" href="#t_selling-today2" data-bs-toggle="tab" id="t_selling-today2-tab" role="tab" aria-selected="true">Today</a>
-                        </li>
-                        <li>
-                          <a href="#t_selling-week2" data-bs-toggle="tab" id="t_selling-week2-tab" role="tab" aria-selected="true">Week</a>
-                        </li>
-                        <li>
-                          <a href="#t_selling-month3" data-bs-toggle="tab" id="t_selling-month3-tab" role="tab" aria-selected="true">Month</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="card-body p-0">
-                    <div class="tab-content">
-                      <div class="tab-pane fade active show" id="t_selling-today2" role="tabpanel" aria-labelledby="t_selling-today2-tab">
-                        <div class="selling-table-wrap">
-                          <div class="table-responsive">
-                            <table class="table table--default table-borderless">
-                              <thead>
-                                <tr>
-                                  <th>Browsers</th>
-                                  <th>Session</th>
-                                  <th>Bounce Rate</th>
-                                  <th>CTE</th>
-                                  <th>Goal Conv. Rate</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Google Chrome</span>
-                                    </div>
-                                  </td>
-                                  <td>92,345</td>
-                                  <td>3.5%</td>
-                                  <td>
-                                    12025
-                                  </td>
-                                  <td>90%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Mozila Firefox</span>
-                                    </div>
-                                  </td>
-                                  <td>92,345</td>
-                                  <td>3.5%</td>
-                                  <td>
-                                    12025
-                                  </td>
-                                  <td>90%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Apple Safari</span>
-                                    </div>
-                                  </td>
-                                  <td>92,345</td>
-                                  <td>3.5%</td>
-                                  <td>
-                                    12025
-                                  </td>
-                                  <td>90%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Internet Explorer</span>
-                                    </div>
-                                  </td>
-                                  <td>92,345</td>
-                                  <td>3.5%</td>
-                                  <td>
-                                    12025
-                                  </td>
-                                  <td>90%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Opera Mini</span>
-                                    </div>
-                                  </td>
-                                  <td>92,345</td>
-                                  <td>3.5%</td>
-                                  <td>
-                                    12025
-                                  </td>
-                                  <td>90%</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="tab-pane fade" id="t_selling-week2" role="tabpanel" aria-labelledby="t_selling-week2-tab">
-                        <div class="selling-table-wrap">
-                          <div class="table-responsive">
-                            <table class="table table--default table-borderless">
-                              <thead>
-                                <tr>
-                                  <th>Customer</th>
-                                  <th>Session</th>
-                                  <th>Bounce Rate</th>
-                                  <th>CTE</th>
-                                  <th>Goal Conv. Rate</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Google Chrome</span>
-                                    </div>
-                                  </td>
-                                  <td>92,345</td>
-                                  <td>3.5%</td>
-                                  <td>
-                                    12025
-                                  </td>
-                                  <td>90%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Mozila Firefox</span>
-                                    </div>
-                                  </td>
-                                  <td>92,345</td>
-                                  <td>3.5%</td>
-                                  <td>
-                                    12025
-                                  </td>
-                                  <td>90%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Apple Safari</span>
-                                    </div>
-                                  </td>
-                                  <td>92,345</td>
-                                  <td>3.5%</td>
-                                  <td>
-                                    12025
-                                  </td>
-                                  <td>90%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Internet Explorer</span>
-                                    </div>
-                                  </td>
-                                  <td>92,345</td>
-                                  <td>3.5%</td>
-                                  <td>
-                                    12025
-                                  </td>
-                                  <td>90%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Opera Mini</span>
-                                    </div>
-                                  </td>
-                                  <td>92,345</td>
-                                  <td>3.5%</td>
-                                  <td>
-                                    12025
-                                  </td>
-                                  <td>90%</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="tab-pane fade" id="t_selling-month3" role="tabpanel" aria-labelledby="t_selling-month3-tab">
-                        <div class="selling-table-wrap">
-                          <div class="table-responsive">
-                            <table class="table table--default table-borderless">
-                              <thead>
-                                <tr>
-                                  <th>Customer</th>
-                                  <th>Session</th>
-                                  <th>Bounce Rate</th>
-                                  <th>CTE</th>
-                                  <th>Goal Conv. Rate</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Google Chrome</span>
-                                    </div>
-                                  </td>
-                                  <td>73,345</td>
-                                  <td>3.5%</td>
-                                  <td>
-                                    12025
-                                  </td>
-                                  <td>90%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Mozila Firefox</span>
-                                    </div>
-                                  </td>
-                                  <td>45,345</td>
-                                  <td>3.5%</td>
-                                  <td>
-                                    12025
-                                  </td>
-                                  <td>90%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Apple Safari</span>
-                                    </div>
-                                  </td>
-                                  <td>57,345</td>
-                                  <td>3.5%</td>
-                                  <td>
-                                    12025
-                                  </td>
-                                  <td>90%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Internet Explorer</span>
-                                    </div>
-                                  </td>
-                                  <td>92,345</td>
-                                  <td>3.5%</td>
-                                  <td>
-                                    12025
-                                  </td>
-                                  <td>90%</td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <div class="selling-product-img d-flex align-items-center">
-                                      <span>Opera Mini</span>
-                                    </div>
-                                  </td>
-                                  <td>78,345</td>
-                                  <td>1.5%</td>
-                                  <td>
-                                    48584
-                                  </td>
-                                  <td>80%</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="user-pagination">
+                      <div class="d-flex justify-content-md-end justify-content-center mt-1 mb-30">
+                        <nav class="dm-page ">
+                          <ul class="dm-pagination d-flex">
+                            <li class="dm-pagination__item">
+                              <a href="#" class="dm-pagination__link pagination-control"><span class="la la-angle-left"></span></a>
+                              <a href="#" class="dm-pagination__link"><span class="page-number">1</span></a>
+                              <a href="#" class="dm-pagination__link active"><span class="page-number">2</span></a>
+                              <a href="#" class="dm-pagination__link"><span class="page-number">3</span></a>
+                              <a href="#" class="dm-pagination__link pagination-control"><span class="page-number">...</span></a>
+                              <a href="#" class="dm-pagination__link"><span class="page-number">12</span></a>
+                              <a href="#" class="dm-pagination__link pagination-control"><span class="la la-angle-right"></span></a>
+                              <a href="#" class="dm-pagination__option">
+                              </a>
+                            </li>
+                            <li class="dm-pagination__item">
+                              <div class="paging-option">
+                                <select name="page-number" class="page-selection">
+                                  <option value="20">20/page</option>
+                                  <option value="40">40/page</option>
+                                  <option value="60">60/page</option>
+                                </select>
+                              </div>
+                            </li>
+                          </ul>
+                        </nav>
                       </div>
                     </div>
                   </div>
@@ -988,7 +508,7 @@ include('sidebar.php');
             <div class="row">
               <div class="col-md-6">
                 <div class="footer-copyright">
-                  <!-- <p><span>© 2023</span><a href="#">Sovware</a> -->
+                  <p><span>© 2023</span><a href="#">Sovware</a>
                   </p>
                 </div>
               </div>
@@ -1094,5 +614,5 @@ include('sidebar.php');
     <script src="js/script.min.js"></script>
   </body>
 
-  
+  <!-- Mirrored from demo.dashboardmarket.com/hexadash-html/ltr/product-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 07 Oct 2023 01:06:13 GMT -->
 </html>
