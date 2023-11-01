@@ -189,7 +189,7 @@ if ($result->num_rows > 0) {
             <div class="card product-details h-100 border-0">
               <div class="product-item p-sm-50 p-20">
                 <div class="row">
-                  <div class="col-lg-5">
+                  <div class="col-lg-4">
                     <div class="product-item__image">
                       <div class="wrap-gallery-article carousel slide carousel-fade" id="carouselExampleCaptions" data-bs-ride="carousel">
                         <div>
@@ -227,7 +227,7 @@ if ($result->num_rows > 0) {
                       </div>
                     </div>
                   </div>
-                  <div class=" col-lg-7">
+                  <div class=" col-lg-4">
                     <div class=" b-normal-b mb-25 pb-sm-35 pb-15 mt-lg-0 mt-15">
                       <div class="product-item__body">
                         <div class="product-item__title">
@@ -360,7 +360,13 @@ if ($result->num_rows > 0) {
                           </div>
                     </div>
                   </div>
-                  
+                   <div class=" col-lg-4">
+
+  	<div id="map" style="width: 100%; height: 50vh;"></div>
+
+
+
+                       </div>
                 </div>
 <hr>
 <div style="text-align: center; margin-bottom: 5px;">
@@ -507,85 +513,40 @@ if ($result->num_rows > 0) {
     }
   }
 </script>
-<script>
-      function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 15.4755, lng: 120.5963},
-          zoom: 13
-        });
-        var marker = new google.maps.Marker({
-      map: map,
-      anchorPoint: new google.maps.Point(0, -29),
-      draggable: true // Make the marker draggable
-    });
-   marker.addListener('dragend', function() {
-      var latLng = marker.getPosition();
-      document.getElementById("latitude").value = latLng.lat();
-      document.getElementById("longitude").value = latLng.lng();
-    });
 
-        var input = document.getElementById('search-box');
-        var autocomplete = new google.maps.places.Autocomplete(input);
-
-        autocomplete.addListener('place_changed', function() {
-          marker.setVisible(false);
-         // Get the place object
-var place = autocomplete.getPlace();
-
-// Get the address components
-var addressComponents = place.address_components;
-
-// Initialize variables for the city, province, and barangay
-var city = "";
-var province = "";
-var barangay = "";
-
-// Iterate through the address components and extract the city, province, and barangay
-for (var i = 0; i < addressComponents.length; i++) {
-  if (addressComponents[i].types[0] == "locality") {
-    city = addressComponents[i].long_name;
-  } else if (addressComponents[i].types[0] == "administrative_area_level_2") {
-    province = addressComponents[i].long_name;
-  } else if (addressComponents[i].types[0] == "neighborhood") {
-    barangay = addressComponents[i].long_name;
-  }
-}
-
-// Display the city, province, and barangay in the HTML
-document.getElementById("city").value = city;
-document.getElementById("province").value = province;
-document.getElementById("barangay").value = barangay;
-
-
-          if (!place.geometry) {
-            // Place was not found
-            return;
-          }
-
-          // If the place has a geometry, then present it on a map
-          if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-          } else {
-            map.setCenter(place.geometry.location);
-            map.setZoom(17);  // Why 17? Because it looks good.
-          }
-          marker.setPosition(place.geometry.location);
-          marker.setVisible(true);
-
-          // Get the latitude and longitude of the marked place
-          var latLng = marker.getPosition();
-
-          // Display the latitude and longitude in the HTML
-          document.getElementById("latitude").value = latLng.lat();
-          document.getElementById("longitude").value = latLng.lng();
-        });
-      }
-    </script>
    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         
+<script>
+    function initMap() {
+        var center = { lat: <?php echo $lat; ?>, lng: <?php echo $lng; ?> };
 
-        
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDo6VqHn6BDlQ4PWMTPsHo1fDai1xQgHEQ&libraries=places&callback=initMap"
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: center,
+            zoom: 16
+        });
+
+        var marker = new google.maps.Marker({
+            position: center,
+            map: map,
+            animation: google.maps.Animation.BOUNCE
+        });
+
+        // Create a circle to represent the geofence
+        var geofence = new google.maps.Circle({
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FF0000",
+            fillOpacity: 0.35,
+            map: map,
+            center: center,
+            radius: 200 // 200 meters
+        });
+    }
+</script>
+
+
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDo6VqHn6BDlQ4PWMTPsHo1fDai1xQgHEQ&libraries=places&callback=initMap"
     async defer></script>
 
 
