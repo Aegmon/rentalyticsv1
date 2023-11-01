@@ -592,8 +592,7 @@ GIS
       
       
     </script>
-    <script src="js/plugins.min.js"></script>
-    <script src="js/script.min.js"></script>
+    
 
 <script>
     $((function() {
@@ -657,7 +656,8 @@ GIS
     });
 </script>
 
-
+<script src="js/plugins.min.js"></script>
+  <script src="js/script.min.js"></script>
 
      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDo6VqHn6BDlQ4PWMTPsHo1fDai1xQgHEQ&libraries=places&callback=initMap"
     async defer></script>
