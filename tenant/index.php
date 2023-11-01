@@ -59,109 +59,117 @@ include('sidebar.php');
                 </div>
                 <div class="card border-0 shadow-none multi-collapse mt-10 collapse show" id="multiCollapseExample2">
                   <div class="product-category limit-list-item">
-                    <ul>
-                      <li>
-                            <a href="">
-                        <div class="w-100">
-                          <span class="fs-14 color-gray">Apartment<span class="item-numbers"></span></span>
-                        </div>
-                           </a> 
-                      </li>
-                      <li>
-                         <a href="">
-                        <div class="w-100">
-                        <span class="fs-14 color-gray">Bed Space<span class="item-numbers"></span></span>
-                        </div>
-                        </a> 
-                      </li>
-                      <li>
-                           <a href="">
-                        <div class="w-100">
-                          <span class="fs-14 color-gray">Dormitory<span class="item-numbers"></span></span>
-                        </div>
-                             </a> 
-                      </li>
-                      <li>
-                              <a href="">
-                        <div class="w-100">
-                          <span class="fs-14 color-gray">Boarding House<span class="item-numbers"></span></span>
-                        </div>
-                            </a> 
-                      </li>
-                    
-                    
-                
-                    </ul>
+                 <ul>
+    <li>
+        <a href="?category=Apartment">
+            <div class="w-100">
+                <span class="fs-14 color-gray">Apartment<span class="item-numbers"></span></span>
+            </div>
+        </a>
+    </li>
+    <li>
+        <a href="?category=Bed Space">
+            <div class="w-100">
+                <span class="fs-14 color-gray">Bed Space<span class="item-numbers"></span></span>
+            </div>
+        </a>
+    </li>
+    <li>
+        <a href="?category=Dormitory">
+            <div class="w-100">
+                <span class="fs-14 color-gray">Dormitory<span class="item-numbers"></span></span>
+            </div>
+        </a>
+    </li>
+    <li>
+        <a href="?category=Boarding House">
+            <div class="w-100">
+                <span class="fs-14 color-gray">Boarding House<span class="item-numbers"></span></span>
+            </div>
+        </a>
+    </li>
+</ul>
+
                   </div>
                 </div>
               </aside>
               <aside class="product-sidebar-widget mb-30">
-                <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" role="button" aria-expanded="true">
-                  <h6>Bed Rooms</h6>
-                </div>
-                <div class="card border-0 shadow-none multi-collapse mt-10 collapse show" id="multiCollapseExample3">
-                  <div class="product-brands limit-list-item">
-                    <ul>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="check-1">
-                          <label for="check-1">
-                            <span class="checkbox-text">
-1
-<span class="item-numbers"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="check-2">
-                          <label for="check-2">
-                            <span class="checkbox-text">
-2
-<span class="item-numbers"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="check-3">
-                          <label for="check-3">
-                            <span class="checkbox-text">
-3
-<span class="item-numbers"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="check-4">
-                          <label for="check-4">
-                            <span class="checkbox-text">
-5
-<span class="item-numbers"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="check-5">
-                          <label for="check-5">
-                            <span class="checkbox-text">
-5+
-<span class="item-numbers"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-               
-                    </ul>
-                  </div>
-                </div>
-              </aside>
+    <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" role="button" aria-expanded="true">
+        <h6>Bed Rooms</h6>
+    </div>
+    <div class="card border-0 shadow-none multi-collapse mt-10 collapse show" id="multiCollapseExample3">
+        <div class="product-brands limit-list-item">
+            <ul>
+                <li>
+                    <div class="checkbox-theme-default custom-checkbox">
+                        <form method="POST" action="">
+                            <input class="checkbox" type="checkbox" id="check-1" name="n_bedroom" value="1" onchange="this.form.submit()" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['n_bedroom']) && $_POST['n_bedroom'] == '1') echo 'checked'; ?>>
+                            <label for="check-1">
+                                <span class="checkbox-text">
+                                    1
+                                    <span class="item-numbers"></span>
+                                </span>
+                            </label>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="checkbox-theme-default custom-checkbox">
+                        <form method="POST" action="">
+                            <input class="checkbox" type="checkbox" id="check-2" name="n_bedroom" value="2" onchange="this.form.submit()" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['n_bedroom']) && $_POST['n_bedroom'] == '2') echo 'checked'; ?>>
+                            <label for="check-2">
+                                <span class="checkbox-text">
+                                    2
+                                    <span class="item-numbers"></span>
+                                </span>
+                            </label>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="checkbox-theme-default custom-checkbox">
+                        <form method="POST" action="">
+                            <input class="checkbox" type="checkbox" id="check-3" name="n_bedroom" value="3" onchange="this.form.submit()" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['n_bedroom']) && $_POST['n_bedroom'] == '3') echo 'checked'; ?>>
+                            <label for="check-3">
+                                <span class="checkbox-text">
+                                    3
+                                    <span class="item-numbers"></span>
+                                </span>
+                            </label>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="checkbox-theme-default custom-checkbox">
+                        <form method="POST" action="">
+                            <input class="checkbox" type="checkbox" id="check-4" name="n_bedroom" value="5" onchange="this.form.submit()" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['n_bedroom']) && $_POST['n_bedroom'] == '5') echo 'checked'; ?>>
+                            <label for="check-4">
+                                <span class="checkbox-text">
+                                    5
+                                    <span class="item-numbers"></span>
+                                </span>
+                            </label>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="checkbox-theme-default custom-checkbox">
+                        <form method="POST" action="">
+                            <input class="checkbox" type="checkbox" id="check-5" name="n_bedroom" value="5+" onchange="this.form.submit()" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['n_bedroom']) && $_POST['n_bedroom'] == '5+') echo 'checked'; ?>>
+                            <label for="check-5">
+                                <span class="checkbox-text">
+                                    5+
+                                    <span class="item-numbers"></span>
+                                </span>
+                            </label>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>
+
                   <aside class="product-sidebar-widget mb-30">
                 <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" role="button" aria-expanded="true">
                   <h6>Bath Rooms</h6>
@@ -359,6 +367,18 @@ and up
   <div class="row product-page-list">
     <?php
     $sql = "SELECT * FROM listing WHERE status = 'active'";
+    if (isset($_GET['category'])) {
+    $category = $_GET['category'];
+    $sql .= " AND type = '$category'";
+}
+if (isset($_GET['n_bedroom'])) {
+    $n_bedroom = $_GET['n_bedroom'];
+    if ($n_bedroom === '5+') {
+        $sql .= " AND n_bedroom >= 5";
+    } else {
+        $sql .= " AND n_bedroom = '$n_bedroom'";
+    }
+}
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search'])) {
         if ($_POST['select-search'] == '02') {
             $sql .= " ORDER BY created_at DESC";
