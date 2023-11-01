@@ -278,7 +278,7 @@ if ($result->num_rows > 0) {
                           </div>
                           <p class=" product-deatils-pera"><?php echo $description;?></p>
                           <div class="product-details__availability">
-                            <div class="title">
+                            <div class="title d-flex flex-column align-items-start" >
                               <p>Amenities: </p>
                            
                               <?php 
@@ -298,21 +298,21 @@ if ($result->num_rows > 0) {
     echo "  No Amenities";
 }
                               
-                              ?>
+?>
                           
                             </div>
                             
                               <div class="title">
                               <p>Bed Rooms:</p>
-                              <span class="stock"> <?php echo  $n_bedroom;?></span>
+                              <span class="stock"><?php echo  $n_bedroom;?></span>
                             </div>
                              <div class="title">
                               <p>Bath Rooms:</p>
-                              <span class="stock"> <?php echo  $n_bathroom;?></span>
+                              <span class="stock"><?php echo  $n_bathroom;?></span>
                             </div>
                             <div class="title">
                               <p>Address:</p>
-                              <span class="free"> <?php echo  $fullAddress;?></span>
+                              <span class="free"><?php echo  $fullAddress;?></span>
                             </div>
                             <div class="title">
                         <p>House Rules:</p>
@@ -362,14 +362,14 @@ if ($result->num_rows > 0) {
                   </div>
                    <div class=" col-lg-4">
 
-  	<div id="map" style="width: 100%; height: 50vh;"></div>
+  	            <div id="map" style="width: 100%; height: 50vh;margin-top:50px;"></div>
 
 
 
                        </div>
                 </div>
 <hr>
-<div style="text-align: center; margin-bottom: 5px;">
+<div style="text-align: center; margin-bottom: 5px;height:50px">
     <span style="background-color: #ffffff; padding: 0 10px;">
         <h3 style="display: inline;">Feedback And Rating</h3>
     </span>
