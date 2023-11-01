@@ -20,7 +20,7 @@ $total_female_count = $owner_female_count + $tenant_female_count;
 
 $result = $conn->query("SELECT SUM(CASE WHEN gender_req = 'Male' THEN 1 ELSE 0 END) as male_listing_count,
                               SUM(CASE WHEN gender_req = 'Female' THEN 1 ELSE 0 END) as female_listing_count,
-                         SUM(CASE WHEN gender_req = 'Both' THEN 1 ELSE 0 END) as both_listing_count
+                          SUM(CASE WHEN gender_req = 'Both' THEN 1 ELSE 0 END) as both_listing_count
                         FROM listing");
 
 // Fetch the result
@@ -107,7 +107,7 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
   <div class="card-header">Renter Gender Segmentation</div>
 
   
-        <div id="chart"> </div>
+        <div id="chart"></div>
  
   
   </div>
@@ -191,7 +191,7 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
                    <div class="mb-4">
    Bar Graph
     </div>
-<div class="col-lg-4 mb-4">
+<div class="col-lg-12 mb-4">
   <div class="card">
   <div class="card-header">Registered Property Types</div>
 
@@ -201,22 +201,20 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
   
   </div>
 </div>
-<div class="col-lg-4 mb-4">
+<div class="col-lg-12 mb-4">
   <div class="card">
   <div class="card-header">Number of rental places that accept only specific gender</div>
 
-  
-        <div id="chart1"></div>
  
   
   </div>
 </div>
-<div class="col-lg-4 mb-4">
+<div class="col-lg-12 mb-4">
   <div class="card">
   <div class="card-header">Gender</div>
 
   
-        <div id="chart3"></div>
+    
  
   
   </div>
@@ -271,10 +269,11 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
         </div>
       </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
     <script>    
     var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560'];
@@ -284,7 +283,8 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
           data: [<?php echo $total_apartment_count ?>,<?php echo  $total_dormitory_count ?>,<?php echo  $total_bedspace_count ?>,<?php echo  $total_boarding_house_count ?>]
         }],
           chart: {
-          height: 350,
+          height:350 ,
+          width:1000,
           type: 'bar',
           events: {
             click: function(chart, w, e) {
@@ -311,15 +311,16 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
             'Dormitory',
             'Bed Space',
             'Boarding House',
-           
           ],
+
           labels: {
             style: {
-              colors: colors,
+              colors: '#000',
               fontSize: '12px'
             }
           }
-        }
+        },
+       
         };
 
         var chart = new ApexCharts(document.querySelector("#chartbar"), options);
@@ -466,7 +467,7 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
          <script>
       
         var options = {
-                 series: [<?php echo $total_male_apartment_count ;?>, <?php echo $total_female_apartment_count ;?>,<?php echo $total_both_apartment_count ;?>],
+                 series: [<? echo $total_male_apartment_count ;?>, <?php echo $total_female_apartment_count ;?>,<?php echo $total_both_apartment_count ;?>],
           chart: {
           width: 380,
           type: 'pie',

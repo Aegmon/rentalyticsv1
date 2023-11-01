@@ -24,7 +24,7 @@ if (isset($_POST['add'])) {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(
-        "ssssssissssissdss",
+        "ssssssissssissss",
         $name,
         $address1,
         $address2,
