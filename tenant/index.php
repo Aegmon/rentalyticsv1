@@ -8,12 +8,12 @@ include('sidebar.php');
             <div class="col-lg-12">
               <div class="shop-breadcrumb">
                 <div class="breadcrumb-main">
-                  <h4 class="text-capitalize breadcrumb-title">Product Lists</h4>
+                  <h4 class="text-capitalize breadcrumb-title">Places</h4>
                   <div class="breadcrumb-action justify-content-center flex-wrap">
                     <nav aria-label="breadcrumb">
                       <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="uil uil-estate"></i>Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Product Lists</li>
+                        <li class="breadcrumb-item active" aria-current="page">Places</li>
                       </ol>
                     </nav>
                   </div>
@@ -27,7 +27,7 @@ include('sidebar.php');
                     <form action="http://demo.dashboardmarket.com/" class="d-flex align-items-center">
                       <div class="job-search">
                         <img src="img/svg/search.svg" alt="search" class="svg">
-                        <input class="form-control border-0 box-shadow-none" type="search" placeholder="Products" aria-label="Search">
+                        <input class="form-control border-0 box-shadow-none" type="search" placeholder="Search Place....." aria-label="Search">
                       </div>
                       <div class="location-search">
                         <img src="img/svg/map-pin.svg" alt="map-pin" class="svg">
@@ -52,21 +52,7 @@ include('sidebar.php');
               </h6>
             </div>
             <div class="category_sidebar">
-              <!-- <aside class="product-sidebar-widget mb-30">
-                <div class="widget_title nocollapse">
-                  <h6>Price Range</h6>
-                </div>
-                <div class="card border-0 shadow-none mt-10">
-                  <div class="product-price-ranges">
-                    <div id="price-range" class="mb-0">
-                      <div class="section price">
-                        <div class="price-slider"></div>
-                        <p class="price-value"></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </aside> -->
+    
               <aside class="product-sidebar-widget mb-30">
                 <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" role="button" aria-expanded="true">
                   <h6>Category</h6>
@@ -77,28 +63,28 @@ include('sidebar.php');
                       <li>
                             <a href="">
                         <div class="w-100">
-                          <span class="fs-14 color-gray">Apartment<span class="item-numbers">25</span></span>
+                          <span class="fs-14 color-gray">Apartment<span class="item-numbers"></span></span>
                         </div>
                            </a> 
                       </li>
                       <li>
                          <a href="">
                         <div class="w-100">
-                        <span class="fs-14 color-gray">Bed Space<span class="item-numbers">54</span></span>
+                        <span class="fs-14 color-gray">Bed Space<span class="item-numbers"></span></span>
                         </div>
                         </a> 
                       </li>
                       <li>
                            <a href="">
                         <div class="w-100">
-                          <span class="fs-14 color-gray">Dormitory<span class="item-numbers">78</span></span>
+                          <span class="fs-14 color-gray">Dormitory<span class="item-numbers"></span></span>
                         </div>
                              </a> 
                       </li>
                       <li>
                               <a href="">
                         <div class="w-100">
-                          <span class="fs-14 color-gray">Boarding House<span class="item-numbers">42</span></span>
+                          <span class="fs-14 color-gray">Boarding House<span class="item-numbers"></span></span>
                         </div>
                             </a> 
                       </li>
@@ -122,7 +108,7 @@ include('sidebar.php');
                           <label for="check-1">
                             <span class="checkbox-text">
 1
-<span class="item-numbers">25</span>
+<span class="item-numbers"></span>
                             </span>
                           </label>
                         </div>
@@ -133,7 +119,7 @@ include('sidebar.php');
                           <label for="check-2">
                             <span class="checkbox-text">
 2
-<span class="item-numbers">54</span>
+<span class="item-numbers"></span>
                             </span>
                           </label>
                         </div>
@@ -144,7 +130,7 @@ include('sidebar.php');
                           <label for="check-3">
                             <span class="checkbox-text">
 3
-<span class="item-numbers">78</span>
+<span class="item-numbers"></span>
                             </span>
                           </label>
                         </div>
@@ -155,7 +141,7 @@ include('sidebar.php');
                           <label for="check-4">
                             <span class="checkbox-text">
 5
-<span class="item-numbers">42</span>
+<span class="item-numbers"></span>
                             </span>
                           </label>
                         </div>
@@ -166,7 +152,7 @@ include('sidebar.php');
                           <label for="check-5">
                             <span class="checkbox-text">
 5+
-<span class="item-numbers">35</span>
+<span class="item-numbers"></span>
                             </span>
                           </label>
                         </div>
@@ -189,7 +175,7 @@ include('sidebar.php');
                           <label for="check-1">
                             <span class="checkbox-text">
 1
-<span class="item-numbers">25</span>
+<span class="item-numbers"></span>
                             </span>
                           </label>
                         </div>
@@ -200,7 +186,7 @@ include('sidebar.php');
                           <label for="check-2">
                             <span class="checkbox-text">
 2
-<span class="item-numbers">54</span>
+<span class="item-numbers"></span>
                             </span>
                           </label>
                         </div>
@@ -211,7 +197,7 @@ include('sidebar.php');
                           <label for="check-3">
                             <span class="checkbox-text">
 3
-<span class="item-numbers">78</span>
+<span class="item-numbers"></span>
                             </span>
                           </label>
                         </div>
@@ -222,7 +208,7 @@ include('sidebar.php');
                           <label for="check-4">
                             <span class="checkbox-text">
 5
-<span class="item-numbers">42</span>
+<span class="item-numbers"></span>
                             </span>
                           </label>
                         </div>
@@ -233,7 +219,7 @@ include('sidebar.php');
                           <label for="check-5">
                             <span class="checkbox-text">
 5+
-<span class="item-numbers">35</span>
+<span class="item-numbers"></span>
                             </span>
                           </label>
                         </div>
@@ -262,7 +248,7 @@ include('sidebar.php');
                             <span class="star-icon las la-star active"></span>
                             <span class="checkbox-text">
 and up
-<span class="item-numbers">42</span>
+<span class="item-numbers"></span>
                             </span>
                             </span>
                           </label>
@@ -280,7 +266,7 @@ and up
                             <span class="star-icon las la-star inactive"></span>
                             <span class="checkbox-text">
 and up
-<span class="item-numbers">54</span>
+<span class="item-numbers"></span>
                             </span>
                             </span>
                           </label>
@@ -298,7 +284,7 @@ and up
                             <span class="star-icon las la-star inactive"></span>
                             <span class="checkbox-text">
 and up
-<span class="item-numbers">78</span>
+<span class="item-numbers"></span>
                             </span>
                             </span>
                           </label>
@@ -316,7 +302,7 @@ and up
                             <span class="star-icon las la-star inactive"></span>
                             <span class="checkbox-text">
 and up
-<span class="item-numbers">42</span>
+<span class="item-numbers"></span>
                             </span>
                             </span>
                           </label>
@@ -334,7 +320,7 @@ and up
                             <span class="star-icon las la-star inactive"></span>
                             <span class="checkbox-text">
 and up
-<span class="item-numbers">35</span>
+<span class="item-numbers"></span>
                             </span>
                             </span>
                           </label>
@@ -347,39 +333,43 @@ and up
             </div>
           </div>
         </div>
-              <div class="columns-2 col-lg-12">
-                <div class="shop_products_top_filter">
-                  <div class="project-top-wrapper d-flex flex-wrap align-items-center">
-               
-                    <div class="project-top-right d-flex flex-wrap align-items-center">
-                      <div class="project-category flex-wrap d-flex align-items-center">
-                        <p class="fs-14 color-gray text-capitalize">sort by:</p>
-                        <div class="project-tap">
-                          <div class="dm-select ">
-                            <select name="select-search" class="select-search form-control">
-                              <option value="01">All</option>
-                              <option value="02">Old</option>
-                              <option value="03" selected>Latest</option>
-                              <option value="04">New</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="project-icon-selected content-center mt-lg-0 mt-25">
-                     
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row product-page-list">
-       
-                 <?php
-$sql = "SELECT * FROM listing WHERE status = 'active'";
-$result = $conn->query($sql);
+        <div class="columns-2 col-lg-12">
+  <div class="shop_products_top_filter">
+    <div class="project-top-wrapper d-flex flex-wrap align-items-center">
+      <div class="project-top-right d-flex flex-wrap align-items-center">
+        <div class="project-category flex-wrap d-flex align-items-center">
+          <p class="fs-14 color-gray text-capitalize">sort by:</p>
+          <div class="project-tap">
+            <div class="dm-select ">
+         <form method="POST" action="">
+    <select name="select-search" class="form-control" onchange="this.form.submit()">
+        <option value="01" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['select-search'] == '01') echo 'selected'; ?>>All</option>
+        <option value="02" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['select-search'] == '02') echo 'selected'; ?>>Latest</option>
+        <option value="03" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['select-search'] == '03') echo 'selected'; ?>>Top Rated</option>
+    </select>
+</form>
 
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) { 
+            </div>
+          </div>
+        </div>
+        <div class="project-icon-selected content-center mt-lg-0 mt-25"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row product-page-list">
+    <?php
+    $sql = "SELECT * FROM listing WHERE status = 'active'";
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search'])) {
+        if ($_POST['select-search'] == '02') {
+            $sql .= " ORDER BY created_at DESC";
+        } elseif ($_POST['select-search'] == '03') {
+            $sql .= " AND listing_id IN (SELECT listing_id FROM review GROUP BY listing_id HAVING AVG(rating) >= 4)";
+        }
+    }
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while ($row = $result->fetch_assoc()) {
       $listing_id = $row['listing_id'];
           $sql = "SELECT 
                     *, 
@@ -456,21 +446,18 @@ if ($result->num_rows > 0) {
                       </div>
                     </div>
                   </div>
-<?php   }
-}else {
-    echo "0 results";
-}?>
-
-
-
-
-                </div>
-                <div class="row">
-                  <div class="col-12">
-                    <div class="user-pagination">
-                      <div class="d-flex justify-content-md-end justify-content-center mt-1 mb-30">
-                        <nav class="dm-page ">
-                          <ul class="dm-pagination d-flex">
+<?php      }
+    } else {
+        echo "0 results";
+    }
+    ?>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="user-pagination">
+        <div class="d-flex justify-content-md-end justify-content-center mt-1 mb-30">
+          <nav class="dm-page ">
+            <ul class="dm-pagination d-flex">
                             <li class="dm-pagination__item">
                               <a href="#" class="dm-pagination__link pagination-control"><span class="la la-angle-left"></span></a>
                               <a href="#" class="dm-pagination__link"><span class="page-number">1</span></a>
@@ -508,7 +495,7 @@ if ($result->num_rows > 0) {
             <div class="row">
               <div class="col-md-6">
                 <div class="footer-copyright">
-                  <p><span>© 2023</span><a href="#">Sovware</a>
+                  <p><span>© 2023</span><a href="#">Rentalytics</a>
                   </p>
                 </div>
               </div>
@@ -532,83 +519,8 @@ if ($result->num_rows > 0) {
         </div>
       </footer>
     </main>
-    <div id="overlayer">
-      <div class="loader-overlay">
-        <div class="dm-spin-dots spin-lg">
-          <span class="spin-dot badge-dot dot-primary"></span>
-          <span class="spin-dot badge-dot dot-primary"></span>
-          <span class="spin-dot badge-dot dot-primary"></span>
-          <span class="spin-dot badge-dot dot-primary"></span>
-        </div>
-      </div>
-    </div>
-    <div class="overlay-dark-sidebar"></div>
-    <div class="customizer-overlay"></div>
-    <div class="customizer-wrapper">
-      <div class="customizer">
-        <div class="customizer__head">
-          <h4 class="customizer__title">Customizer</h4>
-          <span class="customizer__sub-title">Customize your overview page layout</span>
-          <a href="#" class="customizer-close">
-            <img class="svg" src="img/svg/x2.svg" alt>
-          </a>
-        </div>
-        <div class="customizer__body">
-          <div class="customizer__single">
-            <h4>Layout Type</h4>
-            <ul class="customizer-list d-flex layout">
-              <li class="customizer-list__item">
-                <a href="http://demo.dashboardmarket.com/hexadash-html/ltr" class="active">
-                  <img src="img/ltr.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-              <li class="customizer-list__item">
-                <a href="http://demo.dashboardmarket.com/hexadash-html/rtl">
-                  <img src="img/rtl.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="customizer__single">
-            <h4>Sidebar Type</h4>
-            <ul class="customizer-list d-flex l_sidebar">
-              <li class="customizer-list__item">
-                <a href="#" data-layout="light" class="dark-mode-toggle active">
-                  <img src="img/light.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-              <li class="customizer-list__item">
-                <a href="#" data-layout="dark" class="dark-mode-toggle">
-                  <img src="img/dark.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="customizer__single">
-            <h4>Navbar Type</h4>
-            <ul class="customizer-list d-flex l_navbar">
-              <li class="customizer-list__item">
-                <a href="#" data-layout="side" class="active">
-                  <img src="img/side.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-              <li class="customizer-list__item top">
-                <a href="#" data-layout="top">
-                  <img src="img/top.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-              <li class="colors"></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+
+   
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
     <script src="js/plugins.min.js"></script>
     <script src="js/script.min.js"></script>
