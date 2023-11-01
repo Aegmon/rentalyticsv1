@@ -1,53 +1,24 @@
 <?php
 include('sidebar.php');
 
-if (isset($_POST['add_dormitory'])) {
-    $dormitory_name = $_POST['dormitory_name'];
-    $location = $_POST['location'];
-    $description = $_POST['description'];
-    $monthly_rent = $_POST['monthly_rent'];
-    $down_payment = $_POST['down_payment'];
-    $status = $_POST['status'];
+if (isset($_POST['endstay'])) {
+    $listing_id = $_POST['listing_id'];
 
+    // Update the listing status
+    $listingsql = "UPDATE listing SET status = ? WHERE listing_id = ?";
+    $listingstmt = $conn->prepare($listingsql);
+    $status_rented = 'active'; // Make sure this status matches the one in your database
+    $listingstmt->bind_param("si", $status_rented, $listing_id);
+    $listingstmt->execute();
 
-    // Image Upload
-    $targetDir = "../uploads/";
-    $fileName = basename($_FILES["file"]["name"]);
-    $targetFilePath = $targetDir . $fileName;
-    $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-
-    $titleOfDocument = $_POST['document'];
-
-    // File upload handling
-    $file = $_FILES['uploadDocuments'];
-    $fileName1 = $file['name'];
-    $fileTmpName = $file['tmp_name'];
-    $fileType1 = $file['type'];
-
-    // Read the file data
-    $fileData = file_get_contents($fileTmpName);
-    $allowTypes = array('jpg', 'png', 'jpeg', 'gif');
-    if (in_array($fileType, $allowTypes)) {
-        // Upload file to the server
-        if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
-            // Insert the data into the database
-            $sql = "INSERT INTO listing (listing_name,owner_id, location, description, monthly_rent, down_payment, status, image_url,mime, data, title, name) 
-            VALUES ('$dormitory_name', '$location', '$location', '$description', '$monthly_rent', '$down_payment', '$status',  '$fileName',  '$fileType1','$fileData','$titleOfDocument','$fileName1')";
-
-            if ($conn->query($sql) === TRUE) {
-                echo "New record created successfully";
-            } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }
-        } else {
-            echo "Sorry, there was an error uploading your file.";
-        }
-    } else {  
-        echo 'Sorry, only JPG, JPEG, PNG, & GIF files are allowed to upload.';
-    }
-
-  
+    // Update the application status
+    $sql = "UPDATE application SET status = ?, date_of_application = NOW() WHERE listing_id = ?";
+    $stmt = $conn->prepare($sql);
+    $status = 'renter';
+    $stmt->bind_param("si", $status, $listing_id);
+    $stmt->execute();
 }
+
 
 ?>
 
@@ -117,10 +88,9 @@ if ($result->num_rows > 0) {
                     
                 </div>
                 <div class="users-list__button mt-xl-0 mt-15">
-                    <button class="btn btn-primary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow" data-bs-toggle="modal" data-bs-target="#editModal'.$row["listing_id"].'">End Stay</button>
                     <form action="" method="post">
                         <input type="hidden" name="listing_id" value="'.$row["listing_id"].'">
-                        <button type="submit" name="delete_listing" class="border text-capitalize px-25 color-gray transparent shadow2 follow my-xl-0 radius-md">Deposit Information</button>
+                        <button type="submit" name="endstay" class="btn btn-primary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow">End Stay</button>
                     </form>
                 </div>
             </div>

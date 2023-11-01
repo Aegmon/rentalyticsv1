@@ -1,6 +1,35 @@
 <?php
 include('sidebar.php');
    $listing_id = $_GET['listing_id'];
+if(isset($_POST['approved']) || isset($_POST['rejected'])) {
+
+
+    // Retrieve the listing_id from the POST data
+    $listing_id = $_POST['listing_id'];
+
+    // Determine the status based on the button clicked
+    $status = isset($_POST['approved']) ? 'approved' : 'rejected';
+
+    // Prepare and execute the SQL statement for updating the application status
+    $sql = "UPDATE application SET status = ? WHERE listing_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $status, $listing_id);
+
+    // Prepare and execute the SQL statement for updating the listing status
+    $listingsql = "UPDATE listing SET status = ? WHERE listing_id = ?";
+    $listingstmt = $conn->prepare($listingsql);
+    $status_rented = 'rented'; 
+    $listingstmt->bind_param("si", $status_rented, $listing_id);
+    $listingstmt->execute();
+
+    // Execute the application status update
+    if ($stmt->execute()) {
+        echo "Status updated successfully.";
+    } else {
+        echo "Error updating status: " . $conn->error;
+    }
+}
+
 ?>
 <div class="contents">
   <div class="container-fluid">
@@ -74,7 +103,7 @@ $sql = "SELECT
         LEFT JOIN credentials c ON t.user_id = c.user_id
         LEFT JOIN listing l ON l.listing_id = a.listing_id
             LEFT JOIN payment p ON a.application_id = p.application_id
-        WHERE l.listing_id = '$listing_id' ";
+        WHERE l.listing_id = '$listing_id'  ";
 
 $result = $conn->query($sql);
 
@@ -85,30 +114,38 @@ if ($result->num_rows > 0) {
         echo "<td><div class='userDatatable-content'>" . $row["email"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["tenant_name"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["listing_name"] . "</div></td>";
-  echo "<td><div class='userDatatable-content'>" . $row["status"] . "</div></td>";
+        echo "<td><div class='userDatatable-content'>" . $row["status"] . "</div></td>";
 
-    
-echo "<td>
-        <div class='userDatatable-content'>
-            <ul class='orderDatatable_actions mb-0 '>
-                <li>
-                    <a href='viewpayment.php?payment_id=" . $row['payment_id'] . "' class='edit'><i class='uil uil-eye'></i></a>
-                </li>
-            </ul>
-        </div>
-      </td>";
-      echo "<td>
-        <div>
-        
-                      <button class='btn btn-success '>Approve</button>
-                        <button class='btn btn-danger '>Reject</button>
-         
-        </div>
-      </td>";
-echo "</tr>";
+        if ($row["status"] == 'pending'  ) {
+            echo "<td>
+            <div class='userDatatable-content'>
+            <a href='viewpayment.php?payment_id=" . $row['payment_id'] . "' class='edit'><i class='uil uil-eye'></i></a>
+            </div>
+            </td>
+            <td>
+            <div>
+            <form action='' method='POST'>
+            <input type='hidden' value='" . $listing_id . "' name='listing_id'>
+            <button type='submit' name='approved' value='approved' class='btn btn-success'>Approve</button>
+            <button type='submit' name='rejected' value='rejected' class='btn btn-danger'>Reject</button>
+            </form>
+            </div>
+            </td>";
+        } elseif ($row["status"] == 'approved') {
+            echo "<td>
+            <div class='userDatatable-content'>
+            <a href='viewpayment.php?payment_id=" . $row['payment_id'] . "' class='edit'><i class='uil uil-eye'></i></a>
+            </div>
+            </td>";
+        } elseif ($row["status"] == 'renter') {
+            echo "<td><div class='userDatatable-content'>End of Stay :" . date("M, d, Y", strtotime($row["date_of_application"])) . "</div></td>";
+        } else {
+           echo "";
+        }
 
+        echo "</tr>";
     }
-} 
+}
 ?>
 
                   
