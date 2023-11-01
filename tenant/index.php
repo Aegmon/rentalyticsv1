@@ -68,7 +68,7 @@ include('sidebar.php');
         </a>
     </li>
     <li>
-        <a href="?category=Bed Space">
+        <a href="?category=bedspace">
             <div class="w-100">
                 <span class="fs-14 color-gray">Bed Space<span class="item-numbers"></span></span>
             </div>
@@ -82,7 +82,7 @@ include('sidebar.php');
         </a>
     </li>
     <li>
-        <a href="?category=Boarding House">
+        <a href="?category=boarding_house">
             <div class="w-100">
                 <span class="fs-14 color-gray">Boarding House<span class="item-numbers"></span></span>
             </div>
