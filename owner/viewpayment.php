@@ -1,6 +1,6 @@
 <?php
 include('sidebar.php');
-
+   $payment_id = $_GET['payment_id'];
 ?>
 <div class="contents">
   <div class="container-fluid">
@@ -8,12 +8,12 @@ include('sidebar.php');
       <div class="row">
         <div class="col-lg-12">
           <div class="breadcrumb-main">
-            <h4 class="text-capitalize breadcrumb-title">Renter</h4>
+            <h4 class="text-capitalize breadcrumb-title">View Payment</h4>
             <div class="breadcrumb-action justify-content-center flex-wrap">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="#"><i class="uil uil-estate"></i>Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Renter</li>
+                  <li class="breadcrumb-item active" aria-current="page">View Payment</li>
                 </ol>
               </nav>
             </div>
@@ -27,7 +27,7 @@ include('sidebar.php');
   <div class="userDatatable adv-table-table global-shadow border-light-0 w-100 adv-table">
     <div class="table-responsive">
       <div class="adv-table-table__header">
-        <h4>My renter</h4>
+        <h4>Payment info</h4>
       </div>
       <div id="filter-form-container"></div>
       <table class="table mb-0 table-borderless adv-table1"  data-filter-container="#filter-form-container" data-paging-current="1" data-paging-position="right" data-paging-size="10">
@@ -35,19 +35,19 @@ include('sidebar.php');
           <tr class="userDatatable-header">
         
             <th>
-              <span class="userDatatable-title">NAME</span>
+              <span class="userDatatable-title">Reference Number</span>
             </th>
             <th>
-              <span class="userDatatable-title">Email  </span>
+              <span class="userDatatable-title">Reservation ID  </span>
             </th>
           
          
             <th data-type="html" data-name="status">
-              <span class="userDatatable-title">renting name</span>
+              <span class="userDatatable-title">Date</span>
             </th>
           
             <th>
-              <span class="userDatatable-title">view payment</span>
+              <span class="userDatatable-title">Payment type</span>
             </th>
           </tr>
         </thead>
@@ -63,13 +63,15 @@ $sql = "SELECT
             l.listing_name,
             a.application_id,
             p.payment_id,
+              p.ref_number,
+                p.payment_date,
             a.date_of_application
         FROM application a
         LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
         LEFT JOIN credentials c ON t.user_id = c.user_id
         LEFT JOIN listing l ON l.listing_id = a.listing_id
             LEFT JOIN payment p ON a.application_id = p.application_id
-        WHERE l.owner_id = '$id' AND a.status = 'approved'";
+        WHERE   p.payment_id = '$payment_id' ";
 
 $result = $conn->query($sql);
 
@@ -77,23 +79,13 @@ if ($result->num_rows > 0) {
     // output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td><div class='userDatatable-content'>" . $row["email"] . "</div></td>";
-        echo "<td><div class='userDatatable-content'>" . $row["tenant_name"] . "</div></td>";
-        echo "<td><div class='userDatatable-content'>" . $row["listing_name"] . "</div></td>";
+        echo "<td><div class='userDatatable-content'>" . $row["ref_number"] . "</div></td>";
+        echo "<td><div class='userDatatable-content'>" . $row["application_id"] . "</div></td>";
+        echo "<td><div class='userDatatable-content'>" . $row["payment_date"] . "</div></td>";
+    echo "<td><div class='userDatatable-content'> Credit Card</div></td>";
 
-
-    
-echo "<td>
-        <div class='userDatatable-content'>
-            <ul class='orderDatatable_actions mb-0 '>
-                <li>
-                    <a href='viewpayment.php?payment_id=" . $row['payment_id'] . "' class='edit'><i class='uil uil-eye'></i></a>
-                </li>
-            </ul>
-        </div>
-      </td>";
-echo "</tr>";
-
+;
+        echo "</tr>";
     }
 } 
 ?>
