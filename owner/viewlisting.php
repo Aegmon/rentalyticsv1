@@ -353,7 +353,7 @@ if ($result->num_rows > 0) {
                             <div class=" d-flex flex-wrap product-item__action align-items-center">
                               <button class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2">Edit</button>
                            
-                             
+                                <a href="reservation.php?listing_id=<?php echo $listing_id;?>"class="btn btn-secondary btn-default btn-squared border-0 me-10 my-sm-0 my-2">Reservation</a>
                              
                             </div>
                            

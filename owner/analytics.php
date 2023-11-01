@@ -231,6 +231,42 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
     </div>
   </div>
 </div>
+
+
+<div class="container-fluid mt-3">
+    <div class="social-dash-wrap">
+      <div class="row">
+        <div class="col-lg-12">
+        
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+          <div class="card-body">
+            <div class="row">
+                   <div class="mb-4">
+GIS
+    </div>
+<div class="col-lg-12 mb-4">
+  <div class="card">
+   	<div id="map" style="width: 100%; height: 50vh;"></div>
+  </div>
+</div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      
+    </div>
+  </div>
+</div>
+
+
  <footer class="footer-wrapper">
         <div class="footer-wrapper__inside">
           <div class="container-fluid">
@@ -275,8 +311,39 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
         
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
-    <script>    
+  
+    <script>
+    function initMap() {
+        var center = { lat: 15.48017, lng: 120.59794 };
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: center,
+            zoom: 16
+        });
+
+        var marker = new google.maps.Marker({
+            position: center,
+            map: map,
+            animation: google.maps.Animation.BOUNCE
+        });
+
+        // Create a circle to represent the geofence
+        var geofence = new google.maps.Circle({
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FF0000",
+            fillOpacity: 0.35,
+            map: map,
+            center: center,
+            radius: 500 // 200 meters
+        });
+    }
+</script>
+
+    <script> 
+    
+    
     var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560'];
       
         var options = {
@@ -557,6 +624,8 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
 
 
 
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDo6VqHn6BDlQ4PWMTPsHo1fDai1xQgHEQ&libraries=places&callback=initMap"
+    async defer></script>
   </body>
 
   
