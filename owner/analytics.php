@@ -1,6 +1,80 @@
 <?php
 include('sidebar.php');
+$owner_male_result = $conn->query("SELECT COUNT(*) as male_count FROM owner WHERE gender = 'Male'");
+$owner_female_result = $conn->query("SELECT COUNT(*) as female_count FROM owner WHERE gender = 'Female'");
 
+$owner_male_count = $owner_male_result->fetch_assoc()['male_count'];
+$owner_female_count = $owner_female_result->fetch_assoc()['female_count'];
+
+$tenant_male_result = $conn->query("SELECT COUNT(*) as male_count FROM tenant WHERE gender = 'Male'");
+$tenant_female_result = $conn->query("SELECT COUNT(*) as female_count FROM tenant WHERE gender = 'Female'");
+
+$tenant_male_count = $tenant_male_result->fetch_assoc()['male_count'];
+$tenant_female_count = $tenant_female_result->fetch_assoc()['female_count'];
+
+// Calculate the total sum
+$total_male_count = $owner_male_count + $tenant_male_count;
+$total_female_count = $owner_female_count + $tenant_female_count;
+
+
+
+$result = $conn->query("SELECT SUM(CASE WHEN gender_req = 'Male' THEN 1 ELSE 0 END) as male_listing_count,
+                              SUM(CASE WHEN gender_req = 'Female' THEN 1 ELSE 0 END) as female_listing_count,
+                         SUM(CASE WHEN gender_req = 'Both' THEN 1 ELSE 0 END) as both_listing_count
+                        FROM listing");
+
+// Fetch the result
+$row = $result->fetch_assoc();
+$total_male_listing_count = $row['male_listing_count'];
+$total_female_listing_count = $row['female_listing_count'];
+$total_both_listing_count = $row['both_listing_count'];
+
+
+$result = $conn->query("SELECT type, gender_req, COUNT(*) as gender_count 
+                        FROM listing 
+                        GROUP BY type, gender_req");
+
+// Initialize variables
+$gender_counts = array();
+
+// Fetch the result and store it in a variable
+while ($row = $result->fetch_assoc()) {
+    $type = $row['type'];
+    $gender_req = $row['gender_req'];
+    $count = $row['gender_count'];
+    if (!isset($gender_counts[$type])) {
+        $gender_counts[$type] = array();
+    }
+    $gender_counts[$type][$gender_req] = $count;
+}
+
+if (isset($gender_counts['boarding_house'])) {
+    $total_male_boarding_house_count = isset($gender_counts['boarding_house']['Male']) ? $gender_counts['boarding_house']['Male'] : 0;
+    $total_female_boarding_house_count = isset($gender_counts['boarding_house']['Female']) ? $gender_counts['boarding_house']['Female'] : 0;
+    $total_both_boarding_house_count = isset($gender_counts['boarding_house']['Both']) ? $gender_counts['boarding_house']['Both'] : 0;
+}
+
+if (isset($gender_counts['apartment'])) {
+    $total_male_apartment_count = isset($gender_counts['apartment']['Male']) ? $gender_counts['apartment']['Male'] : 0;
+    $total_female_apartment_count = isset($gender_counts['apartment']['Female']) ? $gender_counts['apartment']['Female'] : 0;
+    $total_both_apartment_count = isset($gender_counts['apartment']['Both']) ? $gender_counts['apartment']['Both'] : 0;
+}
+
+if (isset($gender_counts['dormitory'])) {
+    $total_male_dormitory_count = isset($gender_counts['dormitory']['Male']) ? $gender_counts['dormitory']['Male'] : 0;
+    $total_female_dormitory_count = isset($gender_counts['dormitory']['Female']) ? $gender_counts['dormitory']['Female'] : 0;
+    $total_both_dormitory_count = isset($gender_counts['dormitory']['Both']) ? $gender_counts['dormitory']['Both'] : 0;
+}
+
+if (isset($gender_counts['bedspace'])) {
+    $total_male_bedspace_count = isset($gender_counts['bedspace']['Male']) ? $gender_counts['bedspace']['Male'] : 0;
+    $total_female_bedspace_count = isset($gender_counts['bedspace']['Female']) ? $gender_counts['bedspace']['Female'] : 0;
+    $total_both_bedspace_count = isset($gender_counts['bedspace']['Both']) ? $gender_counts['bedspace']['Both'] : 0;
+}
+$total_boarding_house_count = isset($gender_counts['boarding_house']) ? array_sum($gender_counts['boarding_house']) : 0;
+$total_apartment_count = isset($gender_counts['apartment']) ? array_sum($gender_counts['apartment']) : 0;
+$total_dormitory_count = isset($gender_counts['dormitory']) ? array_sum($gender_counts['dormitory']) : 0;
+$total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_counts['bedspace']) : 0;
 ?>
 <div class="contents">
   <div class="container-fluid mb-4">
@@ -115,14 +189,14 @@ include('sidebar.php');
           <div class="card-body">
             <div class="row">
                    <div class="mb-4">
-   Segmentation of gender
+   Bar Graph
     </div>
 <div class="col-lg-4 mb-4">
   <div class="card">
-  <div class="card-header">Renter Gender Segmentation</div>
+  <div class="card-header">Registered Property Types</div>
 
   
-        <div id="chart"></div>
+        <div id="chartbar"></div>
  
   
   </div>
@@ -202,10 +276,62 @@ include('sidebar.php');
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
-          <script>
+    <script>    
+    var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560'];
       
         var options = {
-          series: [60, 100],
+          series: [{
+          data: [<?php echo $total_apartment_count ?>,<?php echo  $total_dormitory_count ?>,<?php echo  $total_bedspace_count ?>,<?php echo  $total_boarding_house_count ?>]
+        }],
+          chart: {
+          height: 350,
+          type: 'bar',
+          events: {
+            click: function(chart, w, e) {
+              // console.log(chart, w, e)
+            }
+          }
+        },
+        colors: colors,
+        plotOptions: {
+          bar: {
+            columnWidth: '45%',
+            distributed: true,
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        legend: {
+          show: false
+        },
+        xaxis: {
+          categories: [
+            'Appartment',
+            'Dormitory',
+            'Bed Space',
+            'Boarding House',
+           
+          ],
+          labels: {
+            style: {
+              colors: colors,
+              fontSize: '12px'
+            }
+          }
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chartbar"), options);
+        chart.render();
+      
+        
+        </script>
+          <script>
+  
+
+        var options = {
+          series: [<?php echo $total_male_count?>, <?php echo $total_female_count?>],
           chart: {
           width: 380,
           type: 'pie',
@@ -232,7 +358,7 @@ include('sidebar.php');
               <script>
       
         var options = {
-          series: [60, 100,35],
+          series: [<?php echo $total_male_listing_count ;?>, <?php echo $total_female_listing_count ;?>,<?php echo $total_both_listing_count ;?>],
           chart: {
           width: 380,
           type: 'pie',
@@ -259,7 +385,7 @@ include('sidebar.php');
          <script>
       
         var options = {
-          series: [60, 100,35],
+          series: [<?php echo $total_male_boarding_house_count ;?>, <?php echo $total_female_boarding_house_count ;?>,<?php echo $total_both_boarding_house_count ;?>],
           chart: {
           width: 380,
           type: 'pie',
@@ -286,7 +412,7 @@ include('sidebar.php');
          <script>
       
         var options = {
-          series: [60, 100,35],
+         series: [<?php echo $total_male_bedspace_count ;?>, <?php echo $total_female_bedspace_count ;?>,<?php echo $total_both_bedspace_count ;?>],
           chart: {
           width: 380,
           type: 'pie',
@@ -313,7 +439,7 @@ include('sidebar.php');
          <script>
       
         var options = {
-          series: [60, 100,35],
+           series: [<?php echo $total_male_dormitory_count ;?>, <?php echo $total_female_dormitory_count ;?>,<?php echo $total_both_dormitory_count ;?>],
           chart: {
           width: 380,
           type: 'pie',
@@ -340,7 +466,7 @@ include('sidebar.php');
          <script>
       
         var options = {
-          series: [60, 100,35],
+                 series: [<?php echo $total_male_apartment_count ;?>, <?php echo $total_female_apartment_count ;?>,<?php echo $total_both_apartment_count ;?>],
           chart: {
           width: 380,
           type: 'pie',

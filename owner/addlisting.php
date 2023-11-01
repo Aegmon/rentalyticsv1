@@ -18,13 +18,13 @@ if (isset($_POST['add'])) {
     $no_bed = $_POST['no_bed'];
     $no_bath = $_POST['no_bath'];
     $house_rules = $_POST['house_rules'];
-   $lat = $_POST['lat'];
-      $lng = $_POST['lng'];
-    $sql = "INSERT INTO listing (listing_name, address1, address2, address3, address4, description, n_bedroom, n_bathroom, house_rules, rentprice, reservationfee, owner_id, gender_req,lat,lng) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+    $lat = $_POST['lat'];
+    $lng = $_POST['lng'];
+    $sql = "INSERT INTO listing (listing_name, address1, address2, address3, address4, description, n_bedroom, n_bathroom, house_rules, rentprice, reservationfee, owner_id, gender_req, type, lat, lng) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(
-        "ssssssissssisss",
+        "ssssssissssissdss",
         $name,
         $address1,
         $address2,
@@ -38,10 +38,10 @@ if (isset($_POST['add'])) {
         $reservation,
         $id,
         $gender,
-          $lat,
+        $type,
+        $lat,
         $lng
     );
-
     if ($stmt->execute()) {
         $last_id = $stmt->insert_id;
         if (!empty($_POST['amenities'])) {

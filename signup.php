@@ -87,7 +87,8 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="form-group mb-20">
                     <label for="birthdate">Birthdate</label>
-                    <input type="date" class="form-control" name="birthdate" required>
+              <input type="date" class="form-control" name="birthdate" required max="<?php echo date('Y-m-d',strtotime('-18 years')); ?>">
+
                 </div>
                 <div class="form-group mb-20">
                     <label for="gender">Gender</label>
@@ -135,35 +136,7 @@ if (isset($_POST['submit'])) {
 </form>
 
 
-                  <!-- <div class="px-20">
-<p class="social-connector social-connector__admin text-center">
-<span>Or</span>
-</p>
-<div class="button-group d-flex align-items-center justify-content-center">
-<ul class="admin-socialBtn">
-<li>
-<button class="btn text-dark google">
-<img class="svg" src="img/google-Icon.svg" alt="img" />
-</button>
-</li>
-<li>
-<button class=" radius-md wh-48 content-center facebook">
-<i class="uil uil-facebook-f"></i>
-</button>
-</li>
-<li>
-<button class="radius-md wh-48 content-center twitter">
-<i class="uil uil-twitter"></i>
-</button>
-</li>
-<li>
-<button class="radius-md wh-48 content-center github">
-<i class="uil uil-github"></i>
-</button>
-</li>
-</ul>
-</div>
-</div> -->
+             
                   <div class="admin-topbar">
                     <p class="mb-0">
                       Don't have an account?

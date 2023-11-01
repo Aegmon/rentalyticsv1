@@ -45,11 +45,9 @@ include('sidebar.php');
             <th data-type="html" data-name="status">
               <span class="userDatatable-title">renting name</span>
             </th>
-              <th>
-              <span class="userDatatable-title ">payment</span>
-            </th>
+          
             <th>
-              <span class="userDatatable-title float-end">action</span>
+              <span class="userDatatable-title">view payment</span>
             </th>
           </tr>
         </thead>
@@ -81,32 +79,15 @@ if ($result->num_rows > 0) {
         echo "<td><div class='userDatatable-content'>" . $row["tenant_name"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["listing_name"] . "</div></td>";
 
-        // Check if there is a payment for this month
-        $application_date = date('Y-m-d', strtotime($row["date_of_application"])); // assuming date_of_application is in Y-m-d format
 
-        // Check if there is a payment for this month
-        $payment_sql = "SELECT * FROM payment WHERE application_id = '" . $row["application_id"] . "' AND payment_date = '" . date('Y-m-d') . "'";
-        $payment_result = $conn->query($payment_sql);
-
-        if ($payment_result->num_rows > 0) {
-            echo "<td>
-           
-              
-                <div class='userDatatable-content'>paid </div>
-            </td>";
-        } else {
-            echo "<td>
-              
-                <div class='userDatatable-content'>not paid</div>
-            </td>";
-        }
-  echo "<td>
-                <ul class='orderDatatable_actions mb-0 d-flex flex-wrap'>
+    
+  echo "<td><div class='userDatatable-content'>
+                <ul class='orderDatatable_actions mb-0 '>
                     <li>
                         <a class='edit'><i class='uil uil-eye'></i></a>
                     </li>
                 </ul>
-          
+          </div>
             </td>";
         echo "</tr>";
     }
