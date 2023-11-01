@@ -40,7 +40,9 @@ include('sidebar.php');
             <th>
               <span class="userDatatable-title">Reservation ID  </span>
             </th>
-          
+           <th>
+              <span class="userDatatable-title">Payment Amount  </span>
+            </th>
          
             <th data-type="html" data-name="status">
               <span class="userDatatable-title">Date</span>
@@ -61,6 +63,7 @@ $sql = "SELECT
             a.status as status,
             l.listing_id,
             l.listing_name,
+               l.reservationfee,
             a.application_id,
             p.payment_id,
               p.ref_number,
@@ -81,6 +84,7 @@ if ($result->num_rows > 0) {
         echo "<tr>";
         echo "<td><div class='userDatatable-content'>" . $row["ref_number"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["application_id"] . "</div></td>";
+             echo "<td><div class='userDatatable-content'>Php. " . $row["reservationfee"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["payment_date"] . "</div></td>";
     echo "<td><div class='userDatatable-content'> Credit Card</div></td>";
 

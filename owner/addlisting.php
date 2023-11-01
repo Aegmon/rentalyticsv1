@@ -277,8 +277,15 @@ if (isset($_POST['add'])) {
 
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label for="a3" class="il-gray fs-14 fw-500 align-center mb-10">Document Name</label>
-                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" name="titleOfDocument" placeholder="Enter Place Name">
+                          <label for="a3" class="il-gray fs-14 fw-500 align-center mb-10">Document Name <small style="color:red;">(For Verification Of admin)</small></label>
+                        <select class="form-control ih-medium ip-light radius-xs b-light px-15" name="titleOfDocument">
+    <option value="">Select Document</option>
+    <option value="Business permit">Business permit</option>
+    <option value="Mayor’s permit">Mayor’s permit</option>
+    <option value="BIR">BIR</option>
+    <option value="Fire safety certificate">Fire safety certificate</option>
+</select>
+
                         </div>
                       </div>
                        <div class="col-md-12">
@@ -311,7 +318,7 @@ if (isset($_POST['add'])) {
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
-                          <label for="a6" class="il-gray fs-14 fw-500 align-center mb-10">City</label>
+                          <label for="a6" class="il-gray fs-14 fw-500 align-center mb-10">City/Municipality</label>
                           <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="city" name="address3" placeholder="City">
                         </div>
                       </div>
