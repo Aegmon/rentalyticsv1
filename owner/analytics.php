@@ -308,44 +308,75 @@ GIS
         
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<<<<<<< HEAD
-  
-    <script>
-    function initMap() {
-        var center = { lat: 15.48017, lng: 120.59794 };
 
-        var map = new google.maps.Map(document.getElementById('map'), {
-            center: center,
-            zoom: 16
-        });
+      <script>
+   function initMap() {
+    // Define the center variable with appropriate latitude and longitude values
+    var center = { lat: 15.4755, lng: 120.5963 }; // Update with actual coordinates
 
-        var marker = new google.maps.Marker({
-            position: center,
-            map: map,
-            animation: google.maps.Animation.BOUNCE
-        });
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: center,
+      zoom: 12,
+    });
 
-        // Create a circle to represent the geofence
+    var locations = [
+      <?php
+      $sql = "SELECT * FROM listing";
+      $result = $conn->query($sql);
+
+      while ($row = mysqli_fetch_array($result)) {
+        echo '["' . $row['listing_name'] . '",' . $row['lat'] . ',' . $row['lng'] . '],';
+      }
+      ?>
+    ];
+
+    // Create an array to store the geofences
+    var geofences = [];
+
+    // Add markers and geofences for each location
+    for (var i = 0; i < locations.length; i++) {
+      var location = new google.maps.LatLng(locations[i][1], locations[i][2]);
+      new google.maps.Marker({
+        position: location,
+        map: map,
+        title: locations[i][0],
+      });
+
+      // Check if this marker falls inside any existing geofence
+      var markerInsideAnyGeofence = false;
+      for (var j = 0; j < geofences.length; j++) {
+        var geofenceBounds = geofences[j].getBounds();
+        if (geofenceBounds.contains(location)) {
+          markerInsideAnyGeofence = true;
+          break;
+        }
+      }
+
+      // If the marker is not inside any existing geofence, create a new geofence
+      if (!markerInsideAnyGeofence) {
         var geofence = new google.maps.Circle({
-            strokeColor: "#FF0000",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#FF0000",
-            fillOpacity: 0.35,
-            map: map,
-            center: center,
-            radius: 500 // 200 meters
+          strokeColor: "#FF0000",
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: "#FF0000",
+          fillOpacity: 0.35,
+          map: map,
+          center: location,
+          radius: 600, // 300 meters
         });
+        geofences.push(geofence);
+      }
     }
-</script>
+}
 
-    <script> 
+    </script>
+ 
     
     
-=======
+
   
     <script>    
->>>>>>> b514427957c6d156ee951b06abe77f11f4a732a3
+
     var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560'];
       
         var options = {
