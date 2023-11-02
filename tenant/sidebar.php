@@ -104,10 +104,18 @@
                  
                 </a>
                </li> -->
+       
                    <li>
                 <a href="renter.php" class>
                      <span class="nav-icon uil uil-home"></span>
                   <span class="menu-text">My Rent</span>
+                 
+                </a>
+               </li>
+                   <li>
+                <a href="togo.php" class>
+                          <span class="nav-icon uil uil-heart"></span>
+                  <span class="menu-text">To Go</span>
                  
                 </a>
                </li>

@@ -104,6 +104,13 @@
                  
                 </a>
                </li>
+                    <li>
+                <a href="property.php" class>
+                               <span class="nav-icon uil uil-home"></span>
+                  <span class="menu-text">Manage Property</span>
+                 
+                </a>
+               </li>
             </ul>
           </div>
         </div>

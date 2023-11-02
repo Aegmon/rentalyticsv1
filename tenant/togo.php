@@ -12,11 +12,11 @@ if (isset($_POST['rentnow'])) {
     $stmt = $conn->prepare($sql);
    $stmt->bind_param("ii", $id, $listing_id);
      $stmt->execute();
-    header('location:renter.php');
+    header('location: renter.php');
       
 
 }
-if (isset($_POST['addtogo'])) {
+if (isset($_POST['togo'])) {
     // Retrieve the listing_id from the POST data
     $listing_id = $_POST['listing_id'];
     
@@ -26,7 +26,7 @@ if (isset($_POST['addtogo'])) {
     $stmt = $conn->prepare($sql);
    $stmt->bind_param("ii", $id, $listing_id);
      $stmt->execute();
-    header('location:togo.php');
+    header('location: renter.php');
       
 
 }
@@ -406,7 +406,8 @@ and up
   </div>
   <div class="row product-page-list">
     <?php
-    $sql = "SELECT * FROM listing WHERE status = 'active' and isVerify = 'Verify'";
+    $sql = "SELECT * FROM listing l 
+    JOIN togo t on l.listing_id = t.listing_id WHERE t.tenant_id = '$id'";
     if (isset($_GET['category'])) {
     $category = $_GET['category'];
     $sql .= " AND type = '$category'";

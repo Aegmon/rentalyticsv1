@@ -1,29 +1,28 @@
 <?php
 include('sidebar.php');
   // Check if the required fields are set
-    if (isset($_POST['pay'])) {
-        // Get the value from the form
-        $application_id = $_POST['application_id'];
-        $payment_date = date('Y-m-d'); // Current date
-
    
+        // Get the value from the form
+    if (isset($_GET['application_id'])) {
+    $application_id = $_GET['application_id'];
+    $payment_date = date('Y-m-d'); // Current date
 
-        // Prepare and bind the SQL statement
-        $stmt = $conn->prepare("INSERT INTO payment (application_id, payment_date) VALUES (?, ?)");
-        $stmt->bind_param("is", $application_id, $payment_date);
+    // Assuming you have already established the database connection
+    // Replace $conn with your actual database connection variable
+    // Prepare and bind the SQL statement
+    $stmt = $conn->prepare("INSERT INTO payment (application_id, payment_date) VALUES (?, ?)");
+    $stmt->bind_param("is", $application_id, $payment_date);
 
-        // Execute the statement
-        if ($stmt->execute() === TRUE) {
-            echo "New record created successfully";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-
-        // Close the connection
-        $conn->close();
+    // Execute the statement
+    if ($stmt->execute() === TRUE) {
+        echo "New record created successfully";
     } else {
-        echo "Some required fields are missing.";
+        echo "Error: " . $stmt->error;
     }
+}
+      
+    
+
 ?>
 
 <div class="contents">
@@ -87,7 +86,8 @@ $sql = "SELECT
             a.status as status,
             l.listing_id,
             l.listing_name,
-              l.monthly_rent,
+              l.rentprice,
+               l.reservationfee,
             a.application_id,
             a.date_of_application
         FROM application a
@@ -125,15 +125,18 @@ if ($result->num_rows > 0) {
                 <div class='userDatatable-content'>Not paid</div>
             </td>";
         }
-  echo '  <td>
-                        <form action="" method="POST">
-                          
-                            <input type="hidden" name="application_id" value="' . $row["application_id"] . '"> 
-                          
-                            <button type="submit" name="pay" class="btn btn-primary">Make Payment</button>
-                        </form>
-                    </td>';
-        echo "</tr>";
+echo '<td>
+        <form action="payment.php" method="POST">
+            <input type="hidden" name="application_id" value="' . $row["application_id"] . '">';
+
+// Manipulate the reservation fee to add two zeros
+$reservation_fee_in_whole_number = $row["reservationfee"] * 100;
+
+echo '<input type="hidden" name="amount" value="'. $reservation_fee_in_whole_number . '">
+      <button type="submit" name="pay" class="btn btn-primary">Make Payment</button>
+      </form>
+      </td>';
+echo "</tr>";
     }
 } 
 ?>

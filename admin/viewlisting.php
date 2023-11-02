@@ -3,6 +3,16 @@ include('sidebar.php');
    $listing_id = $_GET['listing_id'];
 ?>
 <?php
+
+
+if (isset($_POST['verify'])) {
+
+     $listingsql = "UPDATE listing SET isVerify = ? WHERE listing_id = ?";
+    $listingstmt = $conn->prepare($listingsql);
+    $status_rented = 'Verify'; // Make sure this status matches the one in your database
+    $listingstmt->bind_param("si", $status_rented, $listing_id);
+    $listingstmt->execute();
+}
 if (isset($_POST['add'])) {
     $type = $_POST['type'];
     $gender = $_POST['gender'];
@@ -340,7 +350,25 @@ if ($result->num_rows > 0) {
                         </div>
                       </div>
                     </div>
-             
+                    <div class="product-details__availability">
+                      <!-- <div class="title">
+                        <p>Category:</p>
+                        <span class="free">Furniture</span>
+                      </div>
+                      <div class="title">
+                        <p>Tags:</p>
+                        <span class="free"> Blue, Green, Light</span>
+                      </div> -->
+                        <div class="product-item__button mt-lg-30 mt-sm-25 mt-20 d-flex flex-wrap">
+                            <div class=" d-flex flex-wrap product-item__action align-items-center">
+                              <form method="post">
+                                <input type="hidden" value="<?php echo $listing_id; ?>">
+                              <button type="submit" name="verify" class="btn btn-success btn-default btn-squared border-0 me-10 my-sm-0 my-2">Verify</button>
+             </form>
+                            </div>
+                           
+                          </div>
+                    </div>
                   </div>
                    <div class=" col-lg-4">
 
