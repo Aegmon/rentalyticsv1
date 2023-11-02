@@ -99,6 +99,7 @@ if (isset($_POST['add'])) {
         }
         $documentStmt->close();
     }
+
     } else {
         echo "Error: " . $stmt->error;
     }
