@@ -188,8 +188,90 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
           <div class="card">
           <div class="card-body">
             <div class="row">
-                   <div class="mb-4">
-   Bar Graph
+                   <div class="mb-4 d-flex flex-row justify-content-between">
+   <div>Bar Graph</div>
+   <div>
+   <select>
+    <option value="" selected disabled>Select Barangay</option>
+    <option value="Aguso">Aguso</option>
+    <option value="Alvindia">Alvindia</option>
+    <option value="Amucao">Amucao</option>
+    <option value="Armenia">Armenia</option>
+    <option value="Asturias">Asturias</option>
+    <option value="Atioc">Atioc</option>
+    <option value="Balanti">Balanti</option>
+    <option value="Balete">Balete</option>
+    <option value="Balibago I">Balibago I</option>
+    <option value="Balibago II">Balibago II</option>
+    <option value="Balingcanaway">Balingcanaway</option>
+    <option value="Banaba">Banaba</option>
+    <option value="Bantog">Banteg</option>
+    <option value="Baras-baras">Baras-baras</option>
+    <option value="Batang-batang">Batang-batang</option>
+    <option value="Binauganan">Binauganan</option>
+    <option value="Bora">Bora</option>
+    <option value="Buenavista">Buenavista</option>
+    <option value="Buhilit">Buhilit</option>
+    <option value="Burot">Burot</option>
+    <option value="Calingcuan">Calingcuan</option>
+    <option value="Capehan">Capehan</option>
+    <option value="Carangian">Carangian</option>
+    <option value="Care">Care</option>
+    <option value="Central">Central</option>
+    <option value="Culipat">Culipat</option>
+    <option value="Cut-cut I">Cut-cut I</option>
+    <option value="Cut-cut II">Cut-cut II</option>
+    <option value="Dalayap">Dalayap</option>
+    <option value="Dela Paz">Dela Paz</option>
+    <option value="Dolores">Dolores</option>
+    <option value="Laoang">Laoang</option>
+    <option value="Ligtasan">Ligtasan</option>
+    <option value="Lourdes">Lourdes</option>
+    <option value="Mabini">Mabini</option>
+    <option value="Maligaya">Maligaya</option>
+    <option value="Maliwalo">Maliwalo</option>
+    <option value="Mapalacsiao">Mapalacsiao</option>
+    <option value="Mapalad">Mapalad</option>
+    <option value="Matatalaib">Matatalaib</option>
+    <option value="Paraiso">Paraiso</option>
+    <option value="Poblacion">Poblacion</option>
+    <option value="Salapungan">Salapungan</option>
+    <option value="San Carlos">San Carlos</option>
+    <option value="San Francisco">San Francisco</option>
+    <option value="San Isidro">San Isidro</option>
+    <option value="San Jose">San Jose</option>
+    <option value="San Jose de Urquico">San Jose de Urquico</option>
+    <option value="San Juan Bautista (formerly Matadero)">San Juan Bautista (formerly Matadero)</option>
+    <option value="San Juan de Mata (formerly Malatiki)">San Juan de Mata (formerly Malatiki)</option>
+    <option value="San Luis">San Luis</option>
+    <option value="San Manuel">San Manuel</option>
+    <option value="San Miguel">San Miguel</option>
+    <option value="San Nicolas">San Nicolas</option>
+    <option value="San Pablo">San Pablo</option>
+    <option value="San Pascual">San Pascual</option>
+    <option value="San Rafael">San Rafael</option>
+    <option value="San Roque">San Roque</option>
+    <option value="San Sebastian">San Sebastian</option>
+    <option value="San Vicente">San Vicente</option>
+    <option value="Santa Cruz">Santa Cruz</option>
+    <option value="Santa Maria">Santa Maria</option>
+    <option value="Santo Cristo">Santo Cristo</option>
+    <option value="Santo Domingo">Santo Domingo</option>
+    <option value="Santo Niño">Santo Niño</option>
+    <option value="Sapang Maragul">Sapang Maragul</option>
+    <option value="Sapang Tagalog">Sapang Tagalog</option>
+    <option value="Sepung Calzada (Panampunan)">Sepung Calzada (Panampunan)</option>
+    <option value="Sinait">Sinait</option>
+    <option value="Suizo">Suizo</option>
+    <option value="Tariji">Tariji</option>
+    <option value="Tibag">Tibag</option>
+    <option value="Tibagan">Tibagan</option>
+    <option value="Trinidad">Trinidad</option>
+    <option value="Ungot">Ungot</option>
+    <option value="Villa Bacolor">Villa Bacolor</option>
+</select>
+
+   </div>
     </div>
 <div class="col-lg-12 mb-4">
   <div class="card">
@@ -203,19 +285,9 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
 </div>
 <div class="col-lg-12 mb-4">
   <div class="card">
-  <div class="card-header">Number of rental places that accept only specific gender</div>
+  <div class="card-header">Customer Preferences</div>
 
- 
-  
-  </div>
-</div>
-<div class="col-lg-12 mb-4">
-  <div class="card">
-  <div class="card-header">Gender</div>
-
-  
-    
- 
+  <div id="chartbar2"></div>
   
   </div>
 </div>
@@ -230,7 +302,49 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
   </div>
 </div>
 
+<div class="container-fluid">
+    <div class="social-dash-wrap">
+      <div class="row">
+        <div class="col-lg-12">
+        
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+          <div class="card-body">
+            <div class="row">
+                   <div class="mb-4">
+   Competition
+    </div>
+<div class="col-lg-12 mb-4">
+  <div class="card">
+  <div class="card-header">Registered Property Types</div>
 
+  
+        <div id="chartline"></div>
+ 
+  
+  </div>
+</div>
+<div class="col-lg-12 mb-4">
+  <div class="card">
+  <div class="card-header">TreeMap</div>
+
+  <div id="charttreemap"></div>
+  
+  </div>
+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      
+    </div>
+  </div>
+</div>
 <div class="container-fluid mt-3">
     <div class="social-dash-wrap">
       <div class="row">
@@ -306,10 +420,11 @@ GIS
       </div>
     </div>
         
-
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
       <script>
+        
    function initMap() {
     // Define the center variable with appropriate latitude and longitude values
     var center = { lat: 15.4755, lng: 120.5963 }; // Update with actual coordinates
@@ -318,17 +433,21 @@ GIS
       center: center,
       zoom: 12,
     });
-
+    
     var locations = [
-      <?php
-      $sql = "SELECT * FROM listing";
-      $result = $conn->query($sql);
+  <?php
+  $sql = "SELECT * FROM listing";
+  $result = $conn->query($sql);
 
-      while ($row = mysqli_fetch_array($result)) {
-        echo '["' . $row['listing_name'] . '",' . $row['lat'] . ',' . $row['lng'] . '],';
-      }
-      ?>
-    ];
+  while ($row = mysqli_fetch_array($result)) {
+    
+   
+    echo '["Place Name: ' . $row['listing_name'] . '\n'. "Reservation Fee: " . $row['reservationfee'] .'",' . $row['lat'] . ',' . $row['lng'] . '],';
+
+  }
+  
+  ?>
+];
 
     // Create an array to store the geofences
     var geofences = [];
@@ -336,12 +455,13 @@ GIS
     // Add markers and geofences for each location
     for (var i = 0; i < locations.length; i++) {
       var location = new google.maps.LatLng(locations[i][1], locations[i][2]);
-      new google.maps.Marker({
+      var mark = new google.maps.Marker({
         position: location,
         map: map,
+        animation: google.maps.Animation.DROP,
         title: locations[i][0],
+        
       });
-
       // Check if this marker falls inside any existing geofence
       var markerInsideAnyGeofence = false;
       for (var j = 0; j < geofences.length; j++) {
@@ -369,6 +489,8 @@ GIS
     }
 }
 
+   
+
     </script>
  
     
@@ -393,9 +515,10 @@ GIS
             }
           }
         },
-        colors: colors,
+        colors:colors,
         plotOptions: {
           bar: {
+            borderRadius: 5,
             columnWidth: '45%',
             distributed: true,
           }
@@ -417,7 +540,7 @@ GIS
           labels: {
             style: {
               colors: '#000',
-              fontSize: '12px'
+              fontSize: '18px'
             }
           }
         },
@@ -431,7 +554,7 @@ GIS
         </script>
           <script>
   
-
+        var colors = ['#26a0fc','#f41fad']
         var options = {
           series: [<?php echo $total_male_count?>, <?php echo $total_female_count?>],
           chart: {
@@ -449,7 +572,10 @@ GIS
               position: 'bottom'
             }
           }
-        }]
+        }],
+        fill: {
+          colors: colors
+        }
         };
 
         var chart = new ApexCharts(document.querySelector("#chart"), options);
@@ -458,7 +584,7 @@ GIS
       
     </script>
               <script>
-      
+      var colors = ['#26a0fc','#f41fad', '#ffe15d']
         var options = {
           series: [<?php echo $total_male_listing_count ;?>, <?php echo $total_female_listing_count ;?>,<?php echo $total_both_listing_count ;?>],
           chart: {
@@ -470,13 +596,18 @@ GIS
           breakpoint: 480,
           options: {
             chart: {
-              width: 200
+              width: 180
             },
             legend: {
-              position: 'bottom'
-            }
-          }
-        }]
+              position: 'bottom',
+              
+            },
+           
+        }
+        }],
+        fill:{
+          colors: colors
+        }
         };
 
         var chart = new ApexCharts(document.querySelector("#chart1"), options);
@@ -485,6 +616,7 @@ GIS
       
     </script>
          <script>
+      var colors = ['#26a0fc','#f41fad', '#ffe15d']
       
         var options = {
           series: [<?php echo $total_male_boarding_house_count ;?>, <?php echo $total_female_boarding_house_count ;?>,<?php echo $total_both_boarding_house_count ;?>],
@@ -503,7 +635,10 @@ GIS
               position: 'bottom'
             }
           }
-        }]
+        }],
+        fill:{
+          colors: colors
+        }
         };
 
         var chart = new ApexCharts(document.querySelector("#chart2"), options);
@@ -512,6 +647,7 @@ GIS
       
     </script>
          <script>
+      var colors = ['#26a0fc','#f41fad', '#ffe15d']
       
         var options = {
          series: [<?php echo $total_male_bedspace_count ;?>, <?php echo $total_female_bedspace_count ;?>,<?php echo $total_both_bedspace_count ;?>],
@@ -527,10 +663,14 @@ GIS
               width: 200
             },
             legend: {
-              position: 'bottom'
+              position: 'bottom',
             }
           }
-        }]
+        }],
+       
+        fill:{
+          colors: colors
+        }
         };
 
         var chart = new ApexCharts(document.querySelector("#chart3"), options);
@@ -539,6 +679,7 @@ GIS
       
     </script>
          <script>
+      var colors = ['#26a0fc','#f41fad', '#ffe15d']
       
         var options = {
            series: [<?php echo $total_male_dormitory_count ;?>, <?php echo $total_female_dormitory_count ;?>,<?php echo $total_both_dormitory_count ;?>],
@@ -557,7 +698,10 @@ GIS
               position: 'bottom'
             }
           }
-        }]
+        }],
+        fill:{
+          colors: colors
+        }
         };
 
         var chart = new ApexCharts(document.querySelector("#chart4"), options);
@@ -566,9 +710,11 @@ GIS
       
     </script>
          <script>
+      var colors = ['#26a0fc','#f41fad', '#ffe15d']
       
         var options = {
-                 series: [<? echo $total_male_apartment_count ;?>, <?php echo $total_female_apartment_count ;?>,<?php echo $total_both_apartment_count ;?>],
+          series: [<?php echo $total_male_apartment_count;?>, <?php echo $total_female_apartment_count ;?>,<?php echo $total_both_apartment_count ;?>],
+          
           chart: {
           width: 380,
           type: 'pie',
@@ -579,12 +725,12 @@ GIS
           options: {
             chart: {
               width: 200
-            },
-            legend: {
-              position: 'bottom'
             }
           }
-        }]
+        }],
+        fill:{
+          colors: colors
+        }
         };
 
         var chart = new ApexCharts(document.querySelector("#chart5"), options);
@@ -592,8 +738,188 @@ GIS
       
       
     </script>
-    
 
+  <!-- pricing -->
+  <script>
+     var options = {
+          series: [{
+            name: "Price",
+            data: [1500, 2000, 1200]
+        }],
+          chart: {
+          height: 350,
+          type: 'line',
+          zoom: {
+            enabled: false
+          }
+        },
+        dataLabels: {
+          enabled: true
+        },
+        stroke: {
+          curve: 'straight'
+        },
+        title: {
+          text: 'Pricing',
+          align: 'center',
+          style: {
+            fontSize: '20px'
+          }
+        },
+        grid: {
+          row: {
+            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+            opacity: 0.5
+          },
+        },
+        xaxis: {
+          categories: ['Sep', 'Oct', 'Nov'],
+          labels: {
+          show: true,
+          style: {
+            fontSize: '16px',
+            fontWeight:'bold'
+          }
+          }
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chartline"), options);
+        chart.render();
+      
+  </script>
+
+  <!-- count of propeties per barangays -->
+  <script>
+    var options = {
+          series: [
+          {
+            data: [
+              {
+                x: 'New Delhi',
+                y: 218
+              },
+              {
+                x: 'Kolkata',
+                y: 149
+              },
+              {
+                x: 'Mumbai',
+                y: 184
+              },
+              {
+                x: 'Ahmedabad',
+                y: 55
+              },
+              {
+                x: 'Bangaluru',
+                y: 84
+              },
+              {
+                x: 'Pune',
+                y: 31
+              },
+              {
+                x: 'Chennai',
+                y: 70
+              },
+              {
+                x: 'Jaipur',
+                y: 30
+              },
+              {
+                x: 'Surat',
+                y: 44
+              },
+              {
+                x: 'Hyderabad',
+                y: 68
+              },
+              {
+                x: 'Lucknow',
+                y: 28
+              },
+              {
+                x: 'Indore',
+                y: 19
+              },
+              {
+                x: 'Kanpur',
+                y: 29
+              }
+            ]
+          }
+        ],
+          legend: {
+          show: false
+        },
+        
+        chart: {
+          height: 350,
+          type: 'treemap',
+        },
+        title: {
+          text: 'Competition',
+          align: 'center',
+          style: {
+            fontSize: '20px'
+          }
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#charttreemap"), options);
+        chart.render();
+  </script>
+
+    <!-- customer preferences -->
+    <script>
+       var options = {
+          series: [{
+          data: [21, 22, 10, 28, 22]
+        }],
+          chart: {
+          height: 350,
+          type: 'bar',
+          events: {
+            click: function(chart, w, e) {
+              // console.log(chart, w, e)
+            }
+          }
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 5,
+            columnWidth: '45%',
+            distributed: true,
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        legend: {
+          show: false
+        },
+        xaxis: {
+          // search counts here
+          categories: [  
+            ['Apartment'], // type of property
+            ['Bed'+ ' (6)'], // bed count
+            ['Bath'+ ' (2)'],// bath count
+            ['1200'], // price min
+            ['1500'] // price max
+          ],
+          labels: {
+            style: {
+              colors: '#000',
+              fontSize: '18px'
+            }
+          }
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chartbar2"), options);
+        chart.render();
+    </script>
 <script>
     $((function() {
         $(".adv-table1").footable({

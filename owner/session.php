@@ -37,6 +37,7 @@ if(isset($_SESSION['user_id'])) {
         LEFT JOIN application a ON l.listing_id = a.listing_id
       Where l.owner_id = $id   GROUP BY l.owner_id ";
 
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
