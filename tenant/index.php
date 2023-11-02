@@ -2,6 +2,7 @@
 include('sidebar.php');
 
 ?>
+<script></script>
      <div class="contents">
         <div class="container-fluid">
           <div class="row">
@@ -33,9 +34,11 @@ include('sidebar.php');
                         <img src="img/svg/map-pin.svg" alt="map-pin" class="svg">
                         <input class="form-control border-0 box-shadow-none" type="search" placeholder="Location" aria-label="Search">
                       </div>
-                      <button class="btn btn-primary"><img src="img/svg/search.svg" alt="search" class="svg">search</button>
+                      <button class="btn btn-dark"><img src="img/svg/search.svg" alt="search" class="svg">search</button>
                     </form>
+                  
                   </div>
+                  
                 </div>
               </div>
             </div>
@@ -48,7 +51,8 @@ include('sidebar.php');
           <div class="widget mb-lg-30">
             <div class="widget-header-title px-20 py-15">
               <h6 class="d-flex align-content-center fw-500">
-                <img src="img/svg/sliders.svg" alt="sliders" class="svg"> Filters
+                <img src="img/svg/sliders.svg" alt="sliders" class="svg">
+                <span>Filters</span>
               </h6>
             </div>
             <div class="category_sidebar">
@@ -57,9 +61,16 @@ include('sidebar.php');
                 <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" role="button" aria-expanded="true">
                   <h6>Category</h6>
                 </div>
-                <div class="card border-0 shadow-none multi-collapse mt-10 collapse show" id="multiCollapseExample2">
+                <div class="card border-0 shadow-none multi-collapse mt-10 collapse" id="multiCollapseExample2">
                   <div class="product-category limit-list-item">
                  <ul>
+                 <li>
+        <a href="#">
+            <div class="w-100">
+                <span class="fs-14 color-gray">all type<span class="item-numbers"></span></span>
+            </div>
+        </a>
+    </li>
     <li>
         <a href="?category=Apartment">
             <div class="w-100">
@@ -97,7 +108,7 @@ include('sidebar.php');
     <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" role="button" aria-expanded="true">
         <h6>Bed Rooms</h6>
     </div>
-    <div class="card border-0 shadow-none multi-collapse mt-10 collapse show" id="multiCollapseExample3">
+    <div class="card border-0 shadow-none multi-collapse mt-10 collapse" id="multiCollapseExample3">
         <div class="product-brands limit-list-item">
             <ul>
                 <li>
@@ -174,7 +185,7 @@ include('sidebar.php');
                 <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" role="button" aria-expanded="true">
                   <h6>Bath Rooms</h6>
                 </div>
-                <div class="card border-0 shadow-none multi-collapse mt-10 collapse show" id="multiCollapseExample3">
+                <div class="card border-0 shadow-none multi-collapse mt-10 collapse " id="multiCollapseExample3">
                   <div class="product-brands limit-list-item">
                     <ul>
                       <li>
@@ -241,7 +252,7 @@ include('sidebar.php');
                 <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample4" role="button" aria-expanded="true">
                   <h6>Ratings</h6>
                 </div>
-                <div class="card border-0 shadow-none multi-collapse mt-10 collapse show" id="multiCollapseExample4">
+                <div class="card border-0 shadow-none multi-collapse mt-10 collapse " id="multiCollapseExample4">
                   <div class="product-ratings">
                     <ul>
                       <li>
@@ -410,24 +421,25 @@ if (isset($_GET['n_bedroom'])) {
       ?>
       
                   <div class="col-12 mb-30 px-10">
-                    <div class="card product product--list">
+                    <div class="card product product--list d-flex">
                       <div class="h-100">
-                        <div class="product-item">
-                          <div class="product-item__image">
+                        <div class="card-body product-item ">
+                          <div class="card-body product-item__image position-relative">
+                            
                             <img  src="../uploads/<?php echo $row['image_url'];?>" alt="digital-chair">
+                            
                           </div>
-                          <div class="product-item__body  mt-0 position-relative" >
-                          
-                            <div class="product-item__title">
+                          <div class="mx-4 p-10 d-flex flex-column">
                               <a href="#">
                                 <h6 class="card-title"><?php echo $row['listing_name'];?></h6>
                               </a>
                               <p class="mb-0"><?php echo $row['description'];?></p>
                               
                             </div>
-                            <div class="product-item__content text-capitalize " style=" margin-left: 400px;">
-                              <div class="d-flex align-items-left mb-2 flex-wrap">
-                                <span class="product-desc-price ">₱<?php echo $row['rentprice'];?></span>
+                          <div class="product-item__body  mt-0 position-relative" >
+                            <div class="product-item__content text-capitalize ">
+                              <div class="d-flex mb-2 flex-wrap">
+                                <span class="text-dark ">₱ <?php echo $row['rentprice'];?></span>
                               
                               
                               </div>
@@ -450,14 +462,16 @@ if (isset($_GET['n_bedroom'])) {
             }
         ?>
                                 <span class="stars-rating__point"> <?php echo $rating == intval($rating) ? number_format($rating, 0) : number_format($rating, 1); ?></span>
-                                <span class="stars-rating__review">
+                                <span class="stars-rating__review fs-6">
                                 <span><?php echo $rating_count ?></span> Reviews</span>
                               </div>
-                              <div class="product-item__button d-xl-block d-flex flex-wrap">
-                                <button class="btn btn-default btn-squared color-light btn-outline-light ms-lg-0 ms-0 me-2 mb-lg-10"><img src="img/svg/shopping-bag.svg" alt="shopping-bag" class="svg">
+                              <div class="product-item__button">
+                                <button class="btn btn-default btn-squared color-light btn-outline-light ms-lg-0 ms-0 me-2 mb-lg-10"><img src="img/svg/send.svg" alt="shopping-bag" class="svg">
                                   Add To Go
                                 </button>
-                                <button class="btn btn-primary btn-default btn-squared border-0 ms-0">rent now
+                                <button class="btn btn-success fs-6 text-white btn-default btn-squared border-1=0 ms-0">rent now
+                                </button>
+                                 <button class="btn btn-gray fs-6 text-white btn-default btn-squared border-0 ms-0">View place
                                 </button>
                               </div>
                             </div>
