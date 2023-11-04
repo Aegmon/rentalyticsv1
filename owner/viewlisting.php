@@ -351,12 +351,70 @@ if ($result->num_rows > 0) {
                       </div> -->
                         <div class="product-item__button mt-lg-30 mt-sm-25 mt-20 d-flex flex-wrap">
                             <div class=" d-flex flex-wrap product-item__action align-items-center">
-                              <button class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2">Edit</button>
+                              <button class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2" 
+                              data-bs-toggle="modal" data-bs-target="#editModal<?php echo $listing_id;?>">Edit</button>
                            
                                 <a href="reservation.php?listing_id=<?php echo $listing_id;?>"class="btn btn-secondary btn-default btn-squared border-0 me-10 my-sm-0 my-2">Reservation</a>
                              
                             </div>
                            
+                                          <!-- MODAL -->
+
+
+
+
+<div class="modal fade" id="editModal<?php echo $listing_id;?>" tabindex="-1" aria-labelledby="editModal<?php echo $listing_id;?>Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModal'.$row["listing_id"].'Label">Edit Listing</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="new-member-modal">
+                        <input type="hidden" name="listing_id" value="<?php echo $listing_id;?>">
+                        <div class="form-group mb-20">
+                            <input type="text" class="form-control" name="dormitory_name" value="<?php echo $listing_id;?>" placeholder="Name">
+                        </div>
+                       
+                        <div class="form-group mb-20">
+                            <textarea class="form-control" name="description" rows="3" placeholder="Description"><?php echo $listing_id;?></textarea>
+                        </div>
+                    
+                  
+                        <div class="form-group mb-20">
+                            <div class="dm-upload">
+                                <div class="dm-upload-avatar media-import dropzone-md-s">
+                                    <p class="color-light mt-0 fs-14">Drop files here to upload</p>
+                                </div>
+                                <div class="avatar-up">
+                                    <input type="file" name="file" class="upload-avatar-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-group d-flex pt-25">
+                            <button type="submit" name="update_listing" class="btn btn-primary btn-default btn-squared text-capitalize">Update Listing</button>
+                            <button type="button" class="btn btn-light btn-default btn-squared fw-400 text-capitalize b-light color-light" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
                           </div>
                     </div>
                   </div>

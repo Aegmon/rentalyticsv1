@@ -314,7 +314,86 @@ if (isset($_POST['add'])) {
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="a5" class="il-gray fs-14 fw-500 align-center mb-10">Barangay</label>
-                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="barangay" name="address2" placeholder="Barangay">
+                          <!-- <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="barangay" name="address2" placeholder="Barangay"> -->
+                          <select class="form-control ih-medium ip-light radius-xs b-light px-15" id="barangay" name="address2">
+    <option value="" selected disabled>Select Barangay</option>
+    <option value="Aguso">Aguso</option>
+    <option value="Alvindia">Alvindia</option>
+    <option value="Amucao">Amucao</option>
+    <option value="Armenia">Armenia</option>
+    <option value="Asturias">Asturias</option>
+    <option value="Atioc">Atioc</option>
+    <option value="Balanti">Balanti</option>
+    <option value="Balete">Balete</option>
+    <option value="Balibago I">Balibago I</option>
+    <option value="Balibago II">Balibago II</option>
+    <option value="Balingcanaway">Balingcanaway</option>
+    <option value="Banaba">Banaba</option>
+    <option value="Bantog">Banteg</option>
+    <option value="Baras-baras">Baras-baras</option>
+    <option value="Batang-batang">Batang-batang</option>
+    <option value="Binauganan">Binauganan</option>
+    <option value="Bora">Bora</option>
+    <option value="Buenavista">Buenavista</option>
+    <option value="Buhilit">Buhilit</option>
+    <option value="Burot">Burot</option>
+    <option value="Calingcuan">Calingcuan</option>
+    <option value="Capehan">Capehan</option>
+    <option value="Carangian">Carangian</option>
+    <option value="Care">Care</option>
+    <option value="Central">Central</option>
+    <option value="Culipat">Culipat</option>
+    <option value="Cut-cut I">Cut-cut I</option>
+    <option value="Cut-cut II">Cut-cut II</option>
+    <option value="Dalayap">Dalayap</option>
+    <option value="Dela Paz">Dela Paz</option>
+    <option value="Dolores">Dolores</option>
+    <option value="Laoang">Laoang</option>
+    <option value="Ligtasan">Ligtasan</option>
+    <option value="Lourdes">Lourdes</option>
+    <option value="Mabini">Mabini</option>
+    <option value="Maligaya">Maligaya</option>
+    <option value="Maliwalo">Maliwalo</option>
+    <option value="Mapalacsiao">Mapalacsiao</option>
+    <option value="Mapalad">Mapalad</option>
+    <option value="Matatalaib">Matatalaib</option>
+    <option value="Paraiso">Paraiso</option>
+    <option value="Poblacion">Poblacion</option>
+    <option value="Salapungan">Salapungan</option>
+    <option value="San Carlos">San Carlos</option>
+    <option value="San Francisco">San Francisco</option>
+    <option value="San Isidro">San Isidro</option>
+    <option value="San Jose">San Jose</option>
+    <option value="San Jose de Urquico">San Jose de Urquico</option>
+    <option value="San Juan Bautista (formerly Matadero)">San Juan Bautista (formerly Matadero)</option>
+    <option value="San Juan de Mata (formerly Malatiki)">San Juan de Mata (formerly Malatiki)</option>
+    <option value="San Luis">San Luis</option>
+    <option value="San Manuel">San Manuel</option>
+    <option value="San Miguel">San Miguel</option>
+    <option value="San Nicolas">San Nicolas</option>
+    <option value="San Pablo">San Pablo</option>
+    <option value="San Pascual">San Pascual</option>
+    <option value="San Rafael">San Rafael</option>
+    <option value="San Roque">San Roque</option>
+    <option value="San Sebastian">San Sebastian</option>
+    <option value="San Vicente">San Vicente</option>
+    <option value="Santa Cruz">Santa Cruz</option>
+    <option value="Santa Maria">Santa Maria</option>
+    <option value="Santo Cristo">Santo Cristo</option>
+    <option value="Santo Domingo">Santo Domingo</option>
+    <option value="Santo Niño">Santo Niño</option>
+    <option value="Sapang Maragul">Sapang Maragul</option>
+    <option value="Sapang Tagalog">Sapang Tagalog</option>
+    <option value="Sepung Calzada (Panampunan)">Sepung Calzada (Panampunan)</option>
+    <option value="Sinait">Sinait</option>
+    <option value="Suizo">Suizo</option>
+    <option value="Tariji">Tariji</option>
+    <option value="Tibag">Tibag</option>
+    <option value="Tibagan">Tibagan</option>
+    <option value="Trinidad">Trinidad</option>
+    <option value="Ungot">Ungot</option>
+    <option value="Villa Bacolor">Villa Bacolor</option>
+</select>
                         </div>
                       </div>
                       <div class="col-md-3">
@@ -326,7 +405,7 @@ if (isset($_POST['add'])) {
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="a7" class="il-gray fs-14 fw-500 align-center mb-10">Province</label>
-                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="province"name="address4" placeholder="Province">
+                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="province"name="address4" readonly placeholder="Province" value="Tarlac">
                         </div>
                       </div>
  </div>
