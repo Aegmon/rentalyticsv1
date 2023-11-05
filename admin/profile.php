@@ -1,25 +1,26 @@
 <?php
 include('sidebar.php');
+  $sql_credentials = "SELECT * FROM credentials WHERE user_type ='admin'";
+    $result_credentials = mysqli_query($conn, $sql_credentials);
 
+if($row_credentials = mysqli_fetch_assoc($result_credentials)) {
+    $user_type = $row_credentials['user_type'];
+    $email = $row_credentials['email'];
+    $password = $row_credentials['password'];
+}
 if (isset($_POST['update'])) {
    
-$name = $_POST['name'];
+
 $email = $_POST['email'];
 $password = $_POST['password'];
-    $credentials_query = "UPDATE credentials SET email = '$email', password = '$password' WHERE user_id = $user_id";
+    $credentials_query = "UPDATE credentials SET email = '$email', password = '$password' user_type ='admin'";
     if ($conn->query($credentials_query) === true) {
         echo "Credentials updated successfully. ";
     } else {
         echo "Error updating credentials: " . $conn->error;
     }
 
-    // Update owner table
-    $owner_query = "UPDATE tenant SET name = '$name' WHERE user_id = $user_id";
-    if ($conn->query($owner_query) === true) {
-        echo "Owner information updated successfully. ";
-    } else {
-        echo "Error updating owner information: " . $conn->error;
-    }
+ 
 }
 
 ?>
@@ -47,17 +48,7 @@ $password = $_POST['password'];
           <div class="card-body">
    <div class="horizontal-form">
                 <form method="post" action="">
-    <div class="form-group row mb-25">
-        <div class="col-sm-3 d-flex aling-items-center">
-            <label for="inputNameIcon" class="col-form-label color-dark fs-14 fw-500 align-center mb-10">Name</label>
-        </div>
-        <div class="col-sm-9">
-            <div class="with-icon">
-                <span class="la-user lar color-gray"></span>
-                <input type="text" class="form-control ih-medium ip-gray radius-xs b-light" id="inputNameIcon" name="name" value="<?php echo $name; ?>">
-            </div>
-        </div>
-    </div>
+    
     <div class="form-group row mb-25">
         <div class="col-sm-3 d-flex aling-items-center">
             <label for="inputEmailIcon" class="col-form-label color-dark fs-14 fw-500 align-center mb-10">Email Address</label>

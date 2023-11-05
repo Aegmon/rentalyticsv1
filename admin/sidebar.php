@@ -54,15 +54,18 @@
                         <img src="img/user.png" alt class="rounded-circle">
                       </div>
                       <div>
-                        <h6>John Doe</h6>
-                        <span>Admin</span>
+                        <h6>Adminstrator</h6>
+                        
                       </div>
                     </div>
                     <div class="nav-author__options">
                       <ul>
                         
                      
-                      
+                        <li>
+                          <a href="profile.php">
+                            <i class="uil uil-user"></i> Profile</a>
+                        </li>
                        
                       </ul>
                       <a href="../logout.php" class="nav-author__signout">
