@@ -75,6 +75,27 @@ $total_boarding_house_count = isset($gender_counts['boarding_house']) ? array_su
 $total_apartment_count = isset($gender_counts['apartment']) ? array_sum($gender_counts['apartment']) : 0;
 $total_dormitory_count = isset($gender_counts['dormitory']) ? array_sum($gender_counts['dormitory']) : 0;
 $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_counts['bedspace']) : 0;
+
+    $sql = "SELECT l.owner_id, COUNT(DISTINCT l.listing_id) AS listing_count, COUNT(a.application_id) AS rent_count
+        FROM listing l
+        LEFT JOIN application a ON l.listing_id = a.listing_id
+     GROUP BY l.owner_id ";
+
+
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // output data of each row
+    while ($row = $result->fetch_assoc()) {
+        $rent_count = $row['rent_count'];
+        $listing_count = $row["listing_count"];
+    }
+} else {
+   $rent_count = 0;
+   $listing_count = 0;
+}
+
+
 ?>
 <div class="contents">
   <div class="container-fluid mb-4">
@@ -93,11 +114,51 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
             </div>
           </div>
         </div>
+         <div class="col-xxl-6 col-sm-6 mb-25">
+                <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
+                  <div class="overview-content w-100">
+                    <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
+                      <div class="ap-po-details__titlebar">
+                        <h1><?php echo $listing_count; ?></h1>
+                        <h5>Total Listing</h5>
+                      </div>
+                      <div class="ap-po-details__icon-area">
+                        <div class="svg-icon order-bg-opacity-primary color-primary">
+                          <i class="uil uil-home"></i>
+                        </div>
+                      </div>
+                    </div>
+               
+                  </div>
+                </div>
+              </div>
+         
+          
+              <div class="col-xxl-6 col-sm-6 mb-25">
+                <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
+                  <div class="overview-content w-100">
+                    <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
+                      <div class="ap-po-details__titlebar">
+                        <h1><?php echo $rent_count; ?></h1>
+                        <h5>Total Reservation</h5>
+                      </div>
+                      <div class="ap-po-details__icon-area">
+                        <div class="svg-icon order-bg-opacity-warning color-warning">
+                          <i class="uil uil-users-alt"></i>
+                        </div>
+                      </div>
+                    </div>
+                 
+                  </div>
+                </div>
+              </div>
+
       </div>
       <div class="row">
         <div class="col-md-12">
           <div class="card">
           <div class="card-body">
+            
             <div class="row">
                    <div class="mb-4">
    Segmentation of gender

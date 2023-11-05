@@ -49,7 +49,9 @@ if (isset($_POST['addtogo'])) {
                   </div>
                 </div>
               </div>
+              
             </div>
+            
             <div class="col-lg-12 mb-xxl-50 mb-30">
               <div class="row justify-content-center">
                 <div class="col-md-8">
