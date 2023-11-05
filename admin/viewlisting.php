@@ -365,6 +365,7 @@ if ($result->num_rows > 0) {
                                 <input type="hidden" value="<?php echo $listing_id; ?>">
                               <button type="submit" name="verify" class="btn btn-success btn-default btn-squared border-0 me-10 my-sm-0 my-2">Verify</button>
              </form>
+              <a href="download.php?file_id=<?php echo $listing_id; ?>" name="verify" class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2">Download Documents</a>
                             </div>
                            
                           </div>
