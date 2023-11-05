@@ -11,12 +11,12 @@ if (isset($_POST['endstay'])) {
     $listingstmt->bind_param("si", $status_rented, $listing_id);
     $listingstmt->execute();
 
-    // Update the application status
-    $sql = "UPDATE application SET status = ?, date_of_application = NOW() WHERE listing_id = ?";
-    $stmt = $conn->prepare($sql);
-    $status = 'renter';
-    $stmt->bind_param("si", $status, $listing_id);
-    $stmt->execute();
+    // // Update the application status
+    // $sql = "UPDATE application SET status = ?, date_of_application = NOW() WHERE listing_id = ?";
+    // $stmt = $conn->prepare($sql);
+    // $status = 'renter';
+    // $stmt->bind_param("si", $status, $listing_id);
+    // $stmt->execute();
 }
 
 
@@ -90,7 +90,7 @@ if ($result->num_rows > 0) {
                 <div class="users-list__button mt-xl-0 mt-15">
                     <form action="" method="post">
                         <input type="hidden" name="listing_id" value="'.$row["listing_id"].'">
-                        <button type="submit" name="endstay" class="btn btn-primary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow">End Stay</button>
+                        <button type="submit" name="endstay" class="btn btn-primary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow">Active</button>
                     </form>
                 </div>
             </div>

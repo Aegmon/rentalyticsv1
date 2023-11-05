@@ -3,111 +3,59 @@ include('sidebar.php');
    $listing_id = $_GET['listing_id'];
 ?>
 <?php
-if (isset($_POST['add'])) {
-    $type = $_POST['type'];
-    $gender = $_POST['gender'];
-    $price = $_POST['price'];
-    $reservation = $_POST['reservation'];
-    $name = $_POST['name'];
-    $address1 = $_POST['address1'];
-    $address2 = $_POST['address2'];
-    $address3 = $_POST['address3'];
-    $address4 = $_POST['address4'];
-    $desc = $_POST['desc'];
+if (isset($_POST['update_listing'])) {
+    $listing_id = $_POST['listing_id'];
+    $listing_name = $_POST['dormitory_name'];
+    $description = $_POST['description'];
     $no_bed = $_POST['no_bed'];
     $no_bath = $_POST['no_bath'];
-    $house_rules = $_POST['house_rules'];
-   $lat = $_POST['lat'];
-      $lng = $_POST['lng'];
-    $sql = "INSERT INTO listing (listing_name, address1, address2, address3, address4, description, n_bedroom, n_bathroom, house_rules, rentprice, reservationfee, owner_id, gender_req,lat,lng) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param(
-        "ssssssissssisss",
-        $name,
-        $address1,
-        $address2,
-        $address3,
-        $address4,
-        $desc,
+    $status = $_POST['status'];
+
+    // Update the listing
+    $updateListingSql = "UPDATE listing 
+    SET listing_name = ?, description = ?, n_bedroom = ?, n_bathroom = ?, status = ? 
+    WHERE listing_id = ?";
+    $updateListingStmt = $conn->prepare($updateListingSql);
+    $updateListingStmt->bind_param(
+        "ssissi",
+        $listing_name,
+        $description,
         $no_bed,
         $no_bath,
-        $house_rules,
-        $price,
-        $reservation,
-        $id,
-        $gender,
-          $lat,
-        $lng
+        $status,
+        $listing_id
     );
 
-    if ($stmt->execute()) {
-        $last_id = $stmt->insert_id;
-        if (!empty($_POST['amenities'])) {
-            foreach ($_POST['amenities'] as $amenity) {
-                $amenitySql = "INSERT INTO amenities (listing_id, amenity) VALUES (?, ?)";
-                $amenityStmt = $conn->prepare($amenitySql);
-                $amenityStmt->bind_param("is", $last_id, $amenity);
-                $amenityStmt->execute();
-                $amenityStmt->close();
-            }
-        }
-
-         if (!empty($_FILES['images']['name'])) {
-        // Handle image upload
-        $targetDir = "../uploads/";
-        $fileName11 = basename($_FILES["images"]["name"]);
-        $targetFilePath =  $targetDir.$fileName11;
-
-        if (move_uploaded_file($_FILES["images"]["tmp_name"], $targetFilePath)) {
-            // File successfully uploaded
-            $image_sql = "UPDATE listing SET image_url=? WHERE listing_id=?";
-            $imageStmt = $conn->prepare($image_sql);
-            $imageStmt->bind_param("si", $targetFilePath, $last_id);
-            if (!$imageStmt->execute()) {
-                echo "Error updating record: " . $imageStmt->error;
-            }
-            $imageStmt->close();
-        } else {
-            // Failed to upload file
-            echo "Failed to upload image file";
-        }
+    if (!$updateListingStmt->execute()) {
+        echo "Error updating listing: " . $updateListingStmt->error;
     }
 
-    if (!empty($_FILES['documents']['name'])) {
-        // Handle document upload
-        $titleOfDocument = $_POST['titleOfDocument'];
-        $file = $_FILES['documents'];
-        $fileName = $file['name'];
-        $fileTmpName = $file['tmp_name'];
-        $fileType = $file['type'];
+    // Update amenities
+    $selectedAmenities = isset($_POST['amenities']) ? $_POST['amenities'] : [];
+    $deleteAmenitiesSql = "DELETE FROM amenities WHERE listing_id = ?";
+    $deleteAmenitiesStmt = $conn->prepare($deleteAmenitiesSql);
+    $deleteAmenitiesStmt->bind_param("i", $listing_id);
+    $deleteAmenitiesStmt->execute();
 
-        // Read the file data
-        $fileData = file_get_contents($fileTmpName);
-
-        $document_sql = "UPDATE listing SET data=?, mime=?, title=?, name=? WHERE listing_id=?";
-        $documentStmt = $conn->prepare($document_sql);
-        $documentStmt->bind_param("ssssi", $fileData, $fileType, $titleOfDocument, $fileName, $last_id);
-
-        if ($documentStmt->execute()) {
-            // File data inserted successfully
-            echo "File data inserted successfully";
-        } else {
-            // Error inserting file data
-            echo "Error inserting file data: " . $documentStmt->error;
-        }
-        $documentStmt->close();
-    }
-    } else {
-        echo "Error: " . $stmt->error;
+    foreach ($selectedAmenities as $amenity) {
+        $amenitySql = "INSERT INTO amenities (listing_id, amenity) VALUES (?, ?)";
+        $amenityStmt = $conn->prepare($amenitySql);
+        $amenityStmt->bind_param("is", $listing_id, $amenity);
+        $amenityStmt->execute();
     }
 
-    $stmt->close();
-    $conn->close();
+    // Close statements
+    $updateListingStmt->close();
+    $deleteAmenitiesStmt->close();
+
+    // Redirect to the updated listing page or any other page as needed
+    header("Location:index.php ");
+
 }
 // SELECT LISTING
 
-$sql = "SELECT * FROM listing where listing_id = '$listing_id'";
+$sql = "SELECT * FROM listing 
+JOIN amenities ON listing.listing_id = amenities.listing_id where listing.listing_id = '$listing_id'";
 $result = $conn->query($sql);
 $rating = "";
 $rating_count = "";
@@ -119,6 +67,7 @@ if ($result->num_rows > 0) {
                     COUNT(*) AS review_count, 
                     AVG(rating) AS average_rating 
                 FROM review 
+            
                 WHERE listing_id = '$listing_id'";
         $result_review = $conn->query($sql);
         if ($result_review->num_rows > 0) {
@@ -151,12 +100,14 @@ if ($result->num_rows > 0) {
         $data = $row["data"];
         $title = $row["title"];
         $name = $row["name"];
+          $status = $row["status"];
         $n_bedroom = $row["n_bedroom"];
         $n_bathroom = $row["n_bathroom"];
         $house_rules = $row["house_rules"];
         $lat = $row["lat"];
         $lng = $row["lng"];
         $fullAddress = $address1 . ", " . $address2 . ", " . $address3 . ", " . $address4;
+        
     }
 } else {
     echo "0 results";
@@ -375,27 +326,83 @@ if ($result->num_rows > 0) {
                     <div class="new-member-modal">
                         <input type="hidden" name="listing_id" value="<?php echo $listing_id;?>">
                         <div class="form-group mb-20">
-                            <input type="text" class="form-control" name="dormitory_name" value="<?php echo $listing_id;?>" placeholder="Name">
+                            <input type="text" class="form-control" name="dormitory_name" value="<?php echo $listing_name;?>" placeholder="Name">
                         </div>
                        
                         <div class="form-group mb-20">
-                            <textarea class="form-control" name="description" rows="3" placeholder="Description"><?php echo $listing_id;?></textarea>
+                            <textarea class="form-control" name="description" rows="3" placeholder="Description"><?php echo $description;?></textarea>
                         </div>
-                    
+                    <div class="row">
                   
-                        <div class="form-group mb-20">
-                            <div class="dm-upload">
-                                <div class="dm-upload-avatar media-import dropzone-md-s">
-                                    <p class="color-light mt-0 fs-14">Drop files here to upload</p>
-                                </div>
-                                <div class="avatar-up">
-                                    <input type="file" name="file" class="upload-avatar-input">
-                                </div>
-                            </div>
+                               <div class="col-md-12">
+<div class="form-group mb-20">
+    <label for="a9" class="il-gray fs-14 fw-500 align-center mb-10">Amenities</label>
+    <div class="checkbox-list">
+        <div class="checkbox-list__single mb-3">
+            <div class="checkbox-group d-flex flex-wrap">
+
+                <?php
+                $sql = "SELECT * FROM amenities where listing_id = '$listing_id'";
+                $result = $conn->query($sql);
+
+                $amenitiesArray = [];
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $amenitiesArray[] = $row["amenity"];
+                    }
+                } else {
+                    echo "No Amenities";
+                }
+
+                $allAmenities = ["Internet", "Kitchen", "Bed", "Parking", "Pool", "Laundry Facilities"];
+
+                foreach ($allAmenities as $amenity) {
+                    $checked = in_array($amenity, $amenitiesArray) ? 'checked' : '';
+                    echo '<div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                            <input class="checkbox" type="checkbox" id="check-grp-' . $amenity . '" name="amenities[]" value="' . $amenity . '" ' . $checked . '>
+                            <label for="check-grp-' . $amenity . '">
+                                <span class="checkbox-text">' . $amenity . '</span>
+                            </label>
+                        </div>';
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+                        
+</div>
+                   <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="a9" class="il-gray fs-14 fw-500 align-center mb-10">Available Bedrooms</label>
+                          <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15"name="no_bed" value="<?php echo $n_bedroom;?>">
                         </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="a9" class="il-gray fs-14 fw-500 align-center mb-10">Number of Bath Rooms</label>
+                          <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" name="no_bath"  value="<?php echo $n_bathroom;?>">
+                        </div>
+                      </div>
+                        <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="a3" class="il-gray fs-14 fw-500 align-center mb-10">Status</label>
+           <select class="form-control ih-medium ip-light radius-xs b-light px-15" name="status">
+    <option value="">Select Status</option>
+    <option value="active" <?php echo isset($status) && $status === 'active' ? 'selected' : ''; ?>>Active</option>
+    <option value="inactive" <?php echo isset($status) && $status === 'inactive' ? 'selected' : ''; ?>>Inactive</option>
+    <option value="rented" <?php echo isset($status) && $status === 'rented' ? 'selected' : ''; ?>>Rented</option>
+</select>
+
+
+                        </div>
+                      </div>
+                    </div>
+
                         <div class="button-group d-flex pt-25">
                             <button type="submit" name="update_listing" class="btn btn-primary btn-default btn-squared text-capitalize">Update Listing</button>
-                            <button type="button" class="btn btn-light btn-default btn-squared fw-400 text-capitalize b-light color-light" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-info btn-default btn-squared text-capitalize" data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                 </div>

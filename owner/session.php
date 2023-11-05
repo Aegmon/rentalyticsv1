@@ -10,6 +10,8 @@ if(isset($_SESSION['user_id'])) {
 
     if($row_credentials = mysqli_fetch_assoc($result_credentials)) {
         $user_type = $row_credentials['user_type'];
+               $email = $row_credentials['email'];
+                   $password = $row_credentials['password'];
         if($user_type === 'tenant') {
             $sql_tenant = "SELECT * FROM tenant WHERE user_id = $user_id";
             $result_tenant = mysqli_query($conn, $sql_tenant);

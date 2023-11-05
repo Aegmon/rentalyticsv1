@@ -3,6 +3,8 @@
 include('connection.php');
 
 if (isset($_POST['submit'])) {
+ 
+
     // Gather form data
     $name = $_POST['name'];
     $birthdate = $_POST['birthdate'];
@@ -17,17 +19,31 @@ if (isset($_POST['submit'])) {
     if ($conn->query($sql_credentials) === TRUE) {
         $user_id = $conn->insert_id;
 
-        // Insert into respective table based on user type
-        if ($userType === "owner") {
-            $sql_renter = "INSERT INTO owner (user_id, name, birthdate, gender) VALUES ('$user_id', '$name', '$birthdate', '$gender')";
-            if ($conn->query($sql_renter) !== TRUE) {
-                echo "Error: " . $sql_renter . "<br>" . $conn->error;
+        // Check if the file was uploaded without errors
+        if (isset($_FILES['idPicture']) && $_FILES['idPicture']['error'] === UPLOAD_ERR_OK) {
+            $file_name = $_FILES['idPicture']['name'];
+            $file_tmp = $_FILES['idPicture']['tmp_name'];
+            $file_destination = 'uploads/' . $file_name; // Adjust the 'uploads' directory as needed
+
+            // Move the uploaded file to the designated directory
+            if (move_uploaded_file($file_tmp, $file_destination)) {
+                // Insert into the respective table based on user type
+                if ($userType === "owner") {
+                    $sql_owner = "INSERT INTO owner (user_id, name, birthdate, gender, id_picture) VALUES ('$user_id', '$name', '$birthdate', '$gender', '$file_name')";
+                    if ($conn->query($sql_owner) !== TRUE) {
+                        echo "Error: " . $sql_owner . "<br>" . $conn->error;
+                    }
+                } elseif ($userType === "tenant") {
+                    $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender) VALUES ('$user_id', '$name', '$birthdate', '$gender')";
+                    if ($conn->query($sql_tenant) !== TRUE) {
+                        echo "Error: " . $sql_tenant . "<br>" . $conn->error;
+                    }
+                }
+            } else {
+                echo "Error uploading file.";
             }
-        } elseif ($userType === "tenant") {
-            $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender) VALUES ('$user_id', '$name', '$birthdate', '$gender')";
-            if ($conn->query($sql_tenant) !== TRUE) {
-                echo "Error: " . $sql_tenant . "<br>" . $conn->error;
-            }
+        } else {
+            echo "Error uploading ID picture. Please try again.";
         }
 
         // echo "New record created successfully";
@@ -37,6 +53,7 @@ if (isset($_POST['submit'])) {
 
     $conn->close();
 }
+
 ?>
 
 
@@ -77,7 +94,7 @@ if (isset($_POST['submit'])) {
                       <h6>Sign Up Rentalytics</h6>
                     </div>
                   </div>
-          <form action="" method="post">
+  <form action="" method="post" enctype="multipart/form-data">
     <div class="card-body">
         <div class="edit-profile__body">
             <div class="edit-profile__body">
@@ -99,11 +116,18 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="form-group mb-20">
                     <label for="userType">User Type</label>
-                    <select class="form-control" name="userType">
-                        <option value="owner">Owner</option>
+                    <select class="form-control" name="userType" id="userTypeSelect">
+                  
                         <option value="tenant">Tenant</option>
+                              <option value="owner">Owner</option>
                     </select>
                 </div>
+
+                <div id="idPictureUpload" class="form-group mb-20" style="display:none;">
+                    <label for="idPicture">Upload ID Picture</label>
+                    <input type="file" class="form-control" name="idPicture" accept="image/*">
+                </div>
+
                 <div class="form-group mb-20">
                     <label for="email">Email Address</label>
                     <input type="text" class="form-control" name="email" placeholder="name@example.com" required>
@@ -173,6 +197,18 @@ if (isset($_POST['submit'])) {
     </div>
     <script src="js/plugins.min.js"></script>
     <script src="js/script.min.js"></script>
+    <script>
+    const userTypeSelect = document.getElementById('userTypeSelect');
+    const idPictureUpload = document.getElementById('idPictureUpload');
+
+    userTypeSelect.addEventListener('change', function () {
+        if (userTypeSelect.value === 'owner') {
+            idPictureUpload.style.display = 'block';
+        } else {
+            idPictureUpload.style.display = 'none';
+        }
+    });
+</script>
   </body>
 
   <!-- Mirrored from demo.dashboardmarket.com/hexadash-html/ltr/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 07 Oct 2023 01:06:10 GMT -->

@@ -1,0 +1,10 @@
+[05-Nov-2023 20:48:11 Asia/Manila] PHP Warning:  Undefined variable $mysqli in C:\xampp\htdocs\rentalyticsv1\owner\profile.php on line 17
+[05-Nov-2023 20:48:11 Asia/Manila] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\rentalyticsv1\owner\profile.php:17
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\rentalyticsv1\owner\profile.php on line 17
+[05-Nov-2023 20:48:20 Asia/Manila] PHP Warning:  Undefined variable $mysqli in C:\xampp\htdocs\rentalyticsv1\owner\profile.php on line 17
+[05-Nov-2023 20:48:20 Asia/Manila] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in C:\xampp\htdocs\rentalyticsv1\owner\profile.php:17
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\rentalyticsv1\owner\profile.php on line 17

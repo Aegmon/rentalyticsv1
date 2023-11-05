@@ -40,18 +40,78 @@
           <ul class="navbar-right__menu">
          
        
-          
+            <?php
+       $sql = "SELECT * FROM listing JOIN application ON listing.listing_id = application.listing_id WHERE application.tenant_id='$id' AND application.status = 'approved'";
+    $result = $conn->query($sql);
+
+    $notificationCount = $result->num_rows;
+?>
+       
+           <li class="nav-notification">
+           <div class="dropdown-custom">
+  <a href="javascript:;" class="nav-item-toggle <?php echo $notificationCount > 0 ? 'icon-active' : ''; ?>">
+        <img class="svg" src="img/svg/alarm.svg" alt="img">
+    </a>
+    <?php
+    $sql = "SELECT * FROM listing JOIN application ON listing.listing_id = application.listing_id WHERE application.tenant_id='$id' AND application.status = 'approved'";
+    $result = $conn->query($sql);
+
+    $notificationCount = $result->num_rows;
+
+    echo '<div class="dropdown-parent-wrapper">
+        <div class="dropdown-wrapper">
+          <h2 class="dropdown-wrapper__title">Notifications ';
+
+    if ($notificationCount > 0) {
+        echo '<span class="badge-circle badge-warning ms-1">' . $notificationCount . '</span>';
+    }
+
+    echo '</h2><ul>';
+
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while ($row = $result->fetch_assoc()) {
+            echo '<li class="nav-notification__single nav-notification__single--unread d-flex flex-wrap">
+                  <div class="nav-notification__type nav-notification__type--primary">
+                    <img class="svg" src="img/svg/inbox.svg" alt="inbox">
+                  </div>
+                  <div class="nav-notification__details">
+                    <p>
+                     Your reservation is approved
+                    </p>
+                  </div>
+                </li>';
+        }
+    } else {
+        echo '<li class="nav-notification__single nav-notification__single--unread d-flex flex-wrap">
+              <div class="nav-notification__type nav-notification__type--primary">
+                <img class="svg" src="img/svg/inbox.svg" alt="inbox">
+              </div>
+              <div class="nav-notification__details">
+                <p>
+                 No pending reservations found.
+                </p>
+              </div>
+            </li>';
+    }
+
+    echo '</ul></div></div>';
+    ?>
+</div>
+
+            </li>
           
             <li class="nav-author">
               <div class="dropdown-custom">
-                <a href="javascript:;" class="nav-item-toggle"><img src="img/author-nav.jpg" alt class="rounded-circle">
+                
+                <a href="javascript:;" class="nav-item-toggle"><img src="img/user.png" alt class="rounded-circle">
                   <span class="nav-item__title"><?php echo $name;?><i class="las la-angle-down nav-item__arrow"></i></span>
                 </a>
                 <div class="dropdown-parent-wrapper">
                   <div class="dropdown-wrapper">
                     <div class="nav-author__info">
                       <div class="author-img">
-                        <img src="img/author-nav.jpg" alt class="rounded-circle">
+                        <img src="img/user.png" alt class="rounded-circle">
                       </div>
                       <div>
                         <h6><?php echo $name;?></h6>
@@ -61,7 +121,11 @@
                     <div class="nav-author__options">
                       <ul>
                         
-                     
+                       <li>
+                          <a href="profile.php">
+                            <i class="uil uil-user"></i> Profile</a>
+                        </li>
+                      
                       
                        
                       </ul>
@@ -74,11 +138,7 @@
             </li>
           </ul>
           <div class="navbar-right__mobileAction d-md-none">
-            <!-- <a href="#" class="btn-search">
-              <img src="img/svg/search.svg" alt="search" class="svg feather-search">
-              <img src="img/svg/x.svg" alt="x" class="svg feather-x"></a>
-            <a href="#" class="btn-author-action">
-              <img class="svg" src="img/svg/more-vertical.svg" alt="more-vertical"></a> -->
+     
           </div>
         </div>
       </nav>
@@ -97,13 +157,7 @@
                  
                 </a>
                </li>
-                  <!-- <li>
-                <a href="accounts.php" class>
-                           <i class="nav-icon uil uil-users-alt"></i>
-                  <span class="menu-text">Manage Accounts</span>
-                 
-                </a>
-               </li> -->
+          
        
                    <li>
                 <a href="renter.php" class>
@@ -119,13 +173,7 @@
                  
                 </a>
                </li>
-                <!-- <li>
-                <a href="renter.php" class>
-                     <span class="nav-icon uil uil-user"></span>
-                  <span class="menu-text">My Renter</span>
-                 
-                </a>
-               </li> -->
+       
             </ul>
           </div>
         </div>

@@ -1,45 +1,27 @@
 <?php
 include('sidebar.php');
-   $listing_id = $_GET['listing_id'];
-if(isset($_POST['approved']) || isset($_POST['rejected'])) {
 
-
-    // Retrieve the listing_id from the POST data
-    $listing_id = $_POST['listing_id'];
-
-    // Determine the status based on the button clicked
-    $status = isset($_POST['approved']) ? 'approved' : 'rejected';
-
-    // Prepare and execute the SQL statement for updating the application status
-    $sql = "UPDATE application SET status = ? WHERE listing_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $status, $listing_id);
-
- 
-
-    // Execute the application status update
-    if ($stmt->execute()) {
-        echo "Status updated successfully.";
+if (isset($_POST['update'])) {
+   
+$name = $_POST['name'];
+$email = $_POST['email'];
+$password = $_POST['password'];
+    $credentials_query = "UPDATE credentials SET email = '$email', password = '$password' WHERE user_id = $user_id";
+    if ($conn->query($credentials_query) === true) {
+        echo "Credentials updated successfully. ";
     } else {
-        echo "Error updating status: " . $conn->error;
+        echo "Error updating credentials: " . $conn->error;
+    }
+
+    // Update owner table
+    $owner_query = "UPDATE tenant SET name = '$name' WHERE user_id = $user_id";
+    if ($conn->query($owner_query) === true) {
+        echo "Owner information updated successfully. ";
+    } else {
+        echo "Error updating owner information: " . $conn->error;
     }
 }
-if (isset($_POST['endstay'])) {
-    $listing_id = $_POST['listing_id'];
-    $sql = "UPDATE application SET status = ?, date_of_application = NOW() WHERE listing_id = ?";
-    $stmt = $conn->prepare($sql);
-    $status = 'renter';
-    $stmt->bind_param("si", $status, $listing_id);
-    $stmt->execute();
-}
-if (isset($_POST['void'])) {
-    $listing_id = $_POST['listing_id'];
-    $sql = "UPDATE application SET status = ?, date_of_application = NOW() WHERE listing_id = ?";
-    $stmt = $conn->prepare($sql);
-    $status = 'rejected';
-    $stmt->bind_param("si", $status, $listing_id);
-    $stmt->execute();
-}
+
 ?>
 <div class="contents">
   <div class="container-fluid">
@@ -47,12 +29,12 @@ if (isset($_POST['void'])) {
       <div class="row">
         <div class="col-lg-12">
           <div class="breadcrumb-main">
-            <h4 class="text-capitalize breadcrumb-title">Reservation</h4>
+            <h4 class="text-capitalize breadcrumb-title">Profile</h4>
             <div class="breadcrumb-action justify-content-center flex-wrap">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="#"><i class="uil uil-estate"></i>Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Reservation</li>
+                  <li class="breadcrumb-item active" aria-current="page">Profile</li>
                 </ol>
               </nav>
             </div>
@@ -60,120 +42,66 @@ if (isset($_POST['void'])) {
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
           <div class="card">
           <div class="card-body">
-  <div class="userDatatable adv-table-table global-shadow border-light-0 w-100 adv-table">
-    <div class="table-responsive">
-      <div class="adv-table-table__header">
-        <h4>All Reservation</h4>
-      </div>
-      <div id="filter-form-container"></div>
-      <table class="table mb-0  adv-table1"  data-filter-container="#filter-form-container" data-paging-current="1" data-paging-position="right" data-paging-size="10">
-        <thead>
-          <tr class="userDatatable-header">
-        
-            <th>
-              <span class="userDatatable-title">NAME</span>
-            </th>
-            <th>
-              <span class="userDatatable-title">Email  </span>
-            </th>
-          
-         
-            <th data-type="html" data-name="status">
-              <span class="userDatatable-title">renting name</span>
-            </th>
-               <th>
-              <span class="userDatatable-title">Reservation Status</span>
-            </th>
-            <th>
-              <span class="userDatatable-title">View Payment</span>
-            </th>
-                <th>
-              <span class="userDatatable-title">Tools</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-<?php
-$sql = "SELECT 
-            c.email,
-            a.tenant_id,
-            t.name AS tenant_name,
-            c.email AS tenant_email,
-            a.status as status,
-            l.listing_id,
-            l.listing_name,
-            a.application_id,
-            p.payment_id,
-            a.date_of_application
-        FROM application a
-        LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
-        LEFT JOIN credentials c ON t.user_id = c.user_id
-        LEFT JOIN listing l ON l.listing_id = a.listing_id
-            LEFT JOIN payment p ON a.application_id = p.application_id
-        WHERE l.listing_id = '$listing_id'  ";
-
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    // output data of each row
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td><div class='userDatatable-content'>" . $row["email"] . "</div></td>";
-        echo "<td><div class='userDatatable-content'>" . $row["tenant_name"] . "</div></td>";
-        echo "<td><div class='userDatatable-content'>" . $row["listing_name"] . "</div></td>";
-        echo "<td><div class='userDatatable-content'>" . $row["status"] . "</div></td>";
-
-        if ($row["status"] == 'pending'  ) {
-            echo "<td>
-            <div class='userDatatable-content'>
-            <a href='viewpayment.php?payment_id=" . $row['payment_id'] . "' class='edit'><i class='uil uil-eye'></i></a>
+   <div class="horizontal-form">
+                <form method="post" action="">
+    <div class="form-group row mb-25">
+        <div class="col-sm-3 d-flex aling-items-center">
+            <label for="inputNameIcon" class="col-form-label color-dark fs-14 fw-500 align-center mb-10">Name</label>
+        </div>
+        <div class="col-sm-9">
+            <div class="with-icon">
+                <span class="la-user lar color-gray"></span>
+                <input type="text" class="form-control ih-medium ip-gray radius-xs b-light" id="inputNameIcon" name="name" value="<?php echo $name; ?>">
             </div>
-            </td>
-            <td>
-            <div>
-            <form action='' method='POST'>
-            <input type='hidden' value='" . $listing_id . "' name='listing_id'>
-            <button type='submit' name='approved' value='approved' class='btn btn-success'>Approve</button>
-            <button type='submit' name='rejected' value='rejected' class='btn btn-danger'>Reject</button>
-            </form>
-            </div>
-            </td>";
-        } elseif ($row["status"] == 'approved') {
-            echo "<td>
-            <div class='userDatatable-content'>
-            <a href='viewpayment.php?payment_id=" . $row['payment_id'] . "' class='edit'><i class='uil uil-eye'></i></a>
-            </div>
-            </td>
-            <td>
-            <div class='userDatatable-content'>
-               <form action='' method='POST'>
-            <input type='hidden' value='" . $listing_id . "' name='listing_id'>
-            <button type='submit' name='endstay' value='endstay' class='btn btn-success'>End Stay</button>
-            <button type='submit' name='void' value='void' class='btn btn-danger'>Void</button>
-            </form>
-            </div>
-            </td>";
-        } elseif ($row["status"] == 'renter') {
-            echo "<td><div class='userDatatable-content'>End of Stay :" . date("M, d, Y", strtotime($row["date_of_application"])) . "</div></td>";
-        } else {
-           echo "";
-        }
-
-        echo "</tr>";
-    }
-}
-?>
-
-                  
-        </tbody>
-      </table>
+        </div>
     </div>
-  </div>
+    <div class="form-group row mb-25">
+        <div class="col-sm-3 d-flex aling-items-center">
+            <label for="inputEmailIcon" class="col-form-label color-dark fs-14 fw-500 align-center mb-10">Email Address</label>
+        </div>
+        <div class="col-sm-9">
+            <div class="with-icon">
+                <span class="lar la-envelope color-gray"></span>
+                <input type="email" class="form-control ih-medium ip-gray radius-xs b-light" id="inputEmailIcon" name="email" value="<?php echo $email; ?>">
+            </div>
+        </div>
+    </div>
+    <div class="form-group row mb-25">
+        <div class="col-sm-3 d-flex aling-items-center">
+            <label for="inputPasswordIcon" class="col-form-label color-dark fs-14 fw-500 align-center mb-10">Password</label>
+        </div>
+        <div class="col-sm-9">
+            <div class="with-icon">
+                <span class="las la-lock color-gray"></span>
+                <input type="password" class="form-control ih-medium ip-gray radius-xs b-light" id="inputPasswordIcon" name="password" value="<?php echo $password; ?>">
+            </div>
+        </div>
+    </div>
+    <div class="form-group row mb-0">
+        <div class="col-sm-3">
+            <label for="inputConfirmPasswordIcon" class="col-form-label color-dark fs-14 fw-500 align-center mb-10">Confirm Password</label>
+        </div>
+        <div class="col-sm-9">
+            <div class="with-icon">
+                <span class="las la-lock color-gray"></span>
+                <input type="password" class="form-control ih-medium ip-gray radius-xs b-light" id="inputConfirmPasswordIcon" name="confirm_password">
+            </div>
+            <div class="layout-button mt-25">
+                <button type="submit" name="update" class="btn btn-primary btn-default btn-squared px-30">Update</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+                  </div>
+                </div>
           </div>
         </div>
+
+
       </div>
     </div>
   </div>

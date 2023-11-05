@@ -54,17 +54,20 @@ if (isset($_POST['addtogo'])) {
               <div class="row justify-content-center">
                 <div class="col-md-8">
                   <div class="search-style-2 global-shadow ">
-                    <form action="http://demo.dashboardmarket.com/" class="d-flex align-items-center">
-                      <div class="job-search">
-                        <img src="img/svg/search.svg" alt="search" class="svg">
-                        <input class="form-control border-0 box-shadow-none" type="search" placeholder="Search Place....." aria-label="Search">
-                      </div>
-                      <div class="location-search">
-                        <img src="img/svg/map-pin.svg" alt="map-pin" class="svg">
-                        <input class="form-control border-0 box-shadow-none" type="search" placeholder="Location" aria-label="Search">
-                      </div>
-                      <button class="btn btn-dark"><img src="img/svg/search.svg" alt="search" class="svg">search</button>
-                    </form>
+                   <form action="" method="POST" class="d-flex align-items-center">
+  <div class="job-search">
+    <img src="img/svg/search.svg" alt="search" class="svg">
+    <input class="form-control border-0 box-shadow-none" type="search" name="place_search" placeholder="Search Place....." aria-label="Search">
+  </div>
+  <div class="location-search">
+    <img src="img/svg/map-pin.svg" alt="map-pin" class="svg">
+    <input class="form-control border-0 box-shadow-none" type="search" name="location_search" placeholder="Location" aria-label="Search">
+  </div>
+  <button type="submit" class="btn btn-dark">
+    <img src="img/svg/search.svg" alt="search" class="svg">Search
+  </button>
+</form>
+
                   
                   </div>
                   
@@ -94,7 +97,7 @@ if (isset($_POST['addtogo'])) {
                   <div class="product-category limit-list-item">
                  <ul>
                  <li>
-        <a href="#">
+        <a href="?category=alltype">
             <div class="w-100">
                 <span class="fs-14 color-gray">all type<span class="item-numbers"></span></span>
             </div>
@@ -133,251 +136,248 @@ if (isset($_POST['addtogo'])) {
                   </div>
                 </div>
               </aside>
-              <aside class="product-sidebar-widget mb-30">
-    <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" role="button" aria-expanded="true">
-        <h6>Bed Rooms</h6>
+          <aside class="product-sidebar-widget mb-30">
+  <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3-bedroom" role="button" aria-expanded="true">
+    <h6>Bedrooms</h6>
+  </div>
+  <div class="card border-0 shadow-none multi-collapse mt-10 collapse" id="multiCollapseExample3-bedroom">
+    <div class="product-brands limit-list-item">
+      <form method="POST" action="">
+        <ul>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="bedroom-check-1" name="n_bedroom" value="1" onchange="this.form.submit()">
+              <label for="bedroom-check-1">
+                <span class="checkbox-text">
+                  1
+                  <span class="item-numbers"></span>
+                </span>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="bedroom-check-2" name="n_bedroom" value="2" onchange="this.form.submit()">
+              <label for="bedroom-check-2">
+                <span class="checkbox-text">
+                  2
+                  <span class="item-numbers"></span>
+                </span>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="bedroom-check-3" name="n_bedroom" value="3" onchange="this.form.submit()">
+              <label for="bedroom-check-3">
+                <span class="checkbox-text">
+                  3
+                  <span class="item-numbers"></span>
+                </span>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="bedroom-check-4" name="n_bedroom" value="4" onchange="this.form.submit()">
+              <label for="bedroom-check-4">
+                <span class="checkbox-text">
+                  4
+                  <span class="item-numbers"></span>
+                </span>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="bedroom-check-5" name="n_bedroom" value="5" onchange="this.form.submit()">
+              <label for="bedroom-check-5">
+                <span class="checkbox-text">
+                  5
+                  <span class="item-numbers"></span>
+                </span>
+              </label>
+            </div>
+          </li>
+        </ul>
+      </form>
     </div>
-    <div class="card border-0 shadow-none multi-collapse mt-10 collapse" id="multiCollapseExample3">
-        <div class="product-brands limit-list-item">
-            <ul>
-                <li>
-                    <div class="checkbox-theme-default custom-checkbox">
-                        <form method="POST" action="">
-                            <input class="checkbox" type="checkbox" id="check-1" name="n_bedroom" value="1" onchange="this.form.submit()" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['n_bedroom']) && $_POST['n_bedroom'] == '1') echo 'checked'; ?>>
-                            <label for="check-1">
-                                <span class="checkbox-text">
-                                    1
-                                    <span class="item-numbers"></span>
-                                </span>
-                            </label>
-                        </form>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox-theme-default custom-checkbox">
-                        <form method="POST" action="">
-                            <input class="checkbox" type="checkbox" id="check-2" name="n_bedroom" value="2" onchange="this.form.submit()" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['n_bedroom']) && $_POST['n_bedroom'] == '2') echo 'checked'; ?>>
-                            <label for="check-2">
-                                <span class="checkbox-text">
-                                    2
-                                    <span class="item-numbers"></span>
-                                </span>
-                            </label>
-                        </form>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox-theme-default custom-checkbox">
-                        <form method="POST" action="">
-                            <input class="checkbox" type="checkbox" id="check-3" name="n_bedroom" value="3" onchange="this.form.submit()" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['n_bedroom']) && $_POST['n_bedroom'] == '3') echo 'checked'; ?>>
-                            <label for="check-3">
-                                <span class="checkbox-text">
-                                    3
-                                    <span class="item-numbers"></span>
-                                </span>
-                            </label>
-                        </form>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox-theme-default custom-checkbox">
-                        <form method="POST" action="">
-                            <input class="checkbox" type="checkbox" id="check-4" name="n_bedroom" value="5" onchange="this.form.submit()" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['n_bedroom']) && $_POST['n_bedroom'] == '5') echo 'checked'; ?>>
-                            <label for="check-4">
-                                <span class="checkbox-text">
-                                    5
-                                    <span class="item-numbers"></span>
-                                </span>
-                            </label>
-                        </form>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox-theme-default custom-checkbox">
-                        <form method="POST" action="">
-                            <input class="checkbox" type="checkbox" id="check-5" name="n_bedroom" value="5+" onchange="this.form.submit()" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['n_bedroom']) && $_POST['n_bedroom'] == '5+') echo 'checked'; ?>>
-                            <label for="check-5">
-                                <span class="checkbox-text">
-                                    5+
-                                    <span class="item-numbers"></span>
-                                </span>
-                            </label>
-                        </form>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
+  </div>
 </aside>
 
-                  <aside class="product-sidebar-widget mb-30">
-                <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" role="button" aria-expanded="true">
-                  <h6>Bath Rooms</h6>
-                </div>
-                <div class="card border-0 shadow-none multi-collapse mt-10 collapse " id="multiCollapseExample3">
-                  <div class="product-brands limit-list-item">
-                    <ul>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="check-1">
-                          <label for="check-1">
-                            <span class="checkbox-text">
-1
-<span class="item-numbers"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="check-2">
-                          <label for="check-2">
-                            <span class="checkbox-text">
-2
-<span class="item-numbers"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="check-3">
-                          <label for="check-3">
-                            <span class="checkbox-text">
-3
-<span class="item-numbers"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="check-4">
-                          <label for="check-4">
-                            <span class="checkbox-text">
-5
-<span class="item-numbers"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="check-5">
-                          <label for="check-5">
-                            <span class="checkbox-text">
-5+
-<span class="item-numbers"></span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-                 
-                    </ul>
-                  </div>
-                </div>
-              </aside>
+<aside class="product-sidebar-widget mb-30">
+  <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3-bathroom" role="button" aria-expanded="true">
+    <h6>Bathrooms</h6>
+  </div>
+  <div class="card border-0 shadow-none multi-collapse mt-10 collapse" id="multiCollapseExample3-bathroom">
+    <div class="product-brands limit-list-item">
+      <form method="POST" action="">
+        <ul>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="bathroom-check-1" name="n_bathroom" value="1" onchange="this.form.submit()">
+              <label for="bathroom-check-1">
+                <span class="checkbox-text">
+                  1
+                  <span class="item-numbers"></span>
+                </span>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="bathroom-check-2" name="n_bathroom" value="2" onchange="this.form.submit()">
+              <label for="bathroom-check-2">
+                <span class="checkbox-text">
+                  2
+                  <span class="item-numbers"></span>
+                </span>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="bathroom-check-3" name="n_bathroom" value="3" onchange="this.form.submit()">
+              <label for="bathroom-check-3">
+                <span class="checkbox-text">
+                  3
+                  <span class="item-numbers"></span>
+                </span>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="bathroom-check-4" name="n_bathroom" value="4" onchange="this.form.submit()">
+              <label for="bathroom-check-4">
+                <span class="checkbox-text">
+                  4
+                  <span class="item-numbers"></span>
+                </span>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="bathroom-check-5" name="n_bathroom" value="5" onchange="this.form.submit()">
+              <label for="bathroom-check-5">
+                <span class="checkbox-text">
+                  5
+                  <span class="item-numbers"></span>
+                </span>
+              </label>
+            </div>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </div>
+</aside>
+
               <aside class="product-sidebar-widget">
-                <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample4" role="button" aria-expanded="true">
-                  <h6>Ratings</h6>
-                </div>
-                <div class="card border-0 shadow-none multi-collapse mt-10 collapse " id="multiCollapseExample4">
-                  <div class="product-ratings">
-                    <ul>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="rating-1">
-                          <label for="rating-1">
-                            <span class="stars-rating d-flex align-items-center">
-<span class="star-icon las la-star active"></span>
-                            <span class="star-icon las la-star active"></span>
-                            <span class="star-icon las la-star active"></span>
-                            <span class="star-icon las la-star active"></span>
-                            <span class="star-icon las la-star active"></span>
-                            <span class="checkbox-text">
-and up
-<span class="item-numbers"></span>
-                            </span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="rating-3">
-                          <label for="rating-3">
-                            <span class="stars-rating d-flex align-items-center">
-<span class="star-icon las la-star active"></span>
-                            <span class="star-icon las la-star active"></span>
-                            <span class="star-icon las la-star active"></span>
-                            <span class="star-icon las la-star active"></span>
-                            <span class="star-icon las la-star inactive"></span>
-                            <span class="checkbox-text">
-and up
-<span class="item-numbers"></span>
-                            </span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="rating-4">
-                          <label for="rating-4">
-                            <span class="stars-rating d-flex align-items-center">
-<span class="star-icon las la-star active"></span>
-                            <span class="star-icon las la-star active"></span>
-                            <span class="star-icon las la-star active"></span>
-                            <span class="star-icon las la-star inactive"></span>
-                            <span class="star-icon las la-star inactive"></span>
-                            <span class="checkbox-text">
-and up
-<span class="item-numbers"></span>
-                            </span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="rating-5">
-                          <label for="rating-5">
-                            <span class="stars-rating d-flex align-items-center">
-<span class="star-icon las la-star active"></span>
-                            <span class="star-icon las la-star active"></span>
-                            <span class="star-icon las la-star inactive"></span>
-                            <span class="star-icon las la-star inactive"></span>
-                            <span class="star-icon las la-star inactive"></span>
-                            <span class="checkbox-text">
-and up
-<span class="item-numbers"></span>
-                            </span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="checkbox-theme-default custom-checkbox ">
-                          <input class="checkbox" type="checkbox" id="rating-6">
-                          <label for="rating-6">
-                            <span class="stars-rating d-flex align-items-center">
-<span class="star-icon las la-star active"></span>
-                            <span class="star-icon las la-star inactive"></span>
-                            <span class="star-icon las la-star inactive"></span>
-                            <span class="star-icon las la-star inactive"></span>
-                            <span class="star-icon las la-star inactive"></span>
-                            <span class="checkbox-text">
-and up
-<span class="item-numbers"></span>
-                            </span>
-                            </span>
-                          </label>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </aside>
+  <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample4" role="button" aria-expanded="true">
+    <h6>Ratings</h6>
+  </div>
+  <div class="card border-0 shadow-none multi-collapse mt-10 collapse" id="multiCollapseExample4">
+    <div class="product-ratings">
+      <form method="POST" action="">
+        <ul>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="rating-1" name="rating" value="1" onchange="this.form.submit()">
+              <label for="rating-1">
+                <span class="stars-rating d-flex align-items-center">
+                  <span class="star-icon las la-star active"></span>
+                  <span class="star-icon las la-star active"></span>
+                  <span class="star-icon las la-star active"></span>
+                  <span class="star-icon las la-star active"></span>
+                  <span class="star-icon las la-star active"></span>
+                  <span class="checkbox-text">
+                    and up
+                    <span class="item-numbers"></span>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="rating-3" name="rating" value="2" onchange="this.form.submit()">
+              <label for="rating-3">
+                <span class="stars-rating d-flex align-items-center">
+                  <span class="star-icon las la-star active"></span>
+                  <span class="star-icon las la-star active"></span>
+                  <span class="star-icon las la-star active"></span>
+                  <span class="star-icon las la-star active"></span>
+                  <span class="star-icon las la-star inactive"></span>
+                  <span class="checkbox-text">
+                    and up
+                    <span class="item-numbers"></span>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="rating-4" name="rating" value="3" onchange="this.form.submit()">
+              <label for="rating-4">
+                <span class="stars-rating d-flex align-items-center">
+                  <span class="star-icon las la-star active"></span>
+                  <span class="star-icon las la-star active"></span>
+                  <span class="star-icon las la-star active"></span>
+                  <span class="star-icon las la-star inactive"></span>
+                  <span class="star-icon las la-star inactive"></span>
+                  <span class="checkbox-text">
+                    and up
+                    <span class="item-numbers"></span>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="rating-5" name="rating" value="4" onchange="this.form.submit()">
+              <label for="rating-5">
+                <span class="stars-rating d-flex align-items-center">
+                  <span class="star-icon las la-star active"></span>
+                  <span class="star-icon las la-star active"></span>
+                  <span class="star-icon las la-star inactive"></span>
+                  <span class="star-icon las la-star inactive"></span>
+                  <span class="star-icon las la-star inactive"></span>
+                  <span class="checkbox-text">
+                    and up
+                    <span class="item-numbers"></span>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="checkbox-theme-default custom-checkbox">
+              <input class="checkbox" type="checkbox" id="rating-6" name="rating" value="5" onchange="this.form.submit()">
+              <label for="rating-6">
+                <span class="stars-rating d-flex align-items-center">
+                  <span class="star-icon las la-star active"></span>
+                  <span class="star-icon las la-star inactive"></span>
+                  <span class="star-icon las la-star inactive"></span>
+                  <span class="star-icon las la-star inactive"></span>
+                  <span class="star-icon las la-star inactive"></span>
+                  <span class="checkbox-text">
+                    and up
+                    <span class="item-numbers"></span>
+                  </span>
+                </span>
+              </label>
+            </div>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </div>
+</aside>
+
             </div>
           </div>
         </div>
@@ -387,18 +387,18 @@ and up
       <div class="project-top-right d-flex flex-wrap align-items-center">
         <div class="project-category flex-wrap d-flex align-items-center">
           <p class="fs-14 color-gray text-capitalize">sort by:</p>
-          <div class="project-tap">
-            <div class="dm-select ">
-         <form method="POST" action="">
-    <select name="select-search" class="form-control" onchange="this.form.submit()">
-        <option value="01" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['select-search'] == '01') echo 'selected'; ?>>All</option>
-        <option value="02" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['select-search'] == '02') echo 'selected'; ?>>Latest</option>
-        <option value="03" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['select-search'] == '03') echo 'selected'; ?>>Top Rated</option>
-    </select>
-</form>
+        <div class="project-tap">
+    <div class="dm-select ">
+        <form method="POST" action="">
+            <select name="select-search" class="form-control" onchange="this.form.submit()">
+                <option value="01" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search']) && $_POST['select-search'] == '01') echo 'selected'; ?>>All</option>
+                <option value="02" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search']) && $_POST['select-search'] == '02') echo 'selected'; ?>>Latest</option>
+                <option value="03" <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search']) && $_POST['select-search'] == '03') echo 'selected'; ?>>Top Rated</option>
+            </select>
+        </form>
+    </div>
+</div>
 
-            </div>
-          </div>
         </div>
         <div class="project-icon-selected content-center mt-lg-0 mt-25"></div>
       </div>
@@ -406,26 +406,65 @@ and up
   </div>
   <div class="row product-page-list">
     <?php
-    $sql = "SELECT * FROM listing WHERE status = 'active' and isVerify = 'Verify'";
-    if (isset($_GET['category'])) {
-    $category = $_GET['category'];
-    $sql .= " AND type = '$category'";
+ $sql = "SELECT * FROM listing WHERE status = 'active' and isVerify = 'Verify'";
+if (isset($_POST['place_search'])) {
+    $place_search = $_POST['place_search'];
 }
-if (isset($_GET['n_bedroom'])) {
-    $n_bedroom = $_GET['n_bedroom'];
+
+if (isset($_POST['location_search'])) {
+    $location_search = $_POST['location_search'];
+}
+
+if (isset($place_search)) {
+    $sql .= " AND (listing_name LIKE '%$place_search%' OR description LIKE '%$place_search%' OR gender_req LIKE '%$place_search%' OR house_rules LIKE '%$place_search%')";
+}
+
+if (isset($location_search)) {
+    $sql .= " AND (address1 LIKE '%$location_search%' OR address2 LIKE '%$location_search%' OR address3 LIKE '%$location_search%' OR address4 LIKE '%$location_search%')";
+}
+
+if (isset($_GET['category'])) {
+    $category = $_GET['category'];
+    if ($category !== 'alltype') {
+        $sql .= " AND type = '$category'";
+    }else{}
+}
+if (isset($_POST['n_bedroom'])) {
+    $n_bedroom = $_POST['n_bedroom'];
     if ($n_bedroom === '5+') {
         $sql .= " AND n_bedroom >= 5";
     } else {
         $sql .= " AND n_bedroom = '$n_bedroom'";
     }
 }
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search'])) {
-        if ($_POST['select-search'] == '02') {
-            $sql .= " ORDER BY created_at DESC";
-        } elseif ($_POST['select-search'] == '03') {
-            $sql .= " AND listing_id IN (SELECT listing_id FROM review GROUP BY listing_id HAVING AVG(rating) >= 4)";
-        }
+if (isset($_POST['n_bathroom'])) {
+    $n_bathroom = $_POST['n_bathroom'];
+    if ($n_bathroom === '5+') {
+        $sql .= " AND n_bathroom >= 5";
+    } else {
+        $sql .= " AND n_bathroom = '$n_bathroom'";
     }
+}
+if (isset($_POST['rating'])) {
+    $rating = $_POST['rating'];
+    $sql .= " AND rating >= $rating"; // Assuming rating is a numeric value in the database
+}
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search'])) {
+    $selectSearch = $_POST['select-search'];
+
+    if ($selectSearch === '01') {
+        // All
+    } elseif ($selectSearch === '02') {
+        $sql .= " ORDER BY created_at DESC";
+    } elseif ($selectSearch === '03') {
+        $sql .= " AND listing_id IN (SELECT listing_id FROM review GROUP BY listing_id HAVING AVG(rating) >= 4)";
+    }
+} else {
+    // Set a default value if the key is not set
+    $selectSearch = '01';
+}
+
+
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         // output data of each row
