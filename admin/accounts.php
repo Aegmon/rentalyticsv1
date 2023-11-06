@@ -13,6 +13,19 @@ if (isset($_POST['user_id']) && isset($_POST['verify'])) {
         echo "Error updating record: " . $conn->error;
     }
 }
+if (isset($_POST['user_id']) && isset($_POST['unverify'])) {
+    $user_id = $_POST['user_id'];
+    $verify = $_POST['verify'];
+
+    // Update isVerify in the credentials table
+    $sql_update = "UPDATE credentials SET isVerify = '$verify' WHERE user_id = '$user_id'";
+
+    if ($conn->query($sql_update) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+}
 ?>
 <div class="contents">
   <div class="container-fluid">
@@ -60,12 +73,12 @@ if (isset($_POST['user_id']) && isset($_POST['verify'])) {
               <span class="userDatatable-title">status</span>
             </th>
             <th>
-              <span class="userDatatable-title float-end">action</span>
+              <span class="userDatatable-title text-center ">action</span>
             </th>
           </tr>
         </thead>
         <tbody>
-      <?php
+<?php
 
 // SQL query
 $sql = "SELECT 
@@ -73,15 +86,15 @@ $sql = "SELECT
             c.email,
             c.user_type,
             c.isVerify,
+               r.id_picture,
             CASE
                 WHEN r.user_id IS NOT NULL THEN r.name
                 WHEN t.user_id IS NOT NULL THEN t.name
-          
             END AS name
         FROM credentials c
         LEFT JOIN owner r ON c.user_id = r.user_id
-        LEFT JOIN tenant t ON c.user_id = t.user_id Where c.user_type != 'admin'";
-
+        LEFT JOIN tenant t ON c.user_id = t.user_id 
+        WHERE c.user_type != 'admin'";
 
 $result = $conn->query($sql);
 
@@ -98,17 +111,42 @@ if ($result->num_rows > 0) {
             echo "<td><div class='userDatatable-content d-inline-block'><span class='bg-opacity-success  color-success rounded-pill userDatatable-content-status active'>active</span></div></td>";
         }
         echo "<td>
-        <ul class='orderDatatable_actions mb-0 d-flex flex-wrap'>
-          
-            <li>
+        <ul >
                 <form action='' method='post'>
                     <input type='hidden' name='user_id' value='" . $row["user_id"] . "'>
-                    <button type='submit' name='verify' value='1' class='edit'><i class='uil uil-edit'></i></button>
-                </form>
-            </li>
+                    <button type='submit' name='verify' value='1' class='btn btn-primary btn-default btn-rounded btn-transparent-primary '><i class='uil uil-check'></i></button>
+                    <button type='submit' name='unverify' value='0'  class='btn btn-primary btn-default btn-rounded btn-transparent-primary '><i class='uil uil-trash'></i></button> ";
+
+        if ($row["user_type"] == 'owner') {
+            echo "<button type='button' class='btn btn-primary btn-default btn-rounded btn-transparent-primary ' data-bs-toggle='modal' data-bs-target='#ownerModal" . $row["user_id"] . "'><i class='uil uil-eye'></i></button>";
+        }
         
+        echo "</form>
+            </li>
         </ul>
-    </td>";
+    </td>
+    <div class='modal fade' id='ownerModal" . $row["user_id"] . "' tabindex='-1' role='dialog' aria-labelledby='ownerModalLabel' aria-hidden='true'>
+     <div class='modal-dialog modal-dialog-centered'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h5 class='modal-title' id='ownerModalLabel'>Owner ID picture</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+            <div class='text-center' style='width:50%;'>
+             <img src='../uploads/". $row['id_picture'] ."' width='400'>
+              </div>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    ";
 
         echo "</tr>";
     }
