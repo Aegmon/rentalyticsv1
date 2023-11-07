@@ -57,12 +57,11 @@ if (isset($_POST['add_dormitory'])) {
             <div class="row ">
               <div class="col-lg-12">
                 <div class="breadcrumb-main">
-                  <h4 class="text-capitalize breadcrumb-title">Analytics</h4>
                   <div class="breadcrumb-action justify-content-center flex-wrap">
                     <nav aria-label="breadcrumb">
                       <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="uil uil-estate"></i>Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Analytics</li>
+                        <li class="breadcrumb-item active" aria-current="page">Lisitng</li>
                       </ol>
                     </nav>
                   </div>
@@ -114,14 +113,10 @@ if (isset($_POST['add_dormitory'])) {
               <div class="breadcrumb-main user-member justify-content-sm-between ">
                 <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
                   <div class="d-flex align-items-center user-member__title justify-content-center me-sm-25">
-                    <h4 class="text-capitalize fw-500 breadcrumb-title">Listing</h4>
-                    <span class="sub-title ms-sm-25 ps-sm-25">Home</span>
+                    <h2 class="text-capitalize fw-500 breadcrumb-title text-decoration-underline ">Listing</h2>
                   </div>
                   
-                  <form action="http://demo.dashboardmarket.com/" class="d-flex align-items-center user-member__form my-sm-0 my-2">
-                    <img src="img/svg/search.svg" alt="search" class="svg">
-                    <input class="form-control me-sm-2 border-0 box-shadow-none" type="search" placeholder="Search by Name" aria-label="Search">
-                  </form>
+                
                 </div>
                 
                 <div class="action-btn">
