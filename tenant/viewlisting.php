@@ -358,57 +358,63 @@ if ($result->num_rows > 0) {
 </div>
 <hr>
  <div class="row">
-        
-    <div class="col-xxl-4 col-md-6 mb-25">
-       <div class="card">
-              <div class="user-group px-30 pt-30 pb-25 radius-xl">
-                <div class="border-bottom">
-                  <div class="media user-group-media d-flex justify-content-between">
-                    <div class="media-body d-flex align-items-center">
-                      <img class="me-20 wh-70 rounded-circle bg-opacity-primary" src="img/ugl1.png" alt="author">
-                      <div>
-                  
-                          <h6 class="mt-0  fw-500">Juan Dela Cruz</h6>
-                       
-                        <p class="fs-13 color-light mb-0">San Francisco, Tarlac</p>
-                      </div>
-                    </div>
-                    <div class="mt-n15">
-                    
-                    </div>
-                  </div>
-               
-                    <p class="mt-15">Lorem ipsum dolor amet, consetetur sadipscing elitr sed diam nonumy eirmod dolor ame.</p>
-              
-               
-                </div>
-                      <div class="stars-rating  align-items-center">
-        <?php
-            $numStars = intval($rating); // Get the integer part of the rating
-            $decimal = $rating - $numStars; // Get the decimal part
+               <?php 
+$sql = "SELECT * FROM review
+JOIN tenant ON review.tenant_id = tenant.tenant_id where review.listing_id = '$listing_id'";
+$result = $conn->query($sql);
 
-            for ($i = 0; $i < 5; $i++) {
-                if ($i < $numStars) {
-                    echo '<span class="star-icon las la-star active"></span>';
-                } else {
-                    if ($decimal > 0) {
-                        echo '<span class="star-icon las la-star-half-alt active"></span>';
-                        $decimal = 0; // Set the decimal part to 0 after using it
-                    } else {
-                        echo '<span class="star-icon las la-star"></span>';
-                    }
-                }
-            }
-        ?>
-        <span class="stars-rating__point">
-            <?php echo $rating == intval($rating) ? number_format($rating, 0) : number_format($rating, 1); ?>
-        </span>
-   
-    </div>
-              </div>
-                 </div>
+if ($result->num_rows > 0) {
+    // Output data of each row
+    while($row = $result->fetch_assoc()) {
+?>
+    <div class="col-xxl-4 col-md-6 mb-25">
+        <div class="card">
+            <div class="user-group px-30 pt-30 pb-25 radius-xl">
+                <div class="border-bottom">
+                    <div class="media user-group-media d-flex justify-content-between">
+                        <div class="media-body d-flex align-items-center">
+                            <img class="me-20 wh-70 rounded-circle bg-opacity-primary" src="img/user.png" alt="author">
+                            <div>
+                                <h6 class="mt-0  fw-500"><?php echo $row['name']?></h6>
+                            </div>
+                        </div>
+                        <div class="mt-n15"></div>
+                    </div>
+                    <p class="mt-15"><?php echo $row['feedback']?></p>
+                </div>
+                <div class="stars-rating align-items-center">
+                    <?php
+                        $rating = $row['rating']; // Get the rating from the row
+                        $numStars = intval($rating); // Get the integer part of the rating
+                        $decimal = $rating - $numStars; // Get the decimal part
+
+                        for ($i = 0; $i < 5; $i++) {
+                            if ($i < $numStars) {
+                                echo '<span class="star-icon las la-star active"></span>';
+                            } else {
+                                if ($decimal > 0) {
+                                    echo '<span class="star-icon las la-star-half-alt active"></span>';
+                                    $decimal = 0; // Set the decimal part to 0 after using it
+                                } else {
+                                    echo '<span class="star-icon las la-star"></span>';
+                                }
+                            }
+                        }
+                    ?>
+                    <span class="stars-rating__point">
+                        <?php echo $rating == intval($rating) ? number_format($rating, 0) : number_format($rating, 1); ?>
+                    </span>
+                </div>
             </div>
-         
+        </div>
+    </div>
+<?php
+    }
+} else {
+    echo "No Reviews Yet";
+}
+?>  
+
   
       </div>
 

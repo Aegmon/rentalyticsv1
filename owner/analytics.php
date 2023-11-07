@@ -740,136 +740,177 @@ GIS
     </script>
 
   <!-- pricing -->
-  <script>
-     var options = {
-          series: [{
+<?php
+// Assuming you have already established a database connection
+// Execute the SQL query to fetch rent prices per type
+$query = "SELECT type, rentprice FROM listing";
+$result = mysqli_query($conn, $query);
+
+// Initialize an associative array to store rent prices for each type
+$rentPrices = array();
+while ($row = mysqli_fetch_assoc($result)) {
+    $type = $row['type'];
+    $rentPrice = $row['rentprice'];
+    if (!array_key_exists($type, $rentPrices)) {
+        $rentPrices[$type] = array();
+    }
+    $rentPrices[$type][] = $rentPrice;
+}
+
+// Prepare the data array for the chart
+$categories = array();
+$seriesData = array();
+foreach ($rentPrices as $type => $prices) {
+    $categories[] = $type;
+    $averageRentPrice = array_sum($prices) / count($prices);
+    $seriesData[] = round($averageRentPrice, 2);
+}
+?>
+
+<?php
+// Function to format the type strings
+function formatType($type)
+{
+    $formattedType = str_replace("_", " ", $type);
+    $formattedType = ucwords($formattedType);
+    return $formattedType;
+}
+
+// Assuming you have already established a database connection
+// Execute the SQL query to fetch rent prices per type
+$query = "SELECT type, rentprice FROM listing";
+$result = mysqli_query($conn, $query);
+
+// Initialize an associative array to store rent prices for each type
+$rentPrices = array();
+while ($row = mysqli_fetch_assoc($result)) {
+    $type = formatType($row['type']);
+    $rentPrice = $row['rentprice'];
+    if (!array_key_exists($type, $rentPrices)) {
+        $rentPrices[$type] = array();
+    }
+    $rentPrices[$type][] = $rentPrice;
+}
+
+// Prepare the data array for the chart
+$categories = array();
+$seriesData = array();
+foreach ($rentPrices as $type => $prices) {
+    $categories[] = $type;
+    $averageRentPrice = array_sum($prices) / count($prices);
+    $seriesData[] = round($averageRentPrice, 2);
+}
+?>
+
+<script>
+    // Function to format the type strings in JavaScript
+    function formatType(type) {
+        return type.replace(/_/g, ' ').replace(/\b\w/g, function (c) {
+            return c.toUpperCase();
+        });
+    }
+
+    var options = {
+        series: [{
             name: "Price",
-            data: [1500, 2000, 1200]
+            data: <?php echo json_encode($seriesData); ?>
         }],
-          chart: {
-          height: 350,
-          type: 'line',
-          zoom: {
-            enabled: false
-          }
+        chart: {
+            height: 350,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
         },
         dataLabels: {
-          enabled: true
+            enabled: true
         },
         stroke: {
-          curve: 'straight'
+            curve: 'straight'
         },
         title: {
-          text: 'Pricing',
-          align: 'center',
-          style: {
-            fontSize: '20px'
-          }
+            text: 'Pricing',
+            align: 'center',
+            style: {
+                fontSize: '20px'
+            }
         },
         grid: {
-          row: {
-            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
-          },
+            row: {
+                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                opacity: 0.5
+            },
         },
         xaxis: {
-          categories: ['Sep', 'Oct', 'Nov'],
-          labels: {
-          show: true,
-          style: {
-            fontSize: '16px',
-            fontWeight:'bold'
-          }
-          }
+            categories: <?php echo json_encode(array_map('formatType', $categories)); ?>,
+            labels: {
+                show: true,
+                style: {
+                    fontSize: '16px',
+                    fontWeight: 'bold'
+                }
+            }
         }
-        };
+    };
 
-        var chart = new ApexCharts(document.querySelector("#chartline"), options);
-        chart.render();
-      
-  </script>
+    var chart = new ApexCharts(document.querySelector("#chartline"), options);
+    chart.render();
+</script>
+</script>
+
 
   <!-- count of propeties per barangays -->
-  <script>
+<?php
+
+$query = "SELECT `address2` FROM `listing`";
+$result = mysqli_query($conn, $query);
+
+// Initialize an associative array to keep track of counts for each address
+$addressCount = array();
+while ($row = mysqli_fetch_assoc($result)) {
+    $address = $row['address2'];
+    if (array_key_exists($address, $addressCount)) {
+        $addressCount[$address]++;
+    } else {
+        $addressCount[$address] = 1;
+    }
+}
+
+// Prepare the data array for the chart
+$chartData = array();
+foreach ($addressCount as $address => $count) {
+    $chartData[] = array('x' => $address, 'y' => $count);
+}
+?>
+
+<script>
+    var chartData = <?php echo json_encode($chartData); ?>;
+
     var options = {
-          series: [
-          {
-            data: [
-              {
-                x: 'New Delhi',
-                y: 218
-              },
-              {
-                x: 'Kolkata',
-                y: 149
-              },
-              {
-                x: 'Mumbai',
-                y: 184
-              },
-              {
-                x: 'Ahmedabad',
-                y: 55
-              },
-              {
-                x: 'Bangaluru',
-                y: 84
-              },
-              {
-                x: 'Pune',
-                y: 31
-              },
-              {
-                x: 'Chennai',
-                y: 70
-              },
-              {
-                x: 'Jaipur',
-                y: 30
-              },
-              {
-                x: 'Surat',
-                y: 44
-              },
-              {
-                x: 'Hyderabad',
-                y: 68
-              },
-              {
-                x: 'Lucknow',
-                y: 28
-              },
-              {
-                x: 'Indore',
-                y: 19
-              },
-              {
-                x: 'Kanpur',
-                y: 29
-              }
-            ]
-          }
+        series: [
+            {
+                data: chartData
+            }
         ],
-          legend: {
-          show: false
+        legend: {
+            show: false
         },
-        
         chart: {
-          height: 350,
-          type: 'treemap',
+            height: 350,
+            type: 'treemap',
         },
         title: {
-          text: 'Competition',
-          align: 'center',
-          style: {
-            fontSize: '20px'
-          }
+            text: 'Competition',
+            align: 'center',
+            style: {
+                fontSize: '20px'
+            }
         }
-        };
+    };
 
-        var chart = new ApexCharts(document.querySelector("#charttreemap"), options);
-        chart.render();
-  </script>
+    var chart = new ApexCharts(document.querySelector("#charttreemap"), options);
+    chart.render();
+</script>
 
     <!-- customer preferences -->
     <script>

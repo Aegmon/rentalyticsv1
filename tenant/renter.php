@@ -21,7 +21,23 @@ include('sidebar.php');
     }
 }
       
-    
+if (isset($_GET['feedback'])) {
+    $listing_id = $_POST['listing_id'];
+    $rating = $_POST['rating'];
+    $feedback = $_POST['feedback'];
+
+    // Assuming $conn is your database connection
+    $stmt = $conn->prepare("INSERT INTO review (tenant_id, rating, feedback, listing_id) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("issi", $id, $rating, $feedback, $listing_id);
+
+    // Execute the statement
+    if ($stmt->execute() === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+}  
+
 
 ?>
 
@@ -86,20 +102,19 @@ $sql = "SELECT
             a.status as status,
             l.listing_id,
             l.listing_name,
-              l.rentprice,
-               l.reservationfee,
+            l.rentprice,
+            l.reservationfee,
             a.application_id,
             a.date_of_application
         FROM application a
         LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
         LEFT JOIN credentials c ON t.user_id = c.user_id
         LEFT JOIN listing l ON l.listing_id = a.listing_id
-        WHERE l.owner_id = '$id' AND a.status = 'approved'";
+        WHERE l.owner_id = '$id'";
 
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    // output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
         echo "<td><div class='userDatatable-content'>" . $row["email"] . "</div></td>";
@@ -110,35 +125,79 @@ if ($result->num_rows > 0) {
         $application_date = date('Y-m-d', strtotime($row["date_of_application"])); // assuming date_of_application is in Y-m-d format
 
         // Check if there is a payment for this month
-        $payment_sql = "SELECT * FROM payment WHERE application_id = '" . $row["application_id"] . "' AND payment_date = '" . date('Y-m-d') . "'";
+        $payment_sql = "SELECT * FROM payment WHERE application_id = '" . $row["application_id"] . "'";
         $payment_result = $conn->query($payment_sql);
 
         if ($payment_result->num_rows > 0) {
             echo "<td>
-           
-              
                 <div class='userDatatable-content'>paid </div>
             </td>";
         } else {
             echo "<td>
-              
                 <div class='userDatatable-content'>Not paid</div>
             </td>";
         }
-echo '<td>
-        <form action="payment.php" method="POST">
-            <input type="hidden" name="application_id" value="' . $row["application_id"] . '">';
 
-// Manipulate the reservation fee to add two zeros
-$reservation_fee_in_whole_number = $row["reservationfee"] * 100;
+        if ($row["status"] == "renter") {
+            echo '<td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal' . $row["application_id"] . '">
+                    Add Review
+                </button>
+            </td>';
+        } else {
+            echo '<td>
+                <form action="payment.php" method="POST">
+                    <input type="hidden" name="application_id" value="' . $row["application_id"] . '">';
 
-echo '<input type="hidden" name="amount" value="'. $reservation_fee_in_whole_number . '">
-      <button type="submit" name="pay" class="btn btn-primary">Make Payment</button>
-      </form>
-      </td>';
-echo "</tr>";
+            // Manipulate the reservation fee to add two zeros
+            $reservation_fee_in_whole_number = $row["reservationfee"] * 100;
+
+            echo '<input type="hidden" name="amount" value="' . $reservation_fee_in_whole_number . '">
+                <button type="submit" name="pay" class="btn btn-primary">Make Payment</button>
+                </form>
+            </td>';
+        }
+        echo "</tr>";
+
+        // Adding the review modal
+        echo '<div class="modal fade" id="reviewModal' . $row["application_id"] . '" tabindex="-1" aria-labelledby="reviewModal' . $row["application_id"] . 'Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="reviewModal' . $row["application_id"] . 'Label">Leave a Review</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                  <form action="" method="post" enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="new-member-modal">
+            <div class="form-group mb-20">
+        <input type="hidden" class="form-control" name="listing_id" value="' . $row["listing_id"] . '">
+
+                <input type="number" class="form-control" name="rating" placeholder=" Rating">
+            </div>
+           
+            <div class="form-group mb-20">
+                <textarea class="form-control" name="feedback" rows="3" placeholder="Feeback...."></textarea>
+            </div>
+          
+        
+         
+         
+            </div>
+            <div class="button-group d-flex pt-25">
+                <button type="submit" name="feedback" class="btn btn-primary btn-default btn-squared text-capitalize">Add</button>
+                <button type="button" class="btn btn-light btn-default btn-squared fw-400 text-capitalize b-light color-light" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</form>
+                   
+                </div>
+            </div>
+        </div>';
     }
-} 
+}
+
 ?>
 
 
