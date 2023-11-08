@@ -497,64 +497,66 @@ GIS
     
 
   
-    <script>    
+   <script>
+  var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560'];
+  var options = {
+    series: [{
+      data: [<?php echo $total_apartment_count ?>, <?php echo  $total_dormitory_count ?>, <?php echo  $total_bedspace_count ?>, <?php echo  $total_boarding_house_count ?>]
+    }],
+    chart: {
+      height: 350,
+      width: 1000,
+      type: 'bar',
+      events: {
+        click: function (chart, w, e) {
+          // console.log(chart, w, e)
+        }
+      }
+    },
+    colors: colors,
+    plotOptions: {
+      bar: {
+        borderRadius: 5,
+        columnWidth: '45%',
+        distributed: true,
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    legend: {
+      show: false
+    },
+    xaxis: {
+      categories: [
+        'Appartment',
+        'Dormitory',
+        'Bed Space',
+        'Boarding House',
+      ],
+      labels: {
+        style: {
+          colors: '#000',
+          fontSize: '18px'
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        formatter: function (val) {
+          return Math.round(val);
+        }
+      }
+    }
+  };
 
-    var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560'];
-      
-        var options = {
-          series: [{
-          data: [<?php echo $total_apartment_count ?>,<?php echo  $total_dormitory_count ?>,<?php echo  $total_bedspace_count ?>,<?php echo  $total_boarding_house_count ?>]
-        }],
-          chart: {
-          height:350 ,
-          width:1000,
-          type: 'bar',
-          events: {
-            click: function(chart, w, e) {
-              // console.log(chart, w, e)
-            }
-          }
-        },
-        colors:colors,
-        plotOptions: {
-          bar: {
-            borderRadius: 5,
-            columnWidth: '45%',
-            distributed: true,
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        legend: {
-          show: false
-        },
-        xaxis: {
-          categories: [
-            'Appartment',
-            'Dormitory',
-            'Bed Space',
-            'Boarding House',
-          ],
+  var chart = new ApexCharts(document.querySelector("#chartbar"), options);
+  chart.render();
+</script>
 
-          labels: {
-            style: {
-              colors: '#000',
-              fontSize: '18px'
-            }
-          }
-        },
-       
-        };
-
-        var chart = new ApexCharts(document.querySelector("#chartbar"), options);
-        chart.render();
-      
-        
-        </script>
           <script>
   
-        var colors = ['#26a0fc','#f41fad']
+        var colors = ['#26a0fc','#00E396']
         var options = {
           series: [<?php echo $total_male_count?>, <?php echo $total_female_count?>],
           chart: {
@@ -584,7 +586,7 @@ GIS
       
     </script>
               <script>
-      var colors = ['#26a0fc','#f41fad', '#ffe15d']
+      var colors = ['#26a0fc','#00E396', '#ffe15d']
         var options = {
           series: [<?php echo $total_male_listing_count ;?>, <?php echo $total_female_listing_count ;?>,<?php echo $total_both_listing_count ;?>],
           chart: {
@@ -616,7 +618,7 @@ GIS
       
     </script>
          <script>
-      var colors = ['#26a0fc','#f41fad', '#ffe15d']
+      var colors = ['#26a0fc','#00E396', '#ffe15d']
       
         var options = {
           series: [<?php echo $total_male_boarding_house_count ;?>, <?php echo $total_female_boarding_house_count ;?>,<?php echo $total_both_boarding_house_count ;?>],
@@ -647,7 +649,7 @@ GIS
       
     </script>
          <script>
-      var colors = ['#26a0fc','#f41fad', '#ffe15d']
+      var colors = ['#26a0fc','#00E396', '#ffe15d']
       
         var options = {
          series: [<?php echo $total_male_bedspace_count ;?>, <?php echo $total_female_bedspace_count ;?>,<?php echo $total_both_bedspace_count ;?>],
@@ -741,12 +743,10 @@ GIS
 
   <!-- pricing -->
 <?php
-// Assuming you have already established a database connection
-// Execute the SQL query to fetch rent prices per type
+
 $query = "SELECT type, rentprice FROM listing";
 $result = mysqli_query($conn, $query);
 
-// Initialize an associative array to store rent prices for each type
 $rentPrices = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $type = $row['type'];

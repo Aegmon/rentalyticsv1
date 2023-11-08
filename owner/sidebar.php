@@ -193,6 +193,13 @@
                  
                 </a>
                </li>
+                  <li>
+                <a href="message.php" class>
+                          <span class="nav-icon uil uil-comment"></span>
+                  <span class="menu-text">Chat</span>
+                 
+                </a>
+               </li>
             </ul>
           </div>
         </div>
