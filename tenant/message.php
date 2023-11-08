@@ -809,7 +809,7 @@ if (isset($_GET['feedback'])) {
                             <img src="img/author/1.jpg" class="align-self-start me-15 wh-46" alt="img">
                           </div>
                           <div class="media-body">
-                            <div class="chat-text-box__content">
+                            <div class="chat-text-box__content">composer require guzzlehttp/guzzle
                               <div class="chat-text-box__title d-flex align-items-center">
                                 <h6 class="fs-14">Domnic Harys</h6>
                                 <span class="chat-text-box__time fs-12 color-light fw-400 ms-15">8:30
