@@ -143,9 +143,9 @@ if (isset($_POST['submit'])) {
                         <input class="checkbox" type="checkbox" id="admin-1" required>
                         <label for="admin-1">
                             <span class="checkbox-text">Creating an account means you’re okay with our
-                                <a href="#" class="color-primary">Terms of Service</a> and
-                                <a href="#" class="color-primary">Privacy Policy</a>
-                                my preference</span>
+                                <a href="#"  data-bs-toggle="modal" data-bs-target="#exampleModalLong" class="color-primary">
+                                  Terms of Service and Privacy Policy</a> 
+                           
                         </label>
                     </div>
                 </div>
@@ -158,7 +158,49 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 </form>
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">TERMS OF SERVICE AND PRIVACY POLICIES</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<p ><strong>TERMS OF SERVICE</strong></p>
+<p style="text-indent: 50px;">RENTALYTICS' major goal is to give Tarlac City's renters and landlords a single forum for 
+communication and business dealings. The Tarlac Tourism Office will manage the system.</p>
+<p>By using RENTALYTICS, you agree to the following Terms of Service:</p>
+<ul style="list-style-type: none;">
+  <li style="text-indent: 30px;">• You must be at least 18 years old to use RENTALYTICS.</li>
+  <li style="text-indent: 30px;">• You must provide accurate and up-to-date information about yourself.</li>
+  <li style="text-indent: 30px;">• You must not use RENTALYTICS for illegal or unauthorized purposes.</li>
+  <li style="text-indent: 30px;">• You must not use RENTALYTICS to harass or bully other users.</li>
+  <li style="text-indent: 30px;">• You must not post or transmit any content that is offensive, harmful, or discriminatory.</li>
+</ul>
+<p class="mt-5"><strong>Privacy Policy</strong></p>
 
+<p style="text-indent: 50px;">	When you use the service, RENTALYTICS records information about you, including your name, email address, and 
+contact details. We employ this data to both deliver the service you've requested and enhance it. Except as required to deliver
+ the service, we never sell or otherwise disclose the information that you supply to us.</p>
+
+<p style="text-indent: 50px;">We take measures to protect against unauthorized access, use, and disclosure of your information and 
+we treat it with confidentiality. You have the right to seek access to your information and the correction 
+of any errors. Additionally, you have the option to ask us to remove your data.</p>
+
+<p class="mt-5"><strong>Changes to Terms of Service and Privacy Policy</strong></p>
+<p style="text-indent: 50px;">We may change the Terms of Service and Privacy Policy from time to time. You will be notified of any
+changes by email or by posting the changes on the RENTALYTICS website.</p>
+<p style="text-indent: 50px;">By continuing to use RENTALYTICS after changes have been made to the Terms of Service and Privacy Policy, you agree to the new terms.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    
+      </div>
+    </div>
+  </div>
+</div>
 
              
                   <div class="admin-topbar">
