@@ -1,15 +1,11 @@
 <?php
 include('sidebar.php');
-  // Check if the required fields are set
-   
-        // Get the value from the form
+
     if (isset($_GET['application_id'])) {
     $application_id = $_GET['application_id'];
     $payment_date = date('Y-m-d'); // Current date
 
-    // Assuming you have already established the database connection
-    // Replace $conn with your actual database connection variable
-    // Prepare and bind the SQL statement
+ 
     $stmt = $conn->prepare("INSERT INTO payment (application_id, payment_date) VALUES (?, ?)");
     $stmt->bind_param("is", $application_id, $payment_date);
 
@@ -26,11 +22,10 @@ if (isset($_GET['feedback'])) {
     $rating = $_POST['rating'];
     $feedback = $_POST['feedback'];
 
-    // Assuming $conn is your database connection
+
     $stmt = $conn->prepare("INSERT INTO review (tenant_id, rating, feedback, listing_id) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("issi", $id, $rating, $feedback, $listing_id);
 
-    // Execute the statement
     if ($stmt->execute() === TRUE) {
         echo "New record created successfully";
     } else {
@@ -121,16 +116,17 @@ if ($result->num_rows > 0) {
         echo "<td><div class='userDatatable-content'>" . $row["tenant_name"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["listing_name"] . "</div></td>";
 
-        // Check if there is a payment for this month
-        $application_date = date('Y-m-d', strtotime($row["date_of_application"])); // assuming date_of_application is in Y-m-d format
 
-        // Check if there is a payment for this month
+
         $payment_sql = "SELECT * FROM payment WHERE application_id = '" . $row["application_id"] . "'";
         $payment_result = $conn->query($payment_sql);
 
         if ($payment_result->num_rows > 0) {
             echo "<td>
                 <div class='userDatatable-content'>paid </div>
+            </td>
+            <td>
+             
             </td>";
         } else {
             echo "<td>
@@ -149,7 +145,7 @@ if ($result->num_rows > 0) {
                 <form action="payment.php" method="POST">
                     <input type="hidden" name="application_id" value="' . $row["application_id"] . '">';
 
-            // Manipulate the reservation fee to add two zeros
+    
             $reservation_fee_in_whole_number = $row["reservationfee"] * 100;
 
             echo '<input type="hidden" name="amount" value="' . $reservation_fee_in_whole_number . '">
@@ -159,7 +155,6 @@ if ($result->num_rows > 0) {
         }
         echo "</tr>";
 
-        // Adding the review modal
         echo '<div class="modal fade" id="reviewModal' . $row["application_id"] . '" tabindex="-1" aria-labelledby="reviewModal' . $row["application_id"] . 'Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
