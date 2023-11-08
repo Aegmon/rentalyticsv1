@@ -1,4 +1,10 @@
 <?php
+include('session.php');
+if (isset($_GET['owner_id'])) {
+    $owner_id = $_GET['owner_id'];
+
+?>
+ <?php
 
 $sql = "SELECT m.owner_id, o.name, m.message, m.date, m.message_from FROM message m
         LEFT JOIN owner o ON m.owner_id = o.owner_id
@@ -25,7 +31,7 @@ if ($result->num_rows > 0) {
                                     <span class="chat-text-box__time fs-12 color-light fw-400"><?php echo date('H:i a', strtotime($row['date'])); ?></span>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-end">
-                                    <div class="chat-text-box__subtitle p-20 bg-deep">
+                                    <div class="chat-text-box__subtitle p-20 bg-deep" style="min-width: 150px; max-width: 70%; word-wrap: break-word;">
                                         <p class="color-gray"><?php echo $row['message']; ?></p>
                                     </div>
                                 </div>
@@ -35,7 +41,7 @@ if ($result->num_rows > 0) {
                                     <span class="chat-text-box__time fs-12 color-light fw-400 ms-15"><?php echo date('H:i a', strtotime($row['date'])); ?></span>
                                 </div>
                                 <div class="d-flex align-items-center mb-20 mt-10">
-                                    <div class="chat-text-box__subtitle p-20 bg-primary">
+                                    <div class="chat-text-box__subtitle p-20 bg-primary" style="min-width: 150px; max-width: 70%; word-wrap: break-word;">
                                         <p class="color-white"><?php echo $row['message']; ?></p>
                                     </div>
                                 </div>
@@ -49,6 +55,7 @@ if ($result->num_rows > 0) {
     }
 } else {
     echo "No Message";
-}
+}}
 
 ?>
+

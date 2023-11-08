@@ -1,5 +1,17 @@
 <?php
 include('sidebar.php');
+if (isset($_POST['delete_listing'])) {
+    $listing_id = $_POST['listing_id'];
+
+    // Update the status to inactive
+    $sql = "UPDATE listing SET status='inactive' WHERE listing_id=$listing_id";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+}
 
 if (isset($_POST['add_dormitory'])) {
     $dormitory_name = $_POST['dormitory_name'];
@@ -235,11 +247,11 @@ if ($result->num_rows > 0) {
                 </div>
                 <div class="users-list__button mt-xl-0 mt-15">
                     <a  href="viewlisting.php?listing_id='.$row["listing_id"].'"class="btn btn-secondary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow">View Place</a>
-                    <button type=button class="btn btn-danger fs-6">Delete</button>
-                  <!---added po delete button--->
+                
+          
                     <form action="" method="post">
                         <input type="hidden" name="listing_id" value="'.$row["listing_id"].'">
-                        
+                           <button type="submit" name="delete_listing"  class="btn btn-danger fs-6">Delete</button>
                     </form>
                 </div>
             </div>

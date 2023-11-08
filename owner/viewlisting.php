@@ -391,7 +391,6 @@ if ($result->num_rows > 0) {
            <select class="form-control ih-medium ip-light radius-xs b-light px-15" name="status">
     <option value="">Select Status</option>
     <option value="active" <?php echo isset($status) && $status === 'active' ? 'selected' : ''; ?>>Active</option>
-    <option value="inactive" <?php echo isset($status) && $status === 'inactive' ? 'selected' : ''; ?>>Inactive</option>
     <option value="rented" <?php echo isset($status) && $status === 'rented' ? 'selected' : ''; ?>>Rented</option>
 </select>
 

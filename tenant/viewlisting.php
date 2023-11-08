@@ -3,107 +3,16 @@ include('sidebar.php');
    $listing_id = $_GET['listing_id'];
 ?>
 <?php
-if (isset($_POST['add'])) {
-    $type = $_POST['type'];
-    $gender = $_POST['gender'];
-    $price = $_POST['price'];
-    $reservation = $_POST['reservation'];
-    $name = $_POST['name'];
-    $address1 = $_POST['address1'];
-    $address2 = $_POST['address2'];
-    $address3 = $_POST['address3'];
-    $address4 = $_POST['address4'];
-    $desc = $_POST['desc'];
-    $no_bed = $_POST['no_bed'];
-    $no_bath = $_POST['no_bath'];
-    $house_rules = $_POST['house_rules'];
-   $lat = $_POST['lat'];
-      $lng = $_POST['lng'];
-    $sql = "INSERT INTO listing (listing_name, address1, address2, address3, address4, description, n_bedroom, n_bathroom, house_rules, rentprice, reservationfee, owner_id, gender_req,lat,lng) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param(
-        "ssssssissssisss",
-        $name,
-        $address1,
-        $address2,
-        $address3,
-        $address4,
-        $desc,
-        $no_bed,
-        $no_bath,
-        $house_rules,
-        $price,
-        $reservation,
-        $id,
-        $gender,
-          $lat,
-        $lng
-    );
+if (isset($_POST['send'])) {
+    $msg = $_POST['msg'];
+    $owner_id = $_POST['owner_id'];
+  $stmt = $conn->prepare("INSERT INTO `message` (tenant_id, owner_id, message , message_from) VALUES (?, ?, ?,?)");
+  $m_from ='tenant';
+    $stmt->bind_param("iiss", $id, $owner_id, $msg ,$m_from);
 
-    if ($stmt->execute()) {
-        $last_id = $stmt->insert_id;
-        if (!empty($_POST['amenities'])) {
-            foreach ($_POST['amenities'] as $amenity) {
-                $amenitySql = "INSERT INTO amenities (listing_id, amenity) VALUES (?, ?)";
-                $amenityStmt = $conn->prepare($amenitySql);
-                $amenityStmt->bind_param("is", $last_id, $amenity);
-                $amenityStmt->execute();
-                $amenityStmt->close();
-            }
-        }
-
-         if (!empty($_FILES['images']['name'])) {
-        // Handle image upload
-        $targetDir = "../uploads/";
-        $fileName11 = basename($_FILES["images"]["name"]);
-        $targetFilePath =  $targetDir.$fileName11;
-
-        if (move_uploaded_file($_FILES["images"]["tmp_name"], $targetFilePath)) {
-            // File successfully uploaded
-            $image_sql = "UPDATE listing SET image_url=? WHERE listing_id=?";
-            $imageStmt = $conn->prepare($image_sql);
-            $imageStmt->bind_param("si", $targetFilePath, $last_id);
-            if (!$imageStmt->execute()) {
-                echo "Error updating record: " . $imageStmt->error;
-            }
-            $imageStmt->close();
-        } else {
-            // Failed to upload file
-            echo "Failed to upload image file";
-        }
-    }
-
-    if (!empty($_FILES['documents']['name'])) {
-        // Handle document upload
-        $titleOfDocument = $_POST['titleOfDocument'];
-        $file = $_FILES['documents'];
-        $fileName = $file['name'];
-        $fileTmpName = $file['tmp_name'];
-        $fileType = $file['type'];
-
-        // Read the file data
-        $fileData = file_get_contents($fileTmpName);
-
-        $document_sql = "UPDATE listing SET data=?, mime=?, title=?, name=? WHERE listing_id=?";
-        $documentStmt = $conn->prepare($document_sql);
-        $documentStmt->bind_param("ssssi", $fileData, $fileType, $titleOfDocument, $fileName, $last_id);
-
-        if ($documentStmt->execute()) {
-            // File data inserted successfully
-            echo "File data inserted successfully";
-        } else {
-            // Error inserting file data
-            echo "Error inserting file data: " . $documentStmt->error;
-        }
-        $documentStmt->close();
-    }
-    } else {
-        echo "Error: " . $stmt->error;
-    }
-
-    $stmt->close();
-    $conn->close();
+    // Set parameters and execute
+    $stmt->execute();
+ header("Location: message.php");
 }
 // SELECT LISTING
 
@@ -338,6 +247,7 @@ if ($result->num_rows > 0) {
                      
                         
                         </div>
+                        
                       </div>
                     </div>
              
@@ -346,10 +256,52 @@ if ($result->num_rows > 0) {
 
   	            <div id="map" style="width: 100%; height: 50vh;margin-top:50px;"></div>
 
+     <div class="product-item__button mt-lg-30 mt-sm-25 mt-20 d-flex flex-wrap">
+                            <div class=" d-flex flex-wrap product-item__action align-items-center">
+                              <button class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2" 
+                              data-bs-toggle="modal" data-bs-target="#editModal<?php echo $owner_id;?>">Message Owner</button>
+                           
+                            <!-- MODAL -->
 
+
+
+
+<div class="modal fade" id="editModal<?php echo $owner_id;?>" tabindex="-1" aria-labelledby="editModal<?php echo $owner_id;?>Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModal'.$row["listing_id"].'Label">Message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="new-member-modal">
+                        <input type="hidden" name="owner_id" value="<?php echo $owner_id;?>">
+                    
+                       
+                        <div class="form-group mb-20">
+                            <textarea class="form-control" name="msg" rows="7" placeholder="Type Your Message ...."></textarea>
+                        </div>
+                 
+
+                        <div class="button-group d-flex pt-25">
+                            <button type="submit" name="send" class="btn btn-primary btn-default btn-squared text-capitalize">Send</button>
+                        
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>              
+                             
+                            </div>
+                           
 
                        </div>
+                       
                 </div>
+                
 <hr>
 <div style="text-align: center; margin-bottom: 5px;height:50px">
     <span style="background-color: #ffffff; padding: 0 10px;">
