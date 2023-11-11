@@ -34,10 +34,10 @@ if(isset($_SESSION['user_id'])) {
                 $birthdate = $row_owner['birthdate'];
                 $gender = $row_owner['gender'];
                     $id = $row_owner['owner_id'];
-              $sql = "SELECT l.owner_id, COUNT(DISTINCT l.listing_id) AS listing_count, COUNT(a.application_id) AS rent_count
+              $sql = "SELECT l.owner_id, COUNT(DISTINCT l.listing_id) AS listing_count, COUNT(a.application_id) AS rent_count,l.status
         FROM listing l
         LEFT JOIN application a ON l.listing_id = a.listing_id
-      Where l.owner_id = $id   GROUP BY l.owner_id ";
+      Where l.owner_id = $id  AND l.status = 'active' GROUP BY l.owner_id ";
 
 
 $result = $conn->query($sql);

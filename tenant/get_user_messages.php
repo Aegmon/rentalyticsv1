@@ -3,8 +3,6 @@ include('session.php');
 if (isset($_GET['owner_id'])) {
     $owner_id = $_GET['owner_id'];
 
-?>
- <?php
 
 $sql = "SELECT m.owner_id, o.name, m.message, m.date, m.message_from FROM message m
         LEFT JOIN owner o ON m.owner_id = o.owner_id

@@ -114,7 +114,7 @@ if ($result->num_rows > 0) {
             </div>
           </div>
         </div>
-         <div class="col-xxl-6 col-sm-6 mb-25">
+         <div class="col-xxl-3 col-sm-3 mb-25">
                 <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
                   <div class="overview-content w-100">
                     <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
@@ -134,13 +134,49 @@ if ($result->num_rows > 0) {
               </div>
          
           
-              <div class="col-xxl-6 col-sm-6 mb-25">
+              <div class="col-xxl-3 col-sm-3 mb-25">
                 <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
                   <div class="overview-content w-100">
                     <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
                       <div class="ap-po-details__titlebar">
                         <h1><?php echo $rent_count; ?></h1>
                         <h5>Total Reservation</h5>
+                      </div>
+                      <div class="ap-po-details__icon-area">
+                        <div class="svg-icon order-bg-opacity-warning color-warning">
+                          <i class="uil uil-users-alt"></i>
+                        </div>
+                      </div>
+                    </div>
+                 
+                  </div>
+                </div>
+              </div>
+                         <div class="col-xxl-3 col-sm-3 mb-25">
+                <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
+                  <div class="overview-content w-100">
+                    <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
+                      <div class="ap-po-details__titlebar">
+                        <h1><?php echo $rent_count; ?></h1>
+                        <h5>Total Renter</h5>
+                      </div>
+                      <div class="ap-po-details__icon-area">
+                        <div class="svg-icon order-bg-opacity-warning color-warning">
+                          <i class="uil uil-users-alt"></i>
+                        </div>
+                      </div>
+                    </div>
+                 
+                  </div>
+                </div>
+              </div>
+                         <div class="col-xxl-3 col-sm-3 mb-25">
+                <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
+                  <div class="overview-content w-100">
+                    <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
+                      <div class="ap-po-details__titlebar">
+                        <h1><?php echo $rent_count; ?></h1>
+                        <h5>Total Owner</h5>
                       </div>
                       <div class="ap-po-details__icon-area">
                         <div class="svg-icon order-bg-opacity-warning color-warning">

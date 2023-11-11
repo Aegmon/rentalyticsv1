@@ -125,16 +125,20 @@ if ($result->num_rows > 0) {
             echo "<td>
                 <div class='userDatatable-content'>paid </div>
             </td>
-            <td>
-             
-            </td>";
+            <td>";
+                echo '
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal' . $row["application_id"] . '">
+                    Add Review
+                </button>
+           ';
+          echo"  </td>";
         } else {
             echo "<td>
                 <div class='userDatatable-content'>Not paid</div>
             </td>";
         }
 
-        if ($row["status"] == "renter") {
+        if ($row["status"] = "renter") {
             echo '<td>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal' . $row["application_id"] . '">
                     Add Review
