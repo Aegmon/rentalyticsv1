@@ -120,21 +120,21 @@ if ($result->num_rows > 0) {
 
         $payment_sql = "SELECT * FROM payment WHERE application_id = '" . $row["application_id"] . "'";
         $payment_result = $conn->query($payment_sql);
-
-        if ($payment_result->num_rows > 0) {
+            if ($payment_result->num_rows > 0) {
             echo "<td>
                 <div class='userDatatable-content'>paid </div>
             </td>
-            <td>";
+         ";
            
-          echo"  </td>";
+        
         } else {
             echo "<td>
                 <div class='userDatatable-content'>Not paid</div>
             </td>";
         }
+   
 
-   if ($row["status"] == "renter") {
+if ($row["status"] == "renter") {
     echo '<td>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal' . $row["application_id"] . '">
             Add Review
