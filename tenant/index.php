@@ -2,20 +2,7 @@
 
 include('sidebar.php');
  
-if (isset($_POST['rentnow'])) {
-    // Retrieve the listing_id from the POST data
-    $listing_id = $_POST['listing_id'];
-    
 
-    // Prepare and execute the SQL statement for updating the application status
-    $sql = "INSERT INTO `application`(`tenant_id`, `listing_id`) VALUES (?, ?)";
-    $stmt = $conn->prepare($sql);
-   $stmt->bind_param("ii", $id, $listing_id);
-     $stmt->execute();
-    header('location:renter.php');
-      
-
-}
 if (isset($_POST['addtogo'])) {
     // Retrieve the listing_id from the POST data
     $listing_id = $_POST['listing_id'];
@@ -543,8 +530,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search'])) {
                                   Add To Go
                                 </button>
 
-                                <button type="submit" name="rentnow"class="btn btn-success fs-6 text-white btn-default btn-squared border-1=0 ms-0">rent now
-                                </button>
+                      
                                 </form>
                                  <a href="viewlisting.php?listing_id=<?php echo $listing_id;?>"class="btn btn-gray fs-6 text-white btn-default btn-squared border-0 ms-0">View place
                                 </a>

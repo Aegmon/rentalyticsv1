@@ -126,11 +126,7 @@ if ($result->num_rows > 0) {
                 <div class='userDatatable-content'>paid </div>
             </td>
             <td>";
-                echo '
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal' . $row["application_id"] . '">
-                    Add Review
-                </button>
-           ';
+           
           echo"  </td>";
         } else {
             echo "<td>
@@ -138,25 +134,24 @@ if ($result->num_rows > 0) {
             </td>";
         }
 
-        if ($row["status"] = "renter") {
-            echo '<td>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal' . $row["application_id"] . '">
-                    Add Review
-                </button>
-            </td>';
-        } else {
-            echo '<td>
-                <form action="payment.php" method="POST">
-                    <input type="hidden" name="application_id" value="' . $row["application_id"] . '">';
+   if ($row["status"] == "renter") {
+    echo '<td>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal' . $row["application_id"] . '">
+            Add Review
+        </button>
+    </td>';
+} else {
+    echo '<td>
+        <form action="payment.php" method="POST">
+            <input type="hidden" name="application_id" value="' . $row["application_id"] . '">';
 
-    
-            $reservation_fee_in_whole_number = $row["reservationfee"] * 100;
+    $reservation_fee_in_whole_number = $row["reservationfee"] * 100;
 
-            echo '<input type="hidden" name="amount" value="' . $reservation_fee_in_whole_number . '">
-                <button type="submit" name="pay" class="btn btn-primary">Make Payment</button>
-                </form>
-            </td>';
-        }
+    echo '<input type="hidden" name="amount" value="' . $reservation_fee_in_whole_number . '">
+        <button type="submit" name="pay" class="btn btn-primary">Make Payment</button>
+        </form>
+    </td>';
+}
         echo "</tr>";
 
         echo '<div class="modal fade" id="reviewModal' . $row["application_id"] . '" tabindex="-1" aria-labelledby="reviewModal' . $row["application_id"] . 'Label" aria-hidden="true">
