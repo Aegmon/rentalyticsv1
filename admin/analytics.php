@@ -744,7 +744,7 @@ GIS
   <!-- pricing -->
 <?php
 
-$query = "SELECT type, rentprice FROM listing";
+$query = "SELECT type, rentprice FROM listing where isVerify = 'Verify'";
 $result = mysqli_query($conn, $query);
 
 $rentPrices = array();

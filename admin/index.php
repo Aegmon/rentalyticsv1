@@ -30,7 +30,7 @@ $total_female_listing_count = $row['female_listing_count'];
 $total_both_listing_count = $row['both_listing_count'];
 
 
-$result = $conn->query("SELECT type, gender_req, COUNT(*) as gender_count 
+$result = $conn->query("SELECT type, address2,gender_req, COUNT(*) as gender_count 
                         FROM listing 
                         GROUP BY type, gender_req");
 
@@ -251,7 +251,7 @@ if ($result->num_rows > 0) {
 </div>
 <div class="col-lg-4 mb-4">
   <div class="card">
-  <div class="card-header">Appartment</div>
+  <div class="card-header">Apartment</div>
 
   
         <div id="chart5"></div>
@@ -288,7 +288,15 @@ if ($result->num_rows > 0) {
                    <div class="mb-4 d-flex flex-row justify-content-between">
    <div>Bar Graph</div>
    <div>
-   <select>
+
+
+   </div>
+    </div>
+<div class="col-lg-6 mb-4">
+  <div class="card">
+
+  <div class="card-header">Registered Property Types</div>
+<select id="barangaySelect" class='form-control text-center' style="width: 50%;margin:auto;">
     <option value="" selected disabled>Select Barangay</option>
     <option value="Aguso">Aguso</option>
     <option value="Alvindia">Alvindia</option>
@@ -367,20 +375,13 @@ if ($result->num_rows > 0) {
     <option value="Ungot">Ungot</option>
     <option value="Villa Bacolor">Villa Bacolor</option>
 </select>
-
-   </div>
-    </div>
-<div class="col-lg-12 mb-4">
-  <div class="card">
-  <div class="card-header">Registered Property Types</div>
-
   
-        <div id="chartbar"></div>
+   <div id="chartbar"></div>
  
   
   </div>
 </div>
-<div class="col-lg-12 mb-4">
+<div class="col-lg-6 mb-4">
   <div class="card">
   <div class="card-header">Customer Preferences</div>
 
@@ -593,8 +594,7 @@ GIS
     
     
 
-  
-   <script>
+<script>
   var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560'];
   var options = {
     series: [{
@@ -602,7 +602,6 @@ GIS
     }],
     chart: {
       height: 350,
-      width: 1000,
       type: 'bar',
       events: {
         click: function (chart, w, e) {
@@ -649,7 +648,29 @@ GIS
 
   var chart = new ApexCharts(document.querySelector("#chartbar"), options);
   chart.render();
+
+// Add console.log statements to the event listener and AJAX request
+document.getElementById("barangaySelect").addEventListener("change", function() {
+    var selectedBarangay = this.value;
+    console.log('Selected Barangay:', selectedBarangay);
+
+    fetch('barangay.php?barangay=' + selectedBarangay)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Data received:', data);
+        // Update the chart data based on the fetched data
+        chart.updateSeries([{ data: [data.total_apartment_count, data.total_dormitory_count, data.total_bedspace_count, data.total_boarding_house_count] }]);
+      })
+      .catch(error => console.error('Error fetching data:', error));
+});
+
 </script>
+
 
           <script>
   
@@ -841,7 +862,7 @@ GIS
   <!-- pricing -->
 <?php
 
-$query = "SELECT type, rentprice FROM listing";
+$query = "SELECT type, rentprice FROM listing where isVerify = 'Verify'";
 $result = mysqli_query($conn, $query);
 
 $rentPrices = array();

@@ -80,16 +80,16 @@ if (isset($_POST['add_dormitory'])) {
                     <h4 class="text-capitalize fw-500 breadcrumb-title">Property</h4>
                     <span class="sub-title ms-sm-25 ps-sm-25">Home</span>
                   </div>
-                  
+<!--                   
                   <form action="http://demo.dashboardmarket.com/" class="d-flex align-items-center user-member__form my-sm-0 my-2">
                     <img src="img/svg/search.svg" alt="search" class="svg">
                     <input class="form-control me-sm-2 border-0 box-shadow-none" type="search" placeholder="Search by Name" aria-label="Search">
-                  </form>
+                  </form> -->
                 </div>
                 
                 <div class="action-btn">
-                  <a href="addlisting.php" class="btn px-15 btn-primary">
-                    <i class="las la-plus fs-16"></i>Listing</a>
+                  <!-- <a href="addlisting.php" class="btn px-15 btn-primary">
+                    <i class="las la-plus fs-16"></i>Listing</a> -->
                   <div class="modal fade new-member " id="new-member" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content  radius-xl">
