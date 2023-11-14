@@ -1,20 +1,20 @@
 <?php
 include('session.php');
-if (isset($_GET['owner_id'])) {
-    $owner_id = $_GET['owner_id'];
+if (isset($_GET['tenant_id'])) {
+    $tenant_id = $_GET['tenant_id'];
 
 
-$sql = "SELECT m.owner_id, o.name, m.message, m.date, m.message_from 
+$sql = "SELECT m.tenant_id, o.name, m.message, m.date, m.message_from 
         FROM message m
-        LEFT JOIN owner o ON m.owner_id = o.owner_id
-        WHERE m.tenant_id = '$id' AND m.owner_id = '$owner_id'";
+        LEFT JOIN tenant o ON m.tenant_id = o.tenant_id
+        WHERE m.owner_id = '$id' AND m.tenant_id = '$tenant_id'";
 
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         ?>
-         <?php if ($row['message_from'] == 'tenant') { ?>
+         <?php if ($row['message_from'] == 'owner') { ?>
     <div class="flex-1 justify-content-end d-flex outgoing-chat mt-20">
                       <div class="chat-text-box">
                         <div class="media ">

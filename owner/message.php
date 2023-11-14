@@ -52,19 +52,18 @@ include('sidebar.php');
                       <div class="tab-pane fade show active" id="panel_a_first" role="tabpanel" aria-labelledby="first-tab">
                         <ul class="user-list">
  <?php
-
-$sql = "SELECT m.tenant_id, o.name, MAX(m.message) as message, MAX(m.date) as date 
-        FROM message m
-        LEFT JOIN tenant o ON m.tenant_id = o.tenant_id
-        WHERE m.owner_id = '$id'
-        GROUP BY m.tenant_id";
+$sql = "SELECT t.*, MAX(m.message) as message, MAX(m.date) as date 
+        FROM tenant t
+        LEFT JOIN message m ON t.tenant_id = m.tenant_id
+        WHERE t.tenant_id = '$id'
+        GROUP BY t.tenant_id";
 
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         ?>
-        <li class="user-list-item">
+       <li class="user-list-item" data-tenant-id="<?php echo $row['tenant_id']; ?>">
             <div class="user-list-item__wrapper">
                 <div class="avatar avatar-circle ms-0">
                     <img src="img/user.png" class="rounded-circle wh-46 d-flex bg-opacity-primary" alt="image">
@@ -133,12 +132,14 @@ if ($result->num_rows > 0) {
                         <div class="d-flex justify-content-between align-items-center w-100 flex-wrap">
                           <div class=" flex-1 d-flex align-items-center chat-type-text__write ms-0">
                           
-                            <input class="form-control border-0 bg-transparent box-shadow-none" placeholder="Type your message...">
+                           <input type="text" id="message-input" class="form-control border-0 bg-transparent box-shadow-none" placeholder="Type your message...">
+
                           </div>
                           <div class="chat-type-text__btn">
                         
-                            <button type="button" class="border-0 btn-primary wh-50 p-10 rounded-circle">
-                              <img class="svg" src="img/svg/send.svg" alt="send"></button>
+                           <button type="button" id="send-message-btn" class="border-0 btn-primary wh-50 p-10 rounded-circle">
+   <img class="svg" src="img/svg/send.svg" alt="send">
+</button>
                           </div>
                         </div>
                       </div>
@@ -193,150 +194,13 @@ if ($result->num_rows > 0) {
         </div>
       </div>
     </div>
-    <div class="overlay-dark-sidebar"></div>
-    <div class="customizer-overlay"></div>
-    <div class="customizer-wrapper">
-      <div class="customizer">
-        <div class="customizer__head">
-          <h4 class="customizer__title">Customizer</h4>
-          <span class="customizer__sub-title">Customize your overview page layout</span>
-          <a href="#" class="customizer-close">
-            <img class="svg" src="img/svg/x2.svg" alt>
-          </a>
-        </div>
-        <div class="customizer__body">
-          <div class="customizer__single">
-            <h4>Layout Type</h4>
-            <ul class="customizer-list d-flex layout">
-              <li class="customizer-list__item">
-                <a href="http://demo.dashboardmarket.com/hexadash-html/ltr" class="active">
-                  <img src="img/ltr.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-              <li class="customizer-list__item">
-                <a href="http://demo.dashboardmarket.com/hexadash-html/rtl">
-                  <img src="img/rtl.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="customizer__single">
-            <h4>Sidebar Type</h4>
-            <ul class="customizer-list d-flex l_sidebar">
-              <li class="customizer-list__item">
-                <a href="#" data-layout="light" class="dark-mode-toggle active">
-                  <img src="img/light.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-              <li class="customizer-list__item">
-                <a href="#" data-layout="dark" class="dark-mode-toggle">
-                  <img src="img/dark.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="customizer__single">
-            <h4>Navbar Type</h4>
-            <ul class="customizer-list d-flex l_navbar">
-              <li class="customizer-list__item">
-                <a href="#" data-layout="side" class="active">
-                  <img src="img/side.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-              <li class="customizer-list__item top">
-                <a href="#" data-layout="top">
-                  <img src="img/top.png" alt>
-                  <i class="fa fa-check-circle"></i>
-                </a>
-              </li>
-              <li class="colors"></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+ 
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
     <script src="js/plugins.min.js"></script>
     <script src="js/script.min.js"></script>
-    <script src="https://checkout.stripe.com/checkout.js"></script>
-<script>
-    var stripe = Stripe('pk_test_51Nzrf4Id5WzwE9nmz6QQ06udHZ3k7wucYVgtgA3mWIkkqChWzAg9HizLVyN3Fuc2c7b4UBjx46kt7tpLBHddjxDf00CmqhIZOu');
-    var checkoutButton = document.getElementById('customButton');
 
-    checkoutButton.addEventListener('click', function () {
-        stripe.redirectToCheckout({
-            items: [{ sku: 'sku_123', quantity: 1 }], // Replace with your own SKU
-            successUrl: 'https://your-website.com/success',
-            cancelUrl: 'https://your-website.com/cancel',
-        });
-    });
-</script>
-<script>
-    $((function() {
-        $(".adv-table1").footable({
-            filtering: {
-                enabled: !0
-            },
-            paging: {
-                enabled: !0,
-                current: 1
-            },
-            strings: {
-                enabled: !1
-            },
-            filtering: {
-                enabled: !0
-            },
-            components: {
-                filtering: FooTable.MyFiltering
-            }
-        })
-    })),
-    FooTable.MyFiltering = FooTable.Filtering.extend({
-        construct: function(t) {
-            this._super(t);
-            this.jobTitles = ["Active", "Pending", "Rejected"];
-            this.jobTitleDefault = "All";
-            this.$jobTitle = null;
-        },
-        $create: function() {
-            this._super();
-            var t = this,
-                s = $("<div/>", {
-                    class: "form-group dm-select d-flex align-items-center adv-table-searchs__status my-xl-25 my-15 mb-0 me-sm-30 me-0"
-                }).append($("<label/>", {
-                    class: "d-flex align-items-center mb-sm-0 mb-2",
-                    text: "Status"
-                })).prependTo(t.$form);
-            t.$jobTitle = $("<select/>", {
-                class: "form-control ms-sm-10 ms-0"
-            }).on("change", {
-                self: t
-            }, t._onJobTitleDropdownChanged).append($("<option/>", {
-                text: t.jobTitleDefault
-            })).appendTo(s);
-            $.each(t.jobTitles, (function(e, s) {
-                t.$jobTitle.append($("<option/>").text(s));
-            }));
-        },
-        _onJobTitleDropdownChanged: function(t) {
-            var e = t.data.self,
-                s = $(this).val();
-            s !== e.jobTitleDefault ? e.addFilter("status", s, ["status"]) : e.removeFilter("status");
-            e.filter();
-        },
-        draw: function() {
-            this._super();
-            var e = this.find("status");
-            e instanceof FooTable.Filter ? this.$jobTitle.val(e.query.val()) : this.$jobTitle.val(this.jobTitleDefault);
-        }
-    });
-</script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
@@ -345,28 +209,77 @@ $(document).ready(function() {
     $(this).addClass('active');
     const name = $(this).find('h6').text();
     const time = $(this).find('small').text();
-    const message = $(this).find('p').text();
-    const owner_id = $(this).data('owner-id'); // Assuming data attribute is 'owner-id'
+    const tenant_id = $(this).data('tenant-id');
 
+    // Update the chat box header
     $('.chat-name h5').text(name);
     $('.chat-name small').text(time);
-    $('.chat-box__content p').text(message);
 
+    // Clear the existing messages in the chat box
+    $('.chat-box').empty();
+
+    // Fetch and display user messages using AJAX
     $.ajax({
       type: 'GET',
       url: 'get_user_messages.php',
-      data: { owner_id: owner_id }, // Passing owner_id to get_user_messages.php
+      data: { tenant_id: tenant_id },
       success: function(data) {
         // Display the user's messages in the chat area
-        $('.chat-messages').html(data);
+        $('.chat-box').append(data);
       },
       error: function(error) {
         console.error('Error fetching user messages:', error);
       }
     });
   });
+
+
+     $('#send-message-btn').on('click', function() {
+      const tenant_id = $('.user-list-item.active').data('tenant-id'); // Get the active user's owner_id
+      const message = $('#message-input').val(); // Get the message from the input field
+
+      // Check if the message is not empty
+      if (message.trim() !== '') {
+         // AJAX request to send the message
+         $.ajax({
+            type: 'POST',
+            url: 'send_message.php', // Create a new PHP script for handling the message insertion
+            data: { tenant_id: tenant_id, message: message },
+            success: function(response) {
+               // Clear the input field after successfully sending the message
+               $('#message-input').val('');
+
+               // Fetch and display updated messages
+               fetchAndUpdateMessages(tenant_id);
+            },
+            error: function(error) {
+               console.error('Error sending message:', error);
+            }
+         });
+      }
+   });
+
+   // Function to fetch and update messages (reuse this function)
+   function fetchAndUpdateMessages(tenant_id) {
+      // AJAX request to fetch and display user messages
+      $.ajax({
+         type: 'GET',
+         url: 'get_user_messages.php',
+         data: { tenant_id: tenant_id },
+         success: function(data) {
+            // Display the user's messages in the chat area
+            $('.chat-box').html(data);
+         },
+         error: function(error) {
+            console.error('Error fetching user messages:', error);
+         }
+      });
+   }
+
 });
+
 </script>
+
 
 
 
