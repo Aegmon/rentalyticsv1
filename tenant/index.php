@@ -13,7 +13,7 @@ if (isset($_POST['addtogo'])) {
     $stmt = $conn->prepare($sql);
    $stmt->bind_param("ii", $id, $listing_id);
      $stmt->execute();
-    header('location:togo.php');
+   echo '<script>window.location.href = "togo.php";</script>';
       
 
 }

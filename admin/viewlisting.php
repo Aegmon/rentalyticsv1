@@ -117,7 +117,8 @@ if (isset($_POST['add'])) {
 }
 // SELECT LISTING
 
-$sql = "SELECT * FROM listing where listing_id = '$listing_id'";
+$sql = "SELECT * FROM listing 
+JOIN owner ON listing.owner_id = owner.owner_id where listing.listing_id = '$listing_id'";
 $result = $conn->query($sql);
 $rating = "";
 $rating_count = "";
@@ -167,6 +168,8 @@ if ($result->num_rows > 0) {
         $lat = $row["lat"];
         $lng = $row["lng"];
         $fullAddress = $address1 . ", " . $address2 . ", " . $address3 . ", " . $address4;
+        $name = $row["name"] ;
+       
     }
 } else {
     echo "0 results";
@@ -342,6 +345,10 @@ if ($result->num_rows > 0) {
         ?>
     </span>
 </div>
+ <div class="title">
+                        <p>Owner</p>
+                        <span style="color:red;"><?php echo  $name;?></span>
+                      </div>
 
 
                           </div>

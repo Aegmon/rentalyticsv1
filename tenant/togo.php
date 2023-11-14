@@ -21,12 +21,11 @@ if (isset($_POST['togo'])) {
     $listing_id = $_POST['listing_id'];
     
 
-    // Prepare and execute the SQL statement for updating the application status
-    $sql = "INSERT INTO `togo`( `tenant_id`, `listing_id`) VALUES (?, ?)";
+    $sql = "DELETE FROM `togo` WHERE listing_id = ?";
     $stmt = $conn->prepare($sql);
-   $stmt->bind_param("ii", $id, $listing_id);
+   $stmt->bind_param("i", $listing_id);
      $stmt->execute();
-    header('location: renter.php');
+    header('location: index.php');
       
 
 }
@@ -499,12 +498,10 @@ if (isset($_GET['n_bedroom'])) {
                                 <form method="post">
                                   <input type ="hidden" name="listing_id" value="<?php echo $listing_id;?>">
                                   
-                                <button type="submit" name="addtogo" class="btn btn-default btn-squared color-light btn-outline-light ms-lg-0 ms-0 me-2 mb-lg-10"><img src="img/svg/send.svg" alt="shopping-bag" class="svg">
-                                  Add To Go
+                                <button type="submit" name="addtogo" class="btn btn-default btn-squared color-light btn-outline-light ms-lg-0 ms-0 me-2 mb-lg-10">
+                                 Remove
                                 </button>
 
-                                <button type="submit" name="rentnow"class="btn btn-success fs-6 text-white btn-default btn-squared border-1=0 ms-0">rent now
-                                </button>
                                 </form>
                                  <a href="viewlisting.php?listing_id=<?php echo $listing_id;?>"class="btn btn-gray fs-6 text-white btn-default btn-squared border-0 ms-0">View place
                                 </a>

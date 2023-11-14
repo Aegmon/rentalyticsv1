@@ -436,7 +436,7 @@ GIS
     
     var locations = [
   <?php
-  $sql = "SELECT * FROM listing";
+  $sql = "SELECT * FROM listing where owner_id = $id";
   $result = $conn->query($sql);
 
   while ($row = mysqli_fetch_array($result)) {
