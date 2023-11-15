@@ -158,10 +158,7 @@ if ($result->num_rows > 0) {
         $updated_at = $row["updated_at"];
         $status = $row["status"];
         $isVerify = $row["isVerify"];
-        $mime = $row["mime"];
-        $data = $row["data"];
-        $title = $row["title"];
-        $name = $row["name"];
+        $docs_img = $row["docs_img"];
         $n_bedroom = $row["n_bedroom"];
         $n_bathroom = $row["n_bathroom"];
         $house_rules = $row["house_rules"];
@@ -365,9 +362,43 @@ if ($result->num_rows > 0) {
                                 <input type="hidden" value="<?php echo $listing_id; ?>">
                               <button type="submit" name="verify" class="btn btn-success btn-default btn-squared border-0 me-10 my-sm-0 my-2">Verify</button>
              </form>
-              <a href="download.php?file_id=<?php echo $listing_id; ?>" name="verify" class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2">Download Documents</a>
+              <button data-bs-toggle='modal' data-bs-target="#ownerModal<?php echo $listing_id; ?>" class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2">View Documents</button>
                             </div>
                            
+ <div class='modal fade' id="ownerModal<?php echo $listing_id; ?>" tabindex='-1' role='dialog' aria-labelledby='ownerModalLabel' aria-hidden='true'>
+     <div class='modal-dialog modal-dialog-centered'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h5 class='modal-title' id='ownerModalLabel'>Documents</h5>
+                <button type='button' class='close' data-bs-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+            <div class='text-center' style='width:50%;'>
+             <img src='<?php echo $docs_img;?>' width='400'>
+              </div>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                           </div>
                     </div>
                   </div>

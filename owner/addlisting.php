@@ -76,28 +76,26 @@ if (isset($_POST['add'])) {
     }
 
     if (!empty($_FILES['documents']['name'])) {
-        // Handle document upload
-        $titleOfDocument = $_POST['titleOfDocument'];
-        $file = $_FILES['documents'];
-        $fileName = $file['name'];
-        $fileTmpName = $file['tmp_name'];
-        $fileType = $file['type'];
-
+         $targetDir = "../uploads/";
+   
+        $fileName = basename($_FILES["documents"]["name"]);
+        $targetFilePath =  $targetDir.$fileName11;
         // Read the file data
-        $fileData = file_get_contents($fileTmpName);
+   
 
-        $document_sql = "UPDATE listing SET data=?, mime=?, title=?, name=? WHERE listing_id=?";
-        $documentStmt = $conn->prepare($document_sql);
-        $documentStmt->bind_param("ssssi", $fileData, $fileType, $titleOfDocument, $fileName, $last_id);
-
-        if ($documentStmt->execute()) {
-            // File data inserted successfully
-            echo "File data inserted successfully";
+         if (move_uploaded_file($_FILES["documents"]["tmp_name"], $targetFilePath)) {
+            // File successfully uploaded
+            $image_sql = "UPDATE listing SET docs_img=? WHERE listing_id=?";
+            $imageStmt = $conn->prepare($image_sql);
+            $imageStmt->bind_param("si", $targetFilePath, $last_id);
+            if (!$imageStmt->execute()) {
+                echo "Error updating record: " . $imageStmt->error;
+            }
+            $imageStmt->close();
         } else {
-            // Error inserting file data
-            echo "Error inserting file data: " . $documentStmt->error;
+            // Failed to upload file
+            echo "Failed to upload image file";
         }
-        $documentStmt->close();
     }
 
     } else {
@@ -294,8 +292,8 @@ if (isset($_POST['add'])) {
                           <label for="a8" class="il-gray fs-14 fw-500 align-center mb-10">Documents</label>
                           <div class="dm-upload">
                             
-                              <input type="file" name="documents">
-                           
+                              <input type="file" name="documents" accept="image/*">
+                      
                         </div>
                       </div>
 <hr style="margin: 5px 0; padding: 0;">
