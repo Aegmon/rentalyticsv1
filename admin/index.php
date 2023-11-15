@@ -16,19 +16,24 @@ $tenant_female_count = $tenant_female_result->fetch_assoc()['female_count'];
 $total_male_count = $owner_male_count + $tenant_male_count;
 $total_female_count = $owner_female_count + $tenant_female_count;
 
+
+
 $result = $conn->query("SELECT SUM(CASE WHEN gender_req = 'Male' THEN 1 ELSE 0 END) as male_listing_count,
                               SUM(CASE WHEN gender_req = 'Female' THEN 1 ELSE 0 END) as female_listing_count,
                           SUM(CASE WHEN gender_req = 'Both' THEN 1 ELSE 0 END) as both_listing_count
                         FROM listing");
 
-$sql="SELECT type, address2,gender_req, COUNT(*) as gender_count 
+// Fetch the result
+$row = $result->fetch_assoc();
+$total_male_listing_count = $row['male_listing_count'];
+$total_female_listing_count = $row['female_listing_count'];
+$total_both_listing_count = $row['both_listing_count'];
+
+
+$result = $conn->query("SELECT type, address2,gender_req, COUNT(*) as gender_count 
                         FROM listing 
-                        GROUP BY type, gender_req";
+                        GROUP BY type, gender_req");
 
-
-
-
-   $result = $conn->query($sql);
 // Initialize variables
 $gender_counts = array();
 
@@ -70,14 +75,6 @@ $total_boarding_house_count = isset($gender_counts['boarding_house']) ? array_su
 $total_apartment_count = isset($gender_counts['apartment']) ? array_sum($gender_counts['apartment']) : 0;
 $total_dormitory_count = isset($gender_counts['dormitory']) ? array_sum($gender_counts['dormitory']) : 0;
 $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_counts['bedspace']) : 0;
-
-
-
-$row = $result->fetch_assoc();
-$total_male_listing_count = $row['male_listing_count'];
-$total_female_listing_count = $row['female_listing_count'];
-$total_both_listing_count = $row['both_listing_count'];
-
 
     $sql = "SELECT l.owner_id, COUNT(DISTINCT l.listing_id) AS listing_count, COUNT(a.application_id) AS rent_count
         FROM listing l
