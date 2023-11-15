@@ -5,19 +5,30 @@ include('sidebar.php');
 ?>
 <?php
 if (isset($_POST['rentnow'])) {
-    // Retrieve the listing_id from the POST data
+    // Retrieve the listing_id and tenant_id from the POST data
     $listing_id = $_POST['listing_id'];
+
     
-
-    // Prepare and execute the SQL statement for updating the application status
-    $sql = "INSERT INTO `application`(`tenant_id`, `listing_id`) VALUES (?, ?)";
-    $stmt = $conn->prepare($sql);
-   $stmt->bind_param("ii", $id, $listing_id);
-     $stmt->execute();
- echo '<script>window.location.href = "renter.php";</script>';
-      
-
+    // Check if the record already exists
+    $check_sql = "SELECT * FROM `application` WHERE `tenant_id` = ? AND `listing_id` = ?";
+    $check_stmt = $conn->prepare($check_sql);
+    $check_stmt->bind_param("ii",$id, $listing_id);
+    $check_stmt->execute();
+    $check_result = $check_stmt->get_result();
+    
+    // If a record is found, display an alert and don't insert again
+    if ($check_result->num_rows > 0) {
+        echo '<script>alert("Already sent your application.");</script>';
+    } else {
+        // Prepare and execute the SQL statement for inserting the new application
+        $insert_sql = "INSERT INTO `application`(`tenant_id`, `listing_id`) VALUES (?, ?)";
+        $insert_stmt = $conn->prepare($insert_sql);
+        $insert_stmt->bind_param("ii",$id, $listing_id);
+        $insert_stmt->execute();
+        echo '<script>window.location.href = "renter.php";</script>';
+    }
 }
+
 if (isset($_POST['send'])) {
     $msg = $_POST['msg'];
     $owner_id = $_POST['owner_id'];

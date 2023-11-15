@@ -69,7 +69,7 @@ if (isset($_GET['feedback'])) {
           <tr class="userDatatable-header">
         
             <th>
-              <span class="userDatatable-title">NAME</span>
+              <span class="userDatatable-title">Owner Name</span>
             </th>
             <th>
               <span class="userDatatable-title">Email  </span>
@@ -93,6 +93,7 @@ $sql = "SELECT
             c.email,
             a.tenant_id,
             t.name AS tenant_name,
+                o.name AS owner_name,
             c.email AS tenant_email,
             a.status as status,
             l.listing_id,
@@ -103,17 +104,19 @@ $sql = "SELECT
             a.date_of_application
         FROM application a
         LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
-        LEFT JOIN credentials c ON t.user_id = c.user_id
         LEFT JOIN listing l ON l.listing_id = a.listing_id
-        WHERE l.owner_id = '$id'";
+        LEFT JOIN Owner o ON l.owner_id = o.owner_id
+       LEFT JOIN credentials c ON o.user_id = c.user_id
+        WHERE a.tenant_id = '$id'";
 
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
+                echo "<td><div class='userDatatable-content'>" . $row["owner_name"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["email"] . "</div></td>";
-        echo "<td><div class='userDatatable-content'>" . $row["tenant_name"] . "</div></td>";
+
         echo "<td><div class='userDatatable-content'>" . $row["listing_name"] . "</div></td>";
 
 
@@ -141,16 +144,28 @@ if ($row["status"] == "renter") {
         </button>
     </td>';
 } else {
-    echo '<td>
-        <form action="payment.php" method="POST">
-            <input type="hidden" name="application_id" value="' . $row["application_id"] . '">';
+   
 
     $reservation_fee_in_whole_number = $row["reservationfee"] * 100;
-
+if ($payment_result->num_rows > 0) {
+ echo '<td>
+        <form action="payment.php" method="POST">
+            <input type="hidden" name="application_id" value="' . $row["application_id"] . '">';
     echo '<input type="hidden" name="amount" value="' . $reservation_fee_in_whole_number . '">
-        <button type="submit" name="pay" class="btn btn-primary">Make Payment</button>
+        <button type="submit" name="pay" class="btn btn-primary" disabled>Make Payment</button>
         </form>
     </td>';
+}else{
+echo '<td>
+        <form action="payment.php" method="POST">
+            <input type="hidden" name="application_id" value="' . $row["application_id"] . '">';
+echo '<input type="hidden" name="amount" value="' . $reservation_fee_in_whole_number . '">
+        <button type="submit" name="pay" class="btn btn-primary" >Make Payment</button>
+        </form>
+    </td>';
+
+}
+
 }
         echo "</tr>";
 

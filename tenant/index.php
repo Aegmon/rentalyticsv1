@@ -4,19 +4,30 @@ include('sidebar.php');
  
 
 if (isset($_POST['addtogo'])) {
-    // Retrieve the listing_id from the POST data
+    // Retrieve the listing_id and tenant_id from the POST data
     $listing_id = $_POST['listing_id'];
+
     
-
-    // Prepare and execute the SQL statement for updating the application status
-    $sql = "INSERT INTO `togo`( `tenant_id`, `listing_id`) VALUES (?, ?)";
-    $stmt = $conn->prepare($sql);
-   $stmt->bind_param("ii", $id, $listing_id);
-     $stmt->execute();
-   echo '<script>window.location.href = "togo.php";</script>';
-      
-
+    // Check if the record already exists
+    $check_sql = "SELECT * FROM `togo` WHERE `tenant_id` = ? AND `listing_id` = ?";
+    $check_stmt = $conn->prepare($check_sql);
+    $check_stmt->bind_param("ii", $id, $listing_id);
+    $check_stmt->execute();
+    $check_result = $check_stmt->get_result();
+    
+    // If a record is found, display an alert and don't insert again
+    if ($check_result->num_rows > 0) {
+        echo '<script>alert("Already added to togo.");</script>';
+    } else {
+        // Prepare and execute the SQL statement for updating the application status
+        $insert_sql = "INSERT INTO `togo`(`tenant_id`, `listing_id`) VALUES (?, ?)";
+        $insert_stmt = $conn->prepare($insert_sql);
+        $insert_stmt->bind_param("ii", $id, $listing_id);
+        $insert_stmt->execute();
+        echo '<script>window.location.href = "togo.php";</script>';
+    }
 }
+
 ?>
 
      <div class="contents">
@@ -481,9 +492,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search'])) {
                     <div class="card product product--list d-flex">
                       <div class="h-100">
                         <div class="card-body product-item ">
-                          <div class="card-body product-item__image position-relative">
+                          <div class="card-body product-item__image">
                             
-                            <img  src="../uploads/<?php echo $row['image_url'];?>" alt="digital-chair">
+                            <img  src="../uploads/<?php echo $row['image_url'];?>" alt="digital-chair" style="width:50%;">
                             
                           </div>
                           <div class="mx-4 p-10 d-flex flex-column">

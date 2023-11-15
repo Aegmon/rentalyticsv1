@@ -53,7 +53,7 @@ include('sidebar.php');
                         <ul class="user-list">
  <?php
 
-$sql = "SELECT m.owner_id, o.name, MAX(m.message) as message, MAX(m.date) as date 
+$sql = "SELECT m.owner_id, o.name, MAX(m.message) as message, MAX(m.date) as date ,o.profile_pic
         FROM message m
         LEFT JOIN owner o ON m.owner_id = o.owner_id
         WHERE m.tenant_id = '$id'
@@ -67,7 +67,7 @@ if ($result->num_rows > 0) {
        <li class="user-list-item" data-owner-id="<?php echo $row['owner_id']; ?>">
             <div class="user-list-item__wrapper">
                 <div class="avatar avatar-circle ms-0">
-                    <img src="img/user.png" class="rounded-circle wh-46 d-flex bg-opacity-primary" alt="image">
+                    <img src="../uploads/<?php echo $row['profile_pic']?>" class="rounded-circle wh-46 d-flex bg-opacity-primary" alt="image">
                     <div class="badge-direction-bottom">
                         <span class="chat-badge-dot avatar-online"></span>
                     </div>

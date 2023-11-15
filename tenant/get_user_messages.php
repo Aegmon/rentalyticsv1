@@ -4,7 +4,7 @@ if (isset($_GET['owner_id'])) {
     $owner_id = $_GET['owner_id'];
 
 
-$sql = "SELECT m.owner_id, o.name, m.message, m.date, m.message_from 
+$sql = "SELECT m.owner_id, o.name, m.message, m.date, m.message_from ,o.profile_pic
         FROM message m
         LEFT JOIN owner o ON m.owner_id = o.owner_id
         WHERE m.tenant_id = '$id' AND m.owner_id = '$owner_id'";
@@ -43,7 +43,7 @@ if ($result->num_rows > 0) {
                       <div class="chat-text-box ">
                         <div class="media d-flex">
                           <div class="chat-text-box__photo ">
-                            <img src="img/user.png" class="align-self-start me-15 wh-46" alt="img">
+                            <img src="../uploads/<?php echo $row['profile_pic']?>" class="align-self-start me-15 wh-46" alt="img">
                           </div>
                           <div class="media-body">
                             <div class="chat-text-box__content">

@@ -104,14 +104,14 @@
             <li class="nav-author">
               <div class="dropdown-custom">
                 
-                <a href="javascript:;" class="nav-item-toggle"><img src="img/user.png" alt class="rounded-circle">
+                <a href="javascript:;" class="nav-item-toggle">     <img src="../uploads/<?php echo $picture;?>" alt class="rounded-circle">
                   <span class="nav-item__title"><?php echo $name;?><i class="las la-angle-down nav-item__arrow"></i></span>
                 </a>
                 <div class="dropdown-parent-wrapper">
                   <div class="dropdown-wrapper">
                     <div class="nav-author__info">
                       <div class="author-img">
-                        <img src="img/user.png" alt class="rounded-circle">
+                        <img src="../uploads/<?php echo $picture;?>" alt class="rounded-circle">
                       </div>
                       <div>
                         <h6><?php echo $name;?></h6>

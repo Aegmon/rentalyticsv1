@@ -3,8 +3,6 @@
 include('connection.php');
 
 if (isset($_POST['submit'])) {
- 
-
     // Gather form data
     $name = $_POST['name'];
     $birthdate = $_POST['birthdate'];
@@ -20,40 +18,66 @@ if (isset($_POST['submit'])) {
         $user_id = $conn->insert_id;
 
         // Check if the file was uploaded without errors
-        if (isset($_FILES['idPicture']) && $_FILES['idPicture']['error'] === UPLOAD_ERR_OK) {
-            $file_name = $_FILES['idPicture']['name'];
-            $file_tmp = $_FILES['idPicture']['tmp_name'];
-            $file_destination = 'uploads/' . $file_name; // Adjust the 'uploads' directory as needed
+        if (isset($_FILES['idPicture']) && $_FILES['idPicture']['error'] === UPLOAD_ERR_OK && ($userType === "owner" || $userType === "tenant")) {
+            $id_file_name = $_FILES['idPicture']['name'];
+            $id_file_tmp = $_FILES['idPicture']['tmp_name'];
+            $id_file_destination = 'uploads/' . $id_file_name;
 
-            // Move the uploaded file to the designated directory
-            if (move_uploaded_file($file_tmp, $file_destination)) {
+            if (move_uploaded_file($id_file_tmp, $id_file_destination)) {
                 // Insert into the respective table based on user type
                 if ($userType === "owner") {
-                    $sql_owner = "INSERT INTO owner (user_id, name, birthdate, gender, id_picture) VALUES ('$user_id', '$name', '$birthdate', '$gender', '$file_name')";
-                    if ($conn->query($sql_owner) !== TRUE) {
-                        echo "Error: " . $sql_owner . "<br>" . $conn->error;
+                    $profile_pic_name = $_FILES['profile_pic']['name'];
+                    $profile_pic_tmp = $_FILES['profile_pic']['tmp_name'];
+                    $profile_pic_destination = 'uploads/' . $profile_pic_name;
+
+                    if (move_uploaded_file($profile_pic_tmp, $profile_pic_destination)) {
+                        $sql_owner = "INSERT INTO owner (user_id, name, birthdate, gender, id_picture, profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender', '$id_file_name', '$profile_pic_name')";
+                        if ($conn->query($sql_owner) !== TRUE) {
+                            echo "Error: " . $sql_owner . "<br>" . $conn->error;
+                        }
+                    } else {
+                        echo "Error uploading profile picture.";
                     }
                 } elseif ($userType === "tenant") {
-                    $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender) VALUES ('$user_id', '$name', '$birthdate', '$gender')";
-                    if ($conn->query($sql_tenant) !== TRUE) {
-                        echo "Error: " . $sql_tenant . "<br>" . $conn->error;
+                    $profile_pic_name = $_FILES['profile_pic']['name'];
+                    $profile_pic_tmp = $_FILES['profile_pic']['tmp_name'];
+                    $profile_pic_destination = 'uploads/' . $profile_pic_name;
+
+                    if (move_uploaded_file($profile_pic_tmp, $profile_pic_destination)) {
+                        $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender, profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender', '$profile_pic_name')";
+                        if ($conn->query($sql_tenant) !== TRUE) {
+                            echo "Error: " . $sql_tenant . "<br>" . $conn->error;
+                        }
+                    } else {
+                        echo "Error uploading profile picture.";
                     }
                 }
             } else {
-                echo "Error uploading file.";
+                echo "Error uploading ID picture.";
             }
-        } else {
+        } elseif ($userType === "owner") {
             echo "Error uploading ID picture. Please try again.";
-        }
+        } elseif ($userType === "tenant") {
+            // For tenants without ID picture upload
+            $profile_pic_name = $_FILES['profile_pic']['name'];
+            $profile_pic_tmp = $_FILES['profile_pic']['tmp_name'];
+            $profile_pic_destination = 'uploads/' . $profile_pic_name;
 
-        // echo "New record created successfully";
+            if (move_uploaded_file($profile_pic_tmp, $profile_pic_destination)) {
+                $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender, profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender', '$profile_pic_name')";
+                if ($conn->query($sql_tenant) !== TRUE) {
+                    echo "Error: " . $sql_tenant . "<br>" . $conn->error;
+                }
+            } else {
+                echo "Error uploading profile picture.";
+            }
+        }
     } else {
         echo "Error: " . $sql_credentials . "<br>" . $conn->error;
     }
 
     $conn->close();
 }
-
 ?>
 
 
@@ -127,7 +151,10 @@ if (isset($_POST['submit'])) {
                     <label for="idPicture">Upload ID Picture</label>
                     <input type="file" class="form-control" name="idPicture" accept="image/*">
                 </div>
-
+               <div class="form-group mb-20">
+                      <label for="idPicture">Upload Profile Picture</label>
+                     <input type="file" class="form-control" name="profile_pic" accept="image/*">
+                </div>
                 <div class="form-group mb-20">
                     <label for="email">Email Address</label>
                     <input type="text" class="form-control" name="email" placeholder="name@example.com" required>
