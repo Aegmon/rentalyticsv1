@@ -296,7 +296,7 @@ if ($result->num_rows > 0) {
   <div class="card">
 
   <div class="card-header">Registered Property Types</div>
-<select id="barangaySelect" class='form-control text-center' style="width: 50%;margin:auto;">
+<select id="barangaySelect" class='form-control text-center' style="width: 50%;margin:auto;" onchange="updateQuery()">
     <option value="" selected disabled>Select Barangay</option>
     <option value="Aguso">Aguso</option>
     <option value="Alvindia">Alvindia</option>
@@ -649,25 +649,6 @@ GIS
   var chart = new ApexCharts(document.querySelector("#chartbar"), options);
   chart.render();
 
-// Add console.log statements to the event listener and AJAX request
-document.getElementById("barangaySelect").addEventListener("change", function() {
-    var selectedBarangay = this.value;
-    console.log('Selected Barangay:', selectedBarangay);
-
-    fetch('barangay.php?barangay=' + selectedBarangay)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Data received:', data);
-        // Update the chart data based on the fetched data
-        chart.updateSeries([{ data: [data.total_apartment_count, data.total_dormitory_count, data.total_bedspace_count, data.total_boarding_house_count] }]);
-      })
-      .catch(error => console.error('Error fetching data:', error));
-});
 
 </script>
 
@@ -1139,6 +1120,30 @@ foreach ($addressCount as $address => $count) {
             e instanceof FooTable.Filter ? this.$jobTitle.val(e.query.val()) : this.$jobTitle.val(this.jobTitleDefault);
         }
     });
+
+
+    
+</script>
+<script>
+function updateQuery() {
+    // Get the selected barangay value
+    var selectedBarangay = document.getElementById("barangaySelect").value;
+
+    // Send an AJAX request to update the content dynamically
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // Update the content based on the server response
+            var response = JSON.parse(this.responseText);
+
+            // Example: Update the chart data with the response data
+            var updatedChartData = response.chartData;
+            chart.updateSeries([{ data: updatedChartData }]);
+        }
+    };
+    xhttp.open("GET", "update.php?barangay=" + selectedBarangay, true);
+    xhttp.send();
+}
 </script>
 
 <script src="js/plugins.min.js"></script>
