@@ -5,15 +5,15 @@ if(isset($_POST['approved']) || isset($_POST['rejected'])) {
 
 
     // Retrieve the listing_id from the POST data
-    $listing_id = $_POST['listing_id'];
+    $application_id = $_POST['application_id'];
 
     // Determine the status based on the button clicked
     $status = isset($_POST['approved']) ? 'approved' : 'rejected';
 
     // Prepare and execute the SQL statement for updating the application status
-    $sql = "UPDATE application SET status = ? WHERE listing_id = ?";
+    $sql = "UPDATE application SET status = ? WHERE application_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("si", $status, $listing_id);
+    $stmt->bind_param("si", $status, $application_id);
 
  
 
@@ -25,19 +25,19 @@ if(isset($_POST['approved']) || isset($_POST['rejected'])) {
     }
 }
 if (isset($_POST['endstay'])) {
-    $listing_id = $_POST['listing_id'];
-    $sql = "UPDATE application SET status = ?, date_of_application = NOW() WHERE listing_id = ?";
+    $application_id = $_POST['application_id'];
+    $sql = "UPDATE application SET status = ?, date_of_application = NOW() WHERE application_id = ?";
     $stmt = $conn->prepare($sql);
     $status = 'renter';
-    $stmt->bind_param("si", $status, $listing_id);
+    $stmt->bind_param("si", $status, $application_id);
     $stmt->execute();
 }
 if (isset($_POST['void'])) {
-    $listing_id = $_POST['listing_id'];
-    $sql = "UPDATE application SET status = ?, date_of_application = NOW() WHERE listing_id = ?";
+    $application_id = $_POST['application_id'];
+    $sql = "UPDATE application SET status = ?, date_of_application = NOW() WHERE application_id = ?";
     $stmt = $conn->prepare($sql);
     $status = 'rejected';
-    $stmt->bind_param("si", $status, $listing_id);
+    $stmt->bind_param("si", $status, $application_id);
     $stmt->execute();
 }
 ?>
@@ -135,7 +135,7 @@ if ($result->num_rows > 0) {
             <td>
             <div>
             <form action='' method='POST'>
-            <input type='hidden' value='" . $listing_id . "' name='listing_id'>
+                 <input type='hidden' value='" . $row["application_id"] . "' name='application_id'>
             <button type='submit' name='approved' value='approved' class='btn btn-success'>Approve</button>
             <button type='submit' name='rejected' value='rejected' class='btn btn-danger'>Reject</button>
             </form>
@@ -150,7 +150,7 @@ if ($result->num_rows > 0) {
             <td>
             <div class='userDatatable-content'>
                <form action='' method='POST'>
-            <input type='hidden' value='" . $listing_id . "' name='listing_id'>
+            <input type='hidden' value='" . $row["application_id"] . "' name='application_id'>
             <button type='submit' name='endstay' value='endstay' class='btn btn-success'>End Stay</button>
             <button type='submit' name='void' value='void' class='btn btn-danger'>Void</button>
             </form>

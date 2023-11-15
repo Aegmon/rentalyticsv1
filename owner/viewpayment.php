@@ -34,9 +34,7 @@ include('sidebar.php');
         <thead>
           <tr class="userDatatable-header">
         
-            <th>
-              <span class="userDatatable-title">Reference Number</span>
-            </th>
+         
             <th>
               <span class="userDatatable-title">Reservation ID  </span>
             </th>
@@ -48,9 +46,7 @@ include('sidebar.php');
               <span class="userDatatable-title">Date</span>
             </th>
           
-            <th>
-              <span class="userDatatable-title">Payment type</span>
-            </th>
+          
           </tr>
         </thead>
         <tbody>
@@ -82,11 +78,11 @@ if ($result->num_rows > 0) {
     // output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td><div class='userDatatable-content'>" . $row["ref_number"] . "</div></td>";
+     
         echo "<td><div class='userDatatable-content'>" . $row["application_id"] . "</div></td>";
              echo "<td><div class='userDatatable-content'>Php. " . $row["reservationfee"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["payment_date"] . "</div></td>";
-    echo "<td><div class='userDatatable-content'> </div></td>";
+
 
 ;
         echo "</tr>";
