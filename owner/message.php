@@ -52,7 +52,7 @@ include('sidebar.php');
                       <div class="tab-pane fade show active" id="panel_a_first" role="tabpanel" aria-labelledby="first-tab">
                         <ul class="user-list">
  <?php
-$sql = "SELECT t.*, MAX(m.message) as message, MAX(m.date) as date 
+$sql = "SELECT t.*, MAX(m.message) as message, MAX(m.date) as date ,t.profile_pic
         FROM tenant t
         LEFT JOIN message m ON t.tenant_id = m.tenant_id
         WHERE t.tenant_id = '$id'
@@ -66,7 +66,7 @@ if ($result->num_rows > 0) {
        <li class="user-list-item" data-tenant-id="<?php echo $row['tenant_id']; ?>">
             <div class="user-list-item__wrapper">
                 <div class="avatar avatar-circle ms-0">
-                    <img src="img/user.png" class="rounded-circle wh-46 d-flex bg-opacity-primary" alt="image">
+                    <img src="../uploads/<?php echo $row['profile_pic']; ?>" class="rounded-circle wh-46 d-flex bg-opacity-primary" alt="image">
                     <div class="badge-direction-bottom">
                         <span class="chat-badge-dot avatar-online"></span>
                     </div>

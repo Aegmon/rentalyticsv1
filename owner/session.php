@@ -22,7 +22,7 @@ if(isset($_SESSION['user_id'])) {
                 $birthdate = $row_tenant['birthdate'];
                 $gender = $row_tenant['gender'];
                    $id = $row_tenant['tenant_id'];
-                // ... (fetch other data as needed)
+                    $picture = $row_tenant['profile_pic'];
             }
         } elseif($user_type === 'owner') {
             $sql_owner = "SELECT * FROM owner WHERE user_id = $user_id";
@@ -34,6 +34,7 @@ if(isset($_SESSION['user_id'])) {
                 $birthdate = $row_owner['birthdate'];
                 $gender = $row_owner['gender'];
                     $id = $row_owner['owner_id'];
+                         $picture = $row_owner['profile_pic'];
               $sql = "SELECT l.owner_id, COUNT(DISTINCT l.listing_id) AS listing_count, COUNT(a.application_id) AS rent_count,l.status
         FROM listing l
         LEFT JOIN application a ON l.listing_id = a.listing_id

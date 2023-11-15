@@ -154,7 +154,7 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
 </div>
 <div class="col-lg-4 mb-4">
   <div class="card">
-  <div class="card-header">Appartment</div>
+  <div class="card-header">Apartment</div>
 
   
         <div id="chart5"></div>
@@ -187,11 +187,19 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
         <div class="col-md-12">
           <div class="card">
           <div class="card-body">
-            <div class="row">
+         <div class="row">
                    <div class="mb-4 d-flex flex-row justify-content-between">
    <div>Bar Graph</div>
    <div>
-   <select>
+
+
+   </div>
+    </div>
+<div class="col-lg-6 mb-4">
+  <div class="card">
+
+  <div class="card-header">Registered Property Types</div>
+<select id="barangaySelect" class='form-control text-center' style="width: 50%;margin:auto;">
     <option value="" selected disabled>Select Barangay</option>
     <option value="Aguso">Aguso</option>
     <option value="Alvindia">Alvindia</option>
@@ -270,20 +278,13 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
     <option value="Ungot">Ungot</option>
     <option value="Villa Bacolor">Villa Bacolor</option>
 </select>
-
-   </div>
-    </div>
-<div class="col-lg-12 mb-4">
-  <div class="card">
-  <div class="card-header">Registered Property Types</div>
-
   
-        <div id="chartbar"></div>
+   <div id="chartbar"></div>
  
   
   </div>
 </div>
-<div class="col-lg-12 mb-4">
+<div class="col-lg-6 mb-4">
   <div class="card">
   <div class="card-header">Customer Preferences</div>
 
@@ -744,7 +745,7 @@ GIS
   <!-- pricing -->
 <?php
 
-$query = "SELECT type, rentprice FROM listing";
+$query = "SELECT type, rentprice FROM listing where isVerify ='Verify'";
 $result = mysqli_query($conn, $query);
 
 $rentPrices = array();
@@ -778,7 +779,7 @@ function formatType($type)
 
 // Assuming you have already established a database connection
 // Execute the SQL query to fetch rent prices per type
-$query = "SELECT type, rentprice FROM listing";
+$query = "SELECT type, rentprice FROM listing where isVerify ='Verify'";
 $result = mysqli_query($conn, $query);
 
 // Initialize an associative array to store rent prices for each type

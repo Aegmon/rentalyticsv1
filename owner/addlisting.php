@@ -141,7 +141,7 @@ if (isset($_POST['add'])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="a1" class="il-gray fs-14 fw-500 align-center mb-10">Accomadation Type</label>
-                          <select class="form-control ih-medium ip-light radius-xs b-light px-15" name="type">
+                          <select class="form-control ih-medium ip-light radius-xs b-light px-15" name="type" required>
                             <option value="boarding_house">Boarding house</option>
                             <option value="apartment">Apartment</option>
                             <option value="dormitory">Dormitory</option>
@@ -153,7 +153,7 @@ if (isset($_POST['add'])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="a2" class="il-gray fs-14 fw-500 align-center mb-10">Gender Requirements</label>
-                          <select class="form-control ih-medium ip-light radius-xs b-light px-15" name="gender">
+                          <select class="form-control ih-medium ip-light radius-xs b-light px-15" name="gender" required>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                             <option value="Both">Both</option>
@@ -163,38 +163,38 @@ if (isset($_POST['add'])) {
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="a3" class="il-gray fs-14 fw-500 align-center mb-10">Name</label>
-                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" name="name" placeholder="Enter Place Name">
+                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" name="name" placeholder="Enter Place Name" required>
                         </div>
                       </div>
                         <div class="col-md-6">
                         <div class="form-group">
                           <label for="a3" class="il-gray fs-14 fw-500 align-center mb-10">Price</label>
-                          <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" name="price" placeholder="Enter Price">
+                          <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" name="price" placeholder="Enter Price" required>
                         </div>
                       </div>
                         <div class="col-md-6">
                         <div class="form-group">
                           <label for="a3" class="il-gray fs-14 fw-500 align-center mb-10">Reservation Fee</label>
-                          <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" name="reservation" placeholder="Enter Price">
+                          <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" name="reservation" placeholder="Enter Price" required>
                         </div>
                       </div>
                 
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="a8" class="il-gray fs-14 fw-500 align-center mb-10">Description</label>
-                          <textarea class="form-control ih-medium ip-light radius-xs b-light px-15" name="desc"></textarea>
+                          <textarea class="form-control ih-medium ip-light radius-xs b-light px-15" name="desc" required></textarea>
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="a9" class="il-gray fs-14 fw-500 align-center mb-10">Number of Bedrooms</label>
-                          <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15"name="no_bed" >
+                          <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15"name="no_bed" required>
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="a9" class="il-gray fs-14 fw-500 align-center mb-10">Number of Bath Rooms</label>
-                          <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" name="no_bath">
+                          <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" name="no_bath" required>
                         </div>
                       </div>
                       <div class="col-md-3">
@@ -252,7 +252,7 @@ if (isset($_POST['add'])) {
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="a8" class="il-gray fs-14 fw-500 align-center mb-10">House Rules</label>
-                          <textarea class="form-control ih-medium ip-light radius-xs b-light px-15" name="house_rules"></textarea>
+                          <textarea class="form-control ih-medium ip-light radius-xs b-light px-15" name="house_rules" required></textarea>
                         </div>
                       </div>
              <div class="col-md-12">
@@ -263,7 +263,7 @@ if (isset($_POST['add'])) {
         <p class="color-light mt-0 fs-14">Drop files here to upload</p>
       </div>
       <div class="avatar-up">
-        <input type="file" name="images" class="upload-avatar-input" id="uploadInput" multiple accept="image/*">
+        <input type="file" name="images" class="upload-avatar-input" id="uploadInput" multiple accept="image/*" required>
       </div>
     </div>
   </div>
@@ -279,7 +279,7 @@ if (isset($_POST['add'])) {
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="a3" class="il-gray fs-14 fw-500 align-center mb-10">Document Name <small style="color:red;">(For Verification Of admin)</small></label>
-                        <select class="form-control ih-medium ip-light radius-xs b-light px-15" name="titleOfDocument">
+                        <select class="form-control ih-medium ip-light radius-xs b-light px-15" name="titleOfDocument" required>
     <option value="">Select Document</option>
     <option value="Business permit">Business permit</option>
     <option value="Mayor’s permit">Mayor’s permit</option>
@@ -303,19 +303,19 @@ if (isset($_POST['add'])) {
    <div class="row">
        <div class="col-md-12">
           <label for="a4" class="il-gray fs-14 fw-500 align-center mb-10">Search</label>
-                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15"  id="search-box" placeholder="Search....">
+                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15"  id="search-box" placeholder="Search...." >
           </div>
         <div class="col-md-3">
                         <div class="form-group">
                           <label for="a4" class="il-gray fs-14 fw-500 align-center mb-10">House No/Street/Block</label>
-                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" name="address1"  placeholder="House No/Street/Block">
+                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" name="address1"  placeholder="House No/Street/Block" required>
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="a5" class="il-gray fs-14 fw-500 align-center mb-10">Barangay</label>
                           <!-- <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="barangay" name="address2" placeholder="Barangay"> -->
-                          <select class="form-control ih-medium ip-light radius-xs b-light px-15" id="barangay" name="address2">
+                          <select class="form-control ih-medium ip-light radius-xs b-light px-15" id="barangay" name="address2" required>
     <option value="" selected disabled>Select Barangay</option>
     <option value="Aguso">Aguso</option>
     <option value="Alvindia">Alvindia</option>
@@ -399,21 +399,21 @@ if (isset($_POST['add'])) {
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="a6" class="il-gray fs-14 fw-500 align-center mb-10">City/Municipality</label>
-                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="city" name="address3" placeholder="City">
+                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="city" name="address3" placeholder="City" required>
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="a7" class="il-gray fs-14 fw-500 align-center mb-10">Province</label>
-                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="province"name="address4" readonly placeholder="Province" value="Tarlac">
+                          <input type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="province"name="address4" readonly placeholder="Province" value="Tarlac" required>
                         </div>
                       </div>
  </div>
                           <div class="col-md-12">
                               <div class="form-group">
                          <label for="a8" class="il-gray fs-14 fw-500 align-center mb-10">Pin Location</label>
-                                   <input type="hidden" class="form-control" placeholder="lat" name="lat" id="latitude">
-                                    <input type="hidden" class="form-control" placeholder="lng" name="lng" id="longitude">
+                                   <input type="hidden" class="form-control" placeholder="lat" name="lat" id="latitude" required>
+                                    <input type="hidden" class="form-control" placeholder="lng" name="lng" id="longitude" required>
                                            
 										  	<div id="map" style="width: 100%; height: 50vh;"></div>
                          </div>
