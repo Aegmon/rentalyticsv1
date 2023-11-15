@@ -83,7 +83,10 @@
     if ($result->num_rows > 0) {
         // output data of each row
         while ($row = $result->fetch_assoc()) {
-            echo '<li class="nav-notification__single nav-notification__single--unread d-flex flex-wrap">
+
+            echo '
+            <a href="reservation.php?listing_id='.$row['listing_id'].'">
+            <li class="nav-notification__single nav-notification__single--unread d-flex flex-wrap">
                   <div class="nav-notification__type nav-notification__type--primary">
                     <img class="svg" src="img/svg/inbox.svg" alt="inbox">
                   </div>
@@ -92,7 +95,8 @@
                      One of your listings has a pending reservation
                     </p>
                   </div>
-                </li>';
+                </li> </a>';
+
         }
     } else {
         echo '<li class="nav-notification__single nav-notification__single--unread d-flex flex-wrap">
