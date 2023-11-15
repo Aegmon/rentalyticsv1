@@ -114,7 +114,7 @@ if ($result->num_rows > 0) {
             </div>
           </div>
         </div>
-         <div class="col-xxl-3 col-sm-3 mb-25">
+         <div class="col-xxl-4 col-sm-3 mb-25">
                 <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
                   <div class="overview-content w-100">
                     <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
@@ -134,25 +134,8 @@ if ($result->num_rows > 0) {
               </div>
          
           
-              <div class="col-xxl-3 col-sm-3 mb-25">
-                <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
-                  <div class="overview-content w-100">
-                    <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
-                      <div class="ap-po-details__titlebar">
-                        <h1><?php echo $rent_count; ?></h1>
-                        <h5>Total Reservation</h5>
-                      </div>
-                      <div class="ap-po-details__icon-area">
-                        <div class="svg-icon order-bg-opacity-warning color-warning">
-                          <i class="uil uil-users-alt"></i>
-                        </div>
-                      </div>
-                    </div>
-                 
-                  </div>
-                </div>
-              </div>
-                         <div class="col-xxl-3 col-sm-3 mb-25">
+          
+                         <div class="col-xxl-4 col-sm-3 mb-25">
                 <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
                   <div class="overview-content w-100">
                     <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
@@ -170,7 +153,7 @@ if ($result->num_rows > 0) {
                   </div>
                 </div>
               </div>
-                         <div class="col-xxl-3 col-sm-3 mb-25">
+                         <div class="col-xxl-4 col-sm-3 mb-25">
                 <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
                   <div class="overview-content w-100">
                     <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
@@ -969,54 +952,69 @@ foreach ($addressCount as $address => $count) {
 </script>
 
     <!-- customer preferences -->
-    <script>
-       var options = {
-          series: [{
-          data: [21, 22, 10, 28, 22]
-        }],
-          chart: {
-          height: 350,
-          type: 'bar',
-          events: {
-            click: function(chart, w, e) {
-              // console.log(chart, w, e)
-            }
-          }
-        },
-        plotOptions: {
-          bar: {
-            borderRadius: 5,
-            columnWidth: '45%',
-            distributed: true,
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        legend: {
-          show: false
-        },
-        xaxis: {
-          // search counts here
-          categories: [  
-            ['Apartment'], // type of property
-            ['Bed'+ ' (6)'], // bed count
-            ['Bath'+ ' (2)'],// bath count
-            ['1200'], // price min
-            ['1500'] // price max
-          ],
-          labels: {
-            style: {
-              colors: '#000',
-              fontSize: '18px'
-            }
-          }
-        }
-        };
+    <?php
+// Assuming you have a database connection established ($conn)
+$sql_ref = "SELECT keyword, count FROM cus_ref";
+$result_ref = $conn->query($sql_ref);
 
-        var chart = new ApexCharts(document.querySelector("#chartbar2"), options);
-        chart.render();
-    </script>
+$categories = array();
+$data = array();
+
+if ($result_ref->num_rows > 0) {
+    while ($row_ref = $result_ref->fetch_assoc()) {
+        $categories[] = [$row_ref['keyword']];
+        $data[] = intval($row_ref['count']); // Convert to integer (whole number)
+    }
+}
+
+// Construct the chart options
+$chart_options = array(
+    'series' => array(
+        array(
+            'data' => $data,
+        ),
+    ),
+    'chart' => array(
+        'height' => 350,
+        'type' => 'bar',
+        'events' => array(
+            'click' => 'function(chart, w, e) { }',
+        ),
+    ),
+    'plotOptions' => array(
+        'bar' => array(
+            'borderRadius' => 5,
+            'columnWidth' => '45%',
+            'distributed' => true,
+        ),
+    ),
+    'dataLabels' => array(
+        'enabled' => false,
+    ),
+    'legend' => array(
+        'show' => false,
+    ),
+    'xaxis' => array(
+        'categories' => $categories,
+        'labels' => array(
+            'style' => array(
+                'colors' => '#000',
+                'fontSize' => '18px',
+            ),
+        ),
+    ),
+);
+
+// Convert the options array to JSON
+$chart_options_json = json_encode($chart_options);
+?>
+
+<script>
+    var options = <?php echo $chart_options_json; ?>;
+    var chart = new ApexCharts(document.querySelector("#chartbar2"), options);
+    chart.render();
+</script>
+
 <script>
     $((function() {
         $(".adv-table1").footable({

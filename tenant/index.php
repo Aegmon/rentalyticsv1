@@ -88,7 +88,30 @@ if (isset($_POST['addtogo'])) {
               </h6>
             </div>
             <div class="category_sidebar">
-    
+<aside class="product-sidebar-widget mb-30">
+    <div class="widget_title nocollapse">
+        <h6>Price Range</h6>
+    </div>
+    <form method="POST" action="">
+        <div class="card border-0 shadow-none mt-10">
+            <div class="product-price-ranges">
+                <div id="price-range" class="mb-0">
+                    <div class="section price">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="min_price" placeholder="Min Price" style="border: none; background-color: transparent; outline: none;">
+                            <input type="text" class="form-control" name="max_price" placeholder="Max Price" style="border: none; background-color: transparent; outline: none;">
+                            <button type="submit" class="btn btn-default btn-squared color-light btn-outline-light ms-lg-0 ms-0 me-2 mb-lg-10">Filter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</aside>
+
+
+
+
               <aside class="product-sidebar-widget mb-30">
                 <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" role="button" aria-expanded="true">
                   <h6>Category</h6>
@@ -407,22 +430,34 @@ if (isset($_POST['addtogo'])) {
   <div class="row product-page-list">
     <?php
  $sql = "SELECT * FROM listing WHERE status = 'active' and isVerify = 'Verify'";
-if (isset($_POST['place_search'])) {
-    $place_search = $_POST['place_search'];
+if (isset($_POST['min_price']) && isset($_POST['max_price'])) {
+    // Get the min and max price values from the form
+    $min_price = intval($_POST['min_price']);
+    $max_price = intval($_POST['max_price']);
+    
+    // Ensure rentprice column is of numeric type in your database
+    $sql .= " AND rentprice BETWEEN $min_price AND $max_price";
+
 }
 
-if (isset($_POST['location_search'])) {
-    $location_search = $_POST['location_search'];
-}
 
-if (isset($place_search)) {
+// Other input values processing
+$place_search = isset($_POST['place_search']) ? $_POST['place_search'] : null;
+$location_search = isset($_POST['location_search']) ? $_POST['location_search'] : null;
+
+// Add conditions based on other input values
+if ($place_search) {
     $sql .= " AND (listing_name LIKE '%$place_search%' OR description LIKE '%$place_search%' OR gender_req LIKE '%$place_search%' OR house_rules LIKE '%$place_search%')";
+
+    // Update or insert into cus_ref
+    $keyword = $conn->real_escape_string($place_search);
+    $sql_ref = "INSERT INTO cus_ref (keyword, count) VALUES ('$keyword', 1) ON DUPLICATE KEY UPDATE count = count + 1";
+    $conn->query($sql_ref);
 }
 
-if (isset($location_search)) {
+if ($location_search) {
     $sql .= " AND (address1 LIKE '%$location_search%' OR address2 LIKE '%$location_search%' OR address3 LIKE '%$location_search%' OR address4 LIKE '%$location_search%')";
 }
-
 if (isset($_GET['category'])) {
     $category = $_GET['category'];
     if ($category !== 'alltype') {
@@ -630,6 +665,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search'])) {
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
     <script src="js/plugins.min.js"></script>
     <script src="js/script.min.js"></script>
+    <script>
+var priceSlider = jQuery(".price-slider");
+
+priceSlider.slider({
+    range: true,
+    min: 0,
+    max: 30000,
+    values: [0, 2000],
+    slide: function (t, s) {
+        // Update the text of the price-value input field
+        jQuery(".price-value").val("₱" + s.values[0] + " - ₱" + s.values[1]);
+
+        // Update other elements if needed
+        jQuery(".job-value").text(s.values[0] + " miles");
+        jQuery(".job-value2").text(s.values[1] + " miles");
+    }
+});
+
+// Initialize the input field value on page load
+jQuery(".price-value").val("₱" + priceSlider.slider("values", 0) + " - ₱" + priceSlider.slider("values", 1));
+jQuery(".job-value").text(priceSlider.slider("values", 0) + " miles");
+jQuery(".job-value2").text(priceSlider.slider("values", 1) + " miles");
+
+jQuery(document).on("click", ".qty-plus", function() {
+    // Your click handler logic here
+    // Ensure you are updating the value of the price slider as needed
+});
+
+</script>
   </body>
 
   <!-- Mirrored from demo.dashboardmarket.com/hexadash-html/ltr/product-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 07 Oct 2023 01:06:13 GMT -->

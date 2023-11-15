@@ -175,7 +175,6 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
 
 
 
-
 <div class="container-fluid">
     <div class="social-dash-wrap">
       <div class="row">
@@ -187,7 +186,7 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
         <div class="col-md-12">
           <div class="card">
           <div class="card-body">
-         <div class="row">
+            <div class="row">
                    <div class="mb-4 d-flex flex-row justify-content-between">
    <div>Bar Graph</div>
    <div>
@@ -195,96 +194,17 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
 
    </div>
     </div>
-<div class="col-lg-6 mb-4">
+<div class="col-lg-12 mb-4">
   <div class="card">
 
   <div class="card-header">Registered Property Types</div>
-<select id="barangaySelect" class='form-control text-center' style="width: 50%;margin:auto;">
-    <option value="" selected disabled>Select Barangay</option>
-    <option value="Aguso">Aguso</option>
-    <option value="Alvindia">Alvindia</option>
-    <option value="Amucao">Amucao</option>
-    <option value="Armenia">Armenia</option>
-    <option value="Asturias">Asturias</option>
-    <option value="Atioc">Atioc</option>
-    <option value="Balanti">Balanti</option>
-    <option value="Balete">Balete</option>
-    <option value="Balibago I">Balibago I</option>
-    <option value="Balibago II">Balibago II</option>
-    <option value="Balingcanaway">Balingcanaway</option>
-    <option value="Banaba">Banaba</option>
-    <option value="Bantog">Banteg</option>
-    <option value="Baras-baras">Baras-baras</option>
-    <option value="Batang-batang">Batang-batang</option>
-    <option value="Binauganan">Binauganan</option>
-    <option value="Bora">Bora</option>
-    <option value="Buenavista">Buenavista</option>
-    <option value="Buhilit">Buhilit</option>
-    <option value="Burot">Burot</option>
-    <option value="Calingcuan">Calingcuan</option>
-    <option value="Capehan">Capehan</option>
-    <option value="Carangian">Carangian</option>
-    <option value="Care">Care</option>
-    <option value="Central">Central</option>
-    <option value="Culipat">Culipat</option>
-    <option value="Cut-cut I">Cut-cut I</option>
-    <option value="Cut-cut II">Cut-cut II</option>
-    <option value="Dalayap">Dalayap</option>
-    <option value="Dela Paz">Dela Paz</option>
-    <option value="Dolores">Dolores</option>
-    <option value="Laoang">Laoang</option>
-    <option value="Ligtasan">Ligtasan</option>
-    <option value="Lourdes">Lourdes</option>
-    <option value="Mabini">Mabini</option>
-    <option value="Maligaya">Maligaya</option>
-    <option value="Maliwalo">Maliwalo</option>
-    <option value="Mapalacsiao">Mapalacsiao</option>
-    <option value="Mapalad">Mapalad</option>
-    <option value="Matatalaib">Matatalaib</option>
-    <option value="Paraiso">Paraiso</option>
-    <option value="Poblacion">Poblacion</option>
-    <option value="Salapungan">Salapungan</option>
-    <option value="San Carlos">San Carlos</option>
-    <option value="San Francisco">San Francisco</option>
-    <option value="San Isidro">San Isidro</option>
-    <option value="San Jose">San Jose</option>
-    <option value="San Jose de Urquico">San Jose de Urquico</option>
-    <option value="San Juan Bautista (formerly Matadero)">San Juan Bautista (formerly Matadero)</option>
-    <option value="San Juan de Mata (formerly Malatiki)">San Juan de Mata (formerly Malatiki)</option>
-    <option value="San Luis">San Luis</option>
-    <option value="San Manuel">San Manuel</option>
-    <option value="San Miguel">San Miguel</option>
-    <option value="San Nicolas">San Nicolas</option>
-    <option value="San Pablo">San Pablo</option>
-    <option value="San Pascual">San Pascual</option>
-    <option value="San Rafael">San Rafael</option>
-    <option value="San Roque">San Roque</option>
-    <option value="San Sebastian">San Sebastian</option>
-    <option value="San Vicente">San Vicente</option>
-    <option value="Santa Cruz">Santa Cruz</option>
-    <option value="Santa Maria">Santa Maria</option>
-    <option value="Santo Cristo">Santo Cristo</option>
-    <option value="Santo Domingo">Santo Domingo</option>
-    <option value="Santo Niño">Santo Niño</option>
-    <option value="Sapang Maragul">Sapang Maragul</option>
-    <option value="Sapang Tagalog">Sapang Tagalog</option>
-    <option value="Sepung Calzada (Panampunan)">Sepung Calzada (Panampunan)</option>
-    <option value="Sinait">Sinait</option>
-    <option value="Suizo">Suizo</option>
-    <option value="Tariji">Tariji</option>
-    <option value="Tibag">Tibag</option>
-    <option value="Tibagan">Tibagan</option>
-    <option value="Trinidad">Trinidad</option>
-    <option value="Ungot">Ungot</option>
-    <option value="Villa Bacolor">Villa Bacolor</option>
-</select>
-  
+
    <div id="chartbar"></div>
  
   
   </div>
 </div>
-<div class="col-lg-6 mb-4">
+<div class="col-lg-12 mb-4">
   <div class="card">
   <div class="card-header">Customer Preferences</div>
 
@@ -496,64 +416,105 @@ GIS
  
     
     
+    </script>
+ 
+    
+   <?php
+$sql = "SELECT address2, type, COUNT(*) as type_count 
+        FROM listing 
+        GROUP BY address2, type";
 
-  
-   <script>
-  var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560'];
-  var options = {
-    series: [{
-      data: [<?php echo $total_apartment_count ?>, <?php echo  $total_dormitory_count ?>, <?php echo  $total_bedspace_count ?>, <?php echo  $total_boarding_house_count ?>]
-    }],
-    chart: {
-      height: 350,
-      width: 1000,
-      type: 'bar',
-      events: {
-        click: function (chart, w, e) {
-          // console.log(chart, w, e)
-        }
-      }
-    },
-    colors: colors,
-    plotOptions: {
-      bar: {
-        borderRadius: 5,
-        columnWidth: '45%',
-        distributed: true,
-      }
-    },
-    dataLabels: {
-      enabled: false
-    },
-    legend: {
-      show: false
-    },
-    xaxis: {
-      categories: [
-        'Appartment',
-        'Dormitory',
-        'Bed Space',
-        'Boarding House',
-      ],
-      labels: {
-        style: {
-          colors: '#000',
-          fontSize: '18px'
-        }
-      }
-    },
-    yaxis: {
-      labels: {
-        formatter: function (val) {
-          return Math.round(val);
-        }
-      }
+$result = $conn->query($sql);
+
+// Initialize variables
+$gender_counts = array();
+
+// Fetch the result and store it in a variable
+while ($row = $result->fetch_assoc()) {
+    $type = $row['type'];
+    $address2 = $row['address2'];
+    $count = $row['type_count'];
+
+    if (!isset($gender_counts[$type])) {
+        $gender_counts[$type] = array();
     }
-  };
 
-  var chart = new ApexCharts(document.querySelector("#chartbar"), options);
-  chart.render();
-</script>
+    $gender_counts[$type][$address2] = $count;
+}
+
+// Now, you can use the 'address2' values as keys for the inner arrays when generating the chart data.
+$series = array();
+foreach ($gender_counts as $type => $typeData) {
+    $productData = array_values($typeData); // Extract values (counts) for each 'address2'
+    
+    // Use $type as the name for the series
+    $series[] = array(
+        'name' => $type,
+        'data' => $productData,
+    );
+}
+
+// Chart options
+$options = array(
+    'series' => $series,
+    'chart' => array(
+        'type' => 'bar',
+        'height' => 350,
+        'stacked' => true,
+        'toolbar' => array(
+            'show' => true
+        ),
+        'zoom' => array(
+            'enabled' => true
+        )
+    ),
+    'responsive' => array(
+        array(
+            'breakpoint' => 480,
+            'options' => array(
+                'legend' => array(
+                    'position' => 'bottom',
+                    'offsetX' => -10,
+                    'offsetY' => 0
+                )
+            )
+        )
+    ),
+    'plotOptions' => array(
+        'bar' => array(
+            'horizontal' => false,
+            'borderRadius' => 10,
+            'dataLabels' => array(
+                'total' => array(
+                    'enabled' => true,
+                    'style' => array(
+                        'fontSize' => '13px',
+                        'fontWeight' => 900
+                    )
+                )
+            )
+        ),
+    ),
+    'xaxis' => array(
+        'categories' => array_keys(reset($gender_counts)), // Assuming 'address2' is always present
+    ),
+    'legend' => array(
+        'position' => 'right',
+        'offsetY' => 40
+    ),
+    'fill' => array(
+        'opacity' => 1
+    )
+);
+
+// Render the chart
+?>
+<script>
+        var options = <?php echo json_encode($options); ?>;
+        var chart = new ApexCharts(document.querySelector("#chartbar"), options);
+        chart.render();
+    </script>
+
 
           <script>
   
@@ -745,7 +706,7 @@ GIS
   <!-- pricing -->
 <?php
 
-$query = "SELECT type, rentprice FROM listing where isVerify ='Verify'";
+$query = "SELECT type, rentprice FROM listing where isVerify = 'Verify'";
 $result = mysqli_query($conn, $query);
 
 $rentPrices = array();
@@ -779,7 +740,7 @@ function formatType($type)
 
 // Assuming you have already established a database connection
 // Execute the SQL query to fetch rent prices per type
-$query = "SELECT type, rentprice FROM listing where isVerify ='Verify'";
+$query = "SELECT type, rentprice FROM listing";
 $result = mysqli_query($conn, $query);
 
 // Initialize an associative array to store rent prices for each type
@@ -914,54 +875,69 @@ foreach ($addressCount as $address => $count) {
 </script>
 
     <!-- customer preferences -->
-    <script>
-       var options = {
-          series: [{
-          data: [21, 22, 10, 28, 22]
-        }],
-          chart: {
-          height: 350,
-          type: 'bar',
-          events: {
-            click: function(chart, w, e) {
-              // console.log(chart, w, e)
-            }
-          }
-        },
-        plotOptions: {
-          bar: {
-            borderRadius: 5,
-            columnWidth: '45%',
-            distributed: true,
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        legend: {
-          show: false
-        },
-        xaxis: {
-          // search counts here
-          categories: [  
-            ['Apartment'], // type of property
-            ['Bed'+ ' (6)'], // bed count
-            ['Bath'+ ' (2)'],// bath count
-            ['1200'], // price min
-            ['1500'] // price max
-          ],
-          labels: {
-            style: {
-              colors: '#000',
-              fontSize: '18px'
-            }
-          }
-        }
-        };
+    <?php
+// Assuming you have a database connection established ($conn)
+$sql_ref = "SELECT keyword, count FROM cus_ref";
+$result_ref = $conn->query($sql_ref);
 
-        var chart = new ApexCharts(document.querySelector("#chartbar2"), options);
-        chart.render();
-    </script>
+$categories = array();
+$data = array();
+
+if ($result_ref->num_rows > 0) {
+    while ($row_ref = $result_ref->fetch_assoc()) {
+        $categories[] = [$row_ref['keyword']];
+        $data[] = intval($row_ref['count']); // Convert to integer (whole number)
+    }
+}
+
+// Construct the chart options
+$chart_options = array(
+    'series' => array(
+        array(
+            'data' => $data,
+        ),
+    ),
+    'chart' => array(
+        'height' => 350,
+        'type' => 'bar',
+        'events' => array(
+            'click' => 'function(chart, w, e) { }',
+        ),
+    ),
+    'plotOptions' => array(
+        'bar' => array(
+            'borderRadius' => 5,
+            'columnWidth' => '45%',
+            'distributed' => true,
+        ),
+    ),
+    'dataLabels' => array(
+        'enabled' => false,
+    ),
+    'legend' => array(
+        'show' => false,
+    ),
+    'xaxis' => array(
+        'categories' => $categories,
+        'labels' => array(
+            'style' => array(
+                'colors' => '#000',
+                'fontSize' => '18px',
+            ),
+        ),
+    ),
+);
+
+// Convert the options array to JSON
+$chart_options_json = json_encode($chart_options);
+?>
+
+<script>
+    var options = <?php echo $chart_options_json; ?>;
+    var chart = new ApexCharts(document.querySelector("#chartbar2"), options);
+    chart.render();
+</script>
+
 <script>
     $((function() {
         $(".adv-table1").footable({
@@ -1022,6 +998,30 @@ foreach ($addressCount as $address => $count) {
             e instanceof FooTable.Filter ? this.$jobTitle.val(e.query.val()) : this.$jobTitle.val(this.jobTitleDefault);
         }
     });
+
+
+    
+</script>
+<script>
+function updateQuery() {
+    // Get the selected barangay value
+    var selectedBarangay = document.getElementById("barangaySelect").value;
+
+    // Send an AJAX request to update the content dynamically
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // Update the content based on the server response
+            var response = JSON.parse(this.responseText);
+
+            // Example: Update the chart data with the response data
+            var updatedChartData = response.chartData;
+            chart.updateSeries([{ data: updatedChartData }]);
+        }
+    };
+    xhttp.open("GET", "update.php?barangay=" + selectedBarangay, true);
+    xhttp.send();
+}
 </script>
 
 <script src="js/plugins.min.js"></script>
