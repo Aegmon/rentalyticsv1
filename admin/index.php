@@ -16,24 +16,19 @@ $tenant_female_count = $tenant_female_result->fetch_assoc()['female_count'];
 $total_male_count = $owner_male_count + $tenant_male_count;
 $total_female_count = $owner_female_count + $tenant_female_count;
 
-
-
 $result = $conn->query("SELECT SUM(CASE WHEN gender_req = 'Male' THEN 1 ELSE 0 END) as male_listing_count,
                               SUM(CASE WHEN gender_req = 'Female' THEN 1 ELSE 0 END) as female_listing_count,
                           SUM(CASE WHEN gender_req = 'Both' THEN 1 ELSE 0 END) as both_listing_count
                         FROM listing");
 
-// Fetch the result
-$row = $result->fetch_assoc();
-$total_male_listing_count = $row['male_listing_count'];
-$total_female_listing_count = $row['female_listing_count'];
-$total_both_listing_count = $row['both_listing_count'];
-
-
-$result = $conn->query("SELECT type, address2,gender_req, COUNT(*) as gender_count 
+$sql="SELECT type, address2,gender_req, COUNT(*) as gender_count 
                         FROM listing 
-                        GROUP BY type, gender_req");
+                        GROUP BY type, gender_req";
 
+
+
+
+   $result = $conn->query($sql);
 // Initialize variables
 $gender_counts = array();
 
@@ -75,6 +70,14 @@ $total_boarding_house_count = isset($gender_counts['boarding_house']) ? array_su
 $total_apartment_count = isset($gender_counts['apartment']) ? array_sum($gender_counts['apartment']) : 0;
 $total_dormitory_count = isset($gender_counts['dormitory']) ? array_sum($gender_counts['dormitory']) : 0;
 $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_counts['bedspace']) : 0;
+
+
+
+$row = $result->fetch_assoc();
+$total_male_listing_count = $row['male_listing_count'];
+$total_female_listing_count = $row['female_listing_count'];
+$total_both_listing_count = $row['both_listing_count'];
+
 
     $sql = "SELECT l.owner_id, COUNT(DISTINCT l.listing_id) AS listing_count, COUNT(a.application_id) AS rent_count
         FROM listing l
@@ -292,96 +295,17 @@ if ($result->num_rows > 0) {
 
    </div>
     </div>
-<div class="col-lg-6 mb-4">
+<div class="col-lg-12 mb-4">
   <div class="card">
 
   <div class="card-header">Registered Property Types</div>
-<select id="barangaySelect" class='form-control text-center' style="width: 50%;margin:auto;" onchange="updateQuery()">
-    <option value="" selected disabled>Select Barangay</option>
-    <option value="Aguso">Aguso</option>
-    <option value="Alvindia">Alvindia</option>
-    <option value="Amucao">Amucao</option>
-    <option value="Armenia">Armenia</option>
-    <option value="Asturias">Asturias</option>
-    <option value="Atioc">Atioc</option>
-    <option value="Balanti">Balanti</option>
-    <option value="Balete">Balete</option>
-    <option value="Balibago I">Balibago I</option>
-    <option value="Balibago II">Balibago II</option>
-    <option value="Balingcanaway">Balingcanaway</option>
-    <option value="Banaba">Banaba</option>
-    <option value="Bantog">Banteg</option>
-    <option value="Baras-baras">Baras-baras</option>
-    <option value="Batang-batang">Batang-batang</option>
-    <option value="Binauganan">Binauganan</option>
-    <option value="Bora">Bora</option>
-    <option value="Buenavista">Buenavista</option>
-    <option value="Buhilit">Buhilit</option>
-    <option value="Burot">Burot</option>
-    <option value="Calingcuan">Calingcuan</option>
-    <option value="Capehan">Capehan</option>
-    <option value="Carangian">Carangian</option>
-    <option value="Care">Care</option>
-    <option value="Central">Central</option>
-    <option value="Culipat">Culipat</option>
-    <option value="Cut-cut I">Cut-cut I</option>
-    <option value="Cut-cut II">Cut-cut II</option>
-    <option value="Dalayap">Dalayap</option>
-    <option value="Dela Paz">Dela Paz</option>
-    <option value="Dolores">Dolores</option>
-    <option value="Laoang">Laoang</option>
-    <option value="Ligtasan">Ligtasan</option>
-    <option value="Lourdes">Lourdes</option>
-    <option value="Mabini">Mabini</option>
-    <option value="Maligaya">Maligaya</option>
-    <option value="Maliwalo">Maliwalo</option>
-    <option value="Mapalacsiao">Mapalacsiao</option>
-    <option value="Mapalad">Mapalad</option>
-    <option value="Matatalaib">Matatalaib</option>
-    <option value="Paraiso">Paraiso</option>
-    <option value="Poblacion">Poblacion</option>
-    <option value="Salapungan">Salapungan</option>
-    <option value="San Carlos">San Carlos</option>
-    <option value="San Francisco">San Francisco</option>
-    <option value="San Isidro">San Isidro</option>
-    <option value="San Jose">San Jose</option>
-    <option value="San Jose de Urquico">San Jose de Urquico</option>
-    <option value="San Juan Bautista (formerly Matadero)">San Juan Bautista (formerly Matadero)</option>
-    <option value="San Juan de Mata (formerly Malatiki)">San Juan de Mata (formerly Malatiki)</option>
-    <option value="San Luis">San Luis</option>
-    <option value="San Manuel">San Manuel</option>
-    <option value="San Miguel">San Miguel</option>
-    <option value="San Nicolas">San Nicolas</option>
-    <option value="San Pablo">San Pablo</option>
-    <option value="San Pascual">San Pascual</option>
-    <option value="San Rafael">San Rafael</option>
-    <option value="San Roque">San Roque</option>
-    <option value="San Sebastian">San Sebastian</option>
-    <option value="San Vicente">San Vicente</option>
-    <option value="Santa Cruz">Santa Cruz</option>
-    <option value="Santa Maria">Santa Maria</option>
-    <option value="Santo Cristo">Santo Cristo</option>
-    <option value="Santo Domingo">Santo Domingo</option>
-    <option value="Santo Niño">Santo Niño</option>
-    <option value="Sapang Maragul">Sapang Maragul</option>
-    <option value="Sapang Tagalog">Sapang Tagalog</option>
-    <option value="Sepung Calzada (Panampunan)">Sepung Calzada (Panampunan)</option>
-    <option value="Sinait">Sinait</option>
-    <option value="Suizo">Suizo</option>
-    <option value="Tariji">Tariji</option>
-    <option value="Tibag">Tibag</option>
-    <option value="Tibagan">Tibagan</option>
-    <option value="Trinidad">Trinidad</option>
-    <option value="Ungot">Ungot</option>
-    <option value="Villa Bacolor">Villa Bacolor</option>
-</select>
-  
+
    <div id="chartbar"></div>
  
   
   </div>
 </div>
-<div class="col-lg-6 mb-4">
+<div class="col-lg-12 mb-4">
   <div class="card">
   <div class="card-header">Customer Preferences</div>
 
@@ -592,65 +516,101 @@ GIS
     </script>
  
     
-    
+   <?php
+$sql = "SELECT address2, type, COUNT(*) as type_count 
+        FROM listing 
+        GROUP BY address2, type";
 
-<script>
-  var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560'];
-  var options = {
-    series: [{
-      data: [<?php echo $total_apartment_count ?>, <?php echo  $total_dormitory_count ?>, <?php echo  $total_bedspace_count ?>, <?php echo  $total_boarding_house_count ?>]
-    }],
-    chart: {
-      height: 350,
-      type: 'bar',
-      events: {
-        click: function (chart, w, e) {
-          // console.log(chart, w, e)
-        }
-      }
-    },
-    colors: colors,
-    plotOptions: {
-      bar: {
-        borderRadius: 5,
-        columnWidth: '45%',
-        distributed: true,
-      }
-    },
-    dataLabels: {
-      enabled: false
-    },
-    legend: {
-      show: false
-    },
-    xaxis: {
-      categories: [
-        'Appartment',
-        'Dormitory',
-        'Bed Space',
-        'Boarding House',
-      ],
-      labels: {
-        style: {
-          colors: '#000',
-          fontSize: '18px'
-        }
-      }
-    },
-    yaxis: {
-      labels: {
-        formatter: function (val) {
-          return Math.round(val);
-        }
-      }
+$result = $conn->query($sql);
+
+// Initialize variables
+$gender_counts = array();
+
+// Fetch the result and store it in a variable
+while ($row = $result->fetch_assoc()) {
+    $type = $row['type'];
+    $address2 = $row['address2'];
+    $count = $row['type_count'];
+
+    if (!isset($gender_counts[$type])) {
+        $gender_counts[$type] = array();
     }
-  };
 
-  var chart = new ApexCharts(document.querySelector("#chartbar"), options);
-  chart.render();
+    $gender_counts[$type][$address2] = $count;
+}
 
+// Now, you can use the 'address2' values as keys for the inner arrays when generating the chart data.
+$series = array();
+foreach ($gender_counts as $type => $typeData) {
+    $productData = array_values($typeData); // Extract values (counts) for each 'address2'
+    
+    // Use $type as the name for the series
+    $series[] = array(
+        'name' => $type,
+        'data' => $productData,
+    );
+}
 
-</script>
+// Chart options
+$options = array(
+    'series' => $series,
+    'chart' => array(
+        'type' => 'bar',
+        'height' => 350,
+        'stacked' => true,
+        'toolbar' => array(
+            'show' => true
+        ),
+        'zoom' => array(
+            'enabled' => true
+        )
+    ),
+    'responsive' => array(
+        array(
+            'breakpoint' => 480,
+            'options' => array(
+                'legend' => array(
+                    'position' => 'bottom',
+                    'offsetX' => -10,
+                    'offsetY' => 0
+                )
+            )
+        )
+    ),
+    'plotOptions' => array(
+        'bar' => array(
+            'horizontal' => false,
+            'borderRadius' => 10,
+            'dataLabels' => array(
+                'total' => array(
+                    'enabled' => true,
+                    'style' => array(
+                        'fontSize' => '13px',
+                        'fontWeight' => 900
+                    )
+                )
+            )
+        ),
+    ),
+    'xaxis' => array(
+        'categories' => array_keys(reset($gender_counts)), // Assuming 'address2' is always present
+    ),
+    'legend' => array(
+        'position' => 'right',
+        'offsetY' => 40
+    ),
+    'fill' => array(
+        'opacity' => 1
+    )
+);
+
+// Render the chart
+?>
+<script>
+        var options = <?php echo json_encode($options); ?>;
+        var chart = new ApexCharts(document.querySelector("#chartbar"), options);
+        chart.render();
+    </script>
 
 
           <script>
