@@ -13,8 +13,8 @@ $tenant_male_count = $tenant_male_result->fetch_assoc()['male_count'];
 $tenant_female_count = $tenant_female_result->fetch_assoc()['female_count'];
 
 // Calculate the total sum
-$total_male_count = $owner_male_count + $tenant_male_count;
-$total_female_count = $owner_female_count + $tenant_female_count;
+$total_male_count = $tenant_male_count;
+$total_female_count = $tenant_female_count;
 
 
 
@@ -188,7 +188,7 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
           <div class="card-body">
             <div class="row">
                    <div class="mb-4 d-flex flex-row justify-content-between">
-   <div>Bar Graph</div>
+   <div>Rental Statistics</div>
    <div>
 
 
@@ -545,7 +545,7 @@ $options = array(
     },
     xaxis: {
       categories: [
-        'Appartment',
+        'Apartment',
         'Dormitory',
         'Bed Space',
         'Boarding House',

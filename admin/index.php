@@ -269,7 +269,7 @@ if ($result->num_rows > 0) {
           <div class="card-body">
             <div class="row">
                    <div class="mb-4 d-flex flex-row justify-content-between">
-   <div>Bar Graph</div>
+   <div>Rental Statistics</div>
    <div>
 
 
@@ -1102,7 +1102,7 @@ $chart_options_json = json_encode($chart_options);
     },
     xaxis: {
       categories: [
-        'Appartment',
+        'Apartment',
         'Dormitory',
         'Bed Space',
         'Boarding House',
