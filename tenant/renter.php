@@ -24,7 +24,7 @@ if (isset($_GET['feedback'])) {
 
 
     $stmt = $conn->prepare("INSERT INTO review (tenant_id, rating, feedback, listing_id) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("issi", $id, $rating, $feedback, $listing_id);
+    $stmt->bind_param("iisi", $id, $rating, $feedback, $listing_id);
 
     if ($stmt->execute() === TRUE) {
         echo "New record created successfully";
@@ -138,11 +138,31 @@ if ($result->num_rows > 0) {
    
 
 if ($row["status"] == "renter") {
-    echo '<td>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal' . $row["application_id"] . '">
-            Add Review
-        </button>
-    </td>';
+    // Check if there is an existing review for this tenant and listing
+    $existingReviewSql = "SELECT * FROM review WHERE tenant_id = ? AND listing_id = ?";
+    $existingReviewStmt = $conn->prepare($existingReviewSql);
+    $existingReviewStmt->bind_param("ii", $id, $row["listing_id"]);
+    $existingReviewStmt->execute();
+    $existingReviewResult = $existingReviewStmt->get_result();
+    $existingReviewCount = $existingReviewResult->num_rows;
+
+    if ($existingReviewCount > 0) {
+        // Existing review found, disable the button
+        echo '<td>
+            <button type="button" class="btn btn-primary" disabled>
+                Add Review
+            </button>
+        </td>';
+    } else {
+        // No existing review, enable the button
+        echo '<td>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal' . $row["application_id"] . '">
+                Add Review
+            </button>
+        </td>';
+    }
+
+    
 } else {
    
 
@@ -180,7 +200,7 @@ echo '<input type="hidden" name="amount" value="' . $reservation_fee_in_whole_nu
     <div class="modal-body">
         <div class="new-member-modal">
             <div class="form-group mb-20">
-        <input type="hidden" class="form-control" name="listing_id" value="' . $row["listing_id"] . '">
+        <input type="text" class="form-control" name="listing_id" value="' . $row["listing_id"] . '">
 
                 <input type="number" class="form-control" name="rating" placeholder=" Rating">
             </div>
