@@ -9,23 +9,13 @@ if (isset($_POST['addtogo'])) {
 
     
     // Check if the record already exists
-    $check_sql = "SELECT * FROM `togo` WHERE `tenant_id` = ? AND `listing_id` = ?";
+    $check_sql = "DELETE FROM `togo` WHERE `tenant_id` = ? AND `listing_id` = ?";
     $check_stmt = $conn->prepare($check_sql);
     $check_stmt->bind_param("ii", $id, $listing_id);
     $check_stmt->execute();
     $check_result = $check_stmt->get_result();
     
-    // If a record is found, display an alert and don't insert again
-    if ($check_result->num_rows > 0) {
-        echo '<script>alert("Already added to togo.");</script>';
-    } else {
-        // Prepare and execute the SQL statement for updating the application status
-        $insert_sql = "INSERT INTO `togo`(`tenant_id`, `listing_id`) VALUES (?, ?)";
-        $insert_stmt = $conn->prepare($insert_sql);
-        $insert_stmt->bind_param("ii", $id, $listing_id);
-        $insert_stmt->execute();
-        echo '<script>window.location.href = "togo.php";</script>';
-    }
+  
 }
 
 ?>
@@ -572,8 +562,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search'])) {
                                 <form method="post">
                                   <input type ="hidden" name="listing_id" value="<?php echo $listing_id;?>">
                                   
-                                <button type="submit" name="addtogo" class="btn btn-default btn-squared color-light btn-outline-light ms-lg-0 ms-0 me-2 mb-lg-10"><img src="img/svg/send.svg" alt="shopping-bag" class="svg">
-                                  Add To Go
+                                <button type="submit" name="addtogo" class="btn btn-default btn-squared color-light btn-outline-light ms-lg-0 ms-0 me-2 mb-lg-10">
+                                 Remove
                                 </button>
 
                       

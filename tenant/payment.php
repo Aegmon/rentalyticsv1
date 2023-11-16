@@ -7,7 +7,7 @@ $client = new Client();
 
 // Retrieve the monthlyPaymentId from the form
 $application_id = $_POST['application_id'];
-$amount = $_POST['amount']*100; // Replace with the actual amount
+$amount = $_POST['amount']*1; // Replace with the actual amount
 
 // Define other parameters
 $currency = 'PHP'; // Replace with the appropriate currency code
