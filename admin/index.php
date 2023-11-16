@@ -13,8 +13,8 @@ $tenant_male_count = $tenant_male_result->fetch_assoc()['male_count'];
 $tenant_female_count = $tenant_female_result->fetch_assoc()['female_count'];
 
 // Calculate the total sum
-$total_male_count = $owner_male_count + $tenant_male_count;
-$total_female_count = $owner_female_count + $tenant_female_count;
+$total_male_count = $tenant_male_count;
+$total_female_count = $tenant_female_count;
 
 
 

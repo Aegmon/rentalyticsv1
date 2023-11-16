@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
                     $profile_pic_destination = 'uploads/' . $profile_pic_name;
 
                     if (move_uploaded_file($profile_pic_tmp, $profile_pic_destination)) {
-                        $sql_owner = "INSERT INTO owner (user_id, name, birthdate, gender,contact_number, id_picture, profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender','$$contact_number', '$id_file_name', '$profile_pic_name')";
+                        $sql_owner = "INSERT INTO owner (user_id, name, birthdate, gender,contactNumber, id_picture, profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender','$contactNumber', '$id_file_name', '$profile_pic_name')";
                         if ($conn->query($sql_owner) !== TRUE) {
                             echo "Error: " . $sql_owner . "<br>" . $conn->error;
                         }
@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
                     $profile_pic_destination = 'uploads/' . $profile_pic_name;
 
                     if (move_uploaded_file($profile_pic_tmp, $profile_pic_destination)) {
-                        $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender, contact_number, profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender','$$contact_number', '$profile_pic_name')";
+                        $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender, contactNumber, profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender','$contactNumber', '$profile_pic_name')";
                         if ($conn->query($sql_tenant) !== TRUE) {
                             echo "Error: " . $sql_tenant . "<br>" . $conn->error;
                         }
