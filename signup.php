@@ -8,8 +8,10 @@ if (isset($_POST['submit'])) {
     $birthdate = $_POST['birthdate'];
     $gender = $_POST['gender'];
     $userType = $_POST['userType'];
+    $contactNumber = $_POST['contactNumber'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+
 
     // Insert into credentials table
     $sql_credentials = "INSERT INTO credentials (email, password, user_type) VALUES ('$email', '$password', '$userType')";
@@ -31,7 +33,7 @@ if (isset($_POST['submit'])) {
                     $profile_pic_destination = 'uploads/' . $profile_pic_name;
 
                     if (move_uploaded_file($profile_pic_tmp, $profile_pic_destination)) {
-                        $sql_owner = "INSERT INTO owner (user_id, name, birthdate, gender, id_picture, profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender', '$id_file_name', '$profile_pic_name')";
+                        $sql_owner = "INSERT INTO owner (user_id, name, birthdate, gender,contact_number, id_picture, profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender','$$contact_number', '$id_file_name', '$profile_pic_name')";
                         if ($conn->query($sql_owner) !== TRUE) {
                             echo "Error: " . $sql_owner . "<br>" . $conn->error;
                         }
@@ -44,7 +46,7 @@ if (isset($_POST['submit'])) {
                     $profile_pic_destination = 'uploads/' . $profile_pic_name;
 
                     if (move_uploaded_file($profile_pic_tmp, $profile_pic_destination)) {
-                        $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender, profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender', '$profile_pic_name')";
+                        $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender, contact_number, profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender','$$contact_number', '$profile_pic_name')";
                         if ($conn->query($sql_tenant) !== TRUE) {
                             echo "Error: " . $sql_tenant . "<br>" . $conn->error;
                         }
@@ -64,7 +66,7 @@ if (isset($_POST['submit'])) {
             $profile_pic_destination = 'uploads/' . $profile_pic_name;
 
             if (move_uploaded_file($profile_pic_tmp, $profile_pic_destination)) {
-                $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender, profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender', '$profile_pic_name')";
+                $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender,contactNumber,profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender','$contactNumber', '$profile_pic_name')";
                 if ($conn->query($sql_tenant) !== TRUE) {
                     echo "Error: " . $sql_tenant . "<br>" . $conn->error;
                 }
@@ -75,7 +77,6 @@ if (isset($_POST['submit'])) {
     } else {
         echo "Error: " . $sql_credentials . "<br>" . $conn->error;
     }
-
     $conn->close();
 }
 ?>
@@ -138,6 +139,11 @@ if (isset($_POST['submit'])) {
                         <option value="Female">Female</option>
                     </select>
                 </div>
+                <div class="form-group mb-20">
+                    <label for="contactNumber">Contact Number</label>
+                    <input type="number" class="form-control" name="contactNumber" placeholder="01234567890">
+                </div>
+
                 <div class="form-group mb-20">
                     <label for="userType">User Type</label>
                     <select class="form-control" name="userType" id="userTypeSelect">
