@@ -1,5 +1,7 @@
 <?php
 include('sidebar.php');
+$listing_place_total = $conn->query("SELECT COUNT(*) as total_listing FROM listing WHERE isVerify = 'Verify'");
+
 $owner_male_result = $conn->query("SELECT COUNT(*) as male_count FROM owner WHERE gender = 'Male'");
 $owner_female_result = $conn->query("SELECT COUNT(*) as female_count FROM owner WHERE gender = 'Female'");
 
@@ -13,8 +15,16 @@ $tenant_male_count = $tenant_male_result->fetch_assoc()['male_count'];
 $tenant_female_count = $tenant_female_result->fetch_assoc()['female_count'];
 
 // Calculate the total sum
-$total_male_count = $tenant_male_count;
-$total_female_count = $tenant_female_count;
+$total_tenant_male_count = $tenant_male_count;
+$total_tenant_female_count = $tenant_female_count;
+$total_tenant_count = $tenant_male_count + $tenant_female_count;
+
+
+$total_owner_male_count = $owner_male_count;
+$total_owner_female_count = $owner_female_count;
+$total_owner_count = $owner_male_count + $owner_female_count;
+
+$total_listing = $lisitng_total_count;
 
 
 
@@ -119,7 +129,7 @@ if ($result->num_rows > 0) {
                   <div class="overview-content w-100">
                     <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
                       <div class="ap-po-details__titlebar">
-                        <h1><?php echo $listing_count; ?></h1>
+                        <h1><?php echo $total_listing; ?></h1>
                         <h5>Total Listing</h5>
                       </div>
                       <div class="ap-po-details__icon-area">
@@ -140,7 +150,7 @@ if ($result->num_rows > 0) {
                   <div class="overview-content w-100">
                     <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
                       <div class="ap-po-details__titlebar">
-                        <h1><?php echo $rent_count; ?></h1>
+                        <h1><?php echo $total_tenant_count; ?></h1>
                         <h5>Total Renter</h5>
                       </div>
                       <div class="ap-po-details__icon-area">
@@ -158,7 +168,7 @@ if ($result->num_rows > 0) {
                   <div class="overview-content w-100">
                     <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
                       <div class="ap-po-details__titlebar">
-                        <h1><?php echo $rent_count; ?></h1>
+                        <h1><?php  ; ?></h1>
                         <h5>Total Owner</h5>
                       </div>
                       <div class="ap-po-details__icon-area">
@@ -443,8 +453,8 @@ GIS
 
   while ($row = mysqli_fetch_array($result)) {
     
-   
-    echo '["Place Name: ' . $row['listing_name'] . '\n'. "Reservation Fee: " . $row['reservationfee'] .'",' . $row['lat'] . ',' . $row['lng'] . '],';
+       echo '["Place Name: ' . $row['listing_name'] . '\n'. "Reservation Fee: " . $row['reservationfee'] . '\n'. $row['type'] . '' .' ",' . $row['lat'] . ',' . $row['lng'] . '],';
+
 
   }
   
