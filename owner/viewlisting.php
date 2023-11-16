@@ -96,10 +96,7 @@ if ($result->num_rows > 0) {
         $updated_at = $row["updated_at"];
         $status = $row["status"];
         $isVerify = $row["isVerify"];
-        $mime = $row["mime"];
-        $data = $row["data"];
-        $title = $row["title"];
-        $name = $row["name"];
+ 
           $status = $row["status"];
         $n_bedroom = $row["n_bedroom"];
         $n_bathroom = $row["n_bathroom"];

@@ -954,7 +954,9 @@ foreach ($addressCount as $address => $count) {
     <!-- customer preferences -->
     <?php
 // Assuming you have a database connection established ($conn)
-$sql_ref = "SELECT keyword, count FROM cus_ref";
+$sql_ref = "SELECT keyword, MAX(count) AS max_count
+FROM cus_ref
+GROUP BY keyword;";
 $result_ref = $conn->query($sql_ref);
 
 $categories = array();
@@ -962,8 +964,8 @@ $data = array();
 
 if ($result_ref->num_rows > 0) {
     while ($row_ref = $result_ref->fetch_assoc()) {
-        $categories[] = [$row_ref['keyword']];
-        $data[] = intval($row_ref['count']); // Convert to integer (whole number)
+        $categories[] = $row_ref['keyword']; // Remove the extra array wrapping
+        $data[] = intval($row_ref['max_count']); // Use 'max_count' instead of 'count'
     }
 }
 

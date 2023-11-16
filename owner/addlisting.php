@@ -79,7 +79,7 @@ if (isset($_POST['add'])) {
          $targetDir = "../uploads/";
    
         $fileName = basename($_FILES["documents"]["name"]);
-        $targetFilePath =  $targetDir.$fileName11;
+        $targetFilePath =  $targetDir.$fileName;
         // Read the file data
    
 

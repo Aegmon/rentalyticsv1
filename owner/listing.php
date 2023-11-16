@@ -193,7 +193,7 @@ if (isset($_POST['delete_listing'])) {
           </div>
           <div class="row">
          <?php
-$sql = "SELECT * FROM listing WHERE status = 'active'";
+$sql = "SELECT * FROM listing WHERE status = 'active' AND owner_id = '$id'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
