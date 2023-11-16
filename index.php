@@ -23,15 +23,15 @@ if (isset($_POST['login']) ) {
            
 if ($row['isVerify'] == '1') {
     header('Location: owner/index.php');
-    exit(); // It's important to stop script execution after a header redirect
+    exit(); 
 } else {
     echo '<script>alert("Please wait for the admin to verify your account.");</script>';
 }
             } elseif ($row['user_type'] == 'tenant') {
-                // Code for tenant header
+              
                 header('Location: tenant/index.php');
             } else {
-                // Default header if no match is found
+             
               header('Location: admin/index.php');
             }
         }

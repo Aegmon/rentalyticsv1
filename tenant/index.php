@@ -61,7 +61,85 @@ if (isset($_POST['addtogo'])) {
   </div>
   <div class="location-search">
     <img src="img/svg/map-pin.svg" alt="map-pin" class="svg">
-    <input class="form-control border-0 box-shadow-none" type="search" name="location_search" placeholder="Location" aria-label="Search">
+      <select  class="form-control border-0 box-shadow-none"  id="barangay" name="location_search" required>
+    <option value="" selected disabled>Select Barangay</option>
+    <option value="Aguso">Aguso</option>
+    <option value="Alvindia">Alvindia</option>
+    <option value="Amucao">Amucao</option>
+    <option value="Armenia">Armenia</option>
+    <option value="Asturias">Asturias</option>
+    <option value="Atioc">Atioc</option>
+    <option value="Balanti">Balanti</option>
+    <option value="Balete">Balete</option>
+    <option value="Balibago I">Balibago I</option>
+    <option value="Balibago II">Balibago II</option>
+    <option value="Balingcanaway">Balingcanaway</option>
+    <option value="Banaba">Banaba</option>
+    <option value="Bantog">Banteg</option>
+    <option value="Baras-baras">Baras-baras</option>
+    <option value="Batang-batang">Batang-batang</option>
+    <option value="Binauganan">Binauganan</option>
+    <option value="Bora">Bora</option>
+    <option value="Buenavista">Buenavista</option>
+    <option value="Buhilit">Buhilit</option>
+    <option value="Burot">Burot</option>
+    <option value="Calingcuan">Calingcuan</option>
+    <option value="Capehan">Capehan</option>
+    <option value="Carangian">Carangian</option>
+    <option value="Care">Care</option>
+    <option value="Central">Central</option>
+    <option value="Culipat">Culipat</option>
+    <option value="Cut-cut I">Cut-cut I</option>
+    <option value="Cut-cut II">Cut-cut II</option>
+    <option value="Dalayap">Dalayap</option>
+    <option value="Dela Paz">Dela Paz</option>
+    <option value="Dolores">Dolores</option>
+    <option value="Laoang">Laoang</option>
+    <option value="Ligtasan">Ligtasan</option>
+    <option value="Lourdes">Lourdes</option>
+    <option value="Mabini">Mabini</option>
+    <option value="Maligaya">Maligaya</option>
+    <option value="Maliwalo">Maliwalo</option>
+    <option value="Mapalacsiao">Mapalacsiao</option>
+    <option value="Mapalad">Mapalad</option>
+    <option value="Matatalaib">Matatalaib</option>
+    <option value="Paraiso">Paraiso</option>
+    <option value="Poblacion">Poblacion</option>
+    <option value="Salapungan">Salapungan</option>
+    <option value="San Carlos">San Carlos</option>
+    <option value="San Francisco">San Francisco</option>
+    <option value="San Isidro">San Isidro</option>
+    <option value="San Jose">San Jose</option>
+    <option value="San Jose de Urquico">San Jose de Urquico</option>
+    <option value="San Juan Bautista (formerly Matadero)">San Juan Bautista (formerly Matadero)</option>
+    <option value="San Juan de Mata (formerly Malatiki)">San Juan de Mata (formerly Malatiki)</option>
+    <option value="San Luis">San Luis</option>
+    <option value="San Manuel">San Manuel</option>
+    <option value="San Miguel">San Miguel</option>
+    <option value="San Nicolas">San Nicolas</option>
+    <option value="San Pablo">San Pablo</option>
+    <option value="San Pascual">San Pascual</option>
+    <option value="San Rafael">San Rafael</option>
+    <option value="San Roque">San Roque</option>
+    <option value="San Sebastian">San Sebastian</option>
+    <option value="San Vicente">San Vicente</option>
+    <option value="Santa Cruz">Santa Cruz</option>
+    <option value="Santa Maria">Santa Maria</option>
+    <option value="Santo Cristo">Santo Cristo</option>
+    <option value="Santo Domingo">Santo Domingo</option>
+    <option value="Santo Niño">Santo Niño</option>
+    <option value="Sapang Maragul">Sapang Maragul</option>
+    <option value="Sapang Tagalog">Sapang Tagalog</option>
+    <option value="Sepung Calzada (Panampunan)">Sepung Calzada (Panampunan)</option>
+    <option value="Sinait">Sinait</option>
+    <option value="Suizo">Suizo</option>
+    <option value="Tariji">Tariji</option>
+    <option value="Tibag">Tibag</option>
+    <option value="Tibagan">Tibagan</option>
+    <option value="Trinidad">Trinidad</option>
+    <option value="Ungot">Ungot</option>
+    <option value="Villa Bacolor">Villa Bacolor</option>
+</select>
   </div>
   <button type="submit" class="btn btn-dark">
     <img src="img/svg/search.svg" alt="search" class="svg">Search
@@ -297,109 +375,7 @@ if (isset($_POST['addtogo'])) {
   </div>
 </aside>
 
-              <aside class="product-sidebar-widget">
-  <div class="widget_title" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample4" role="button" aria-expanded="true">
-    <h6>Ratings</h6>
-  </div>
-  <div class="card border-0 shadow-none multi-collapse mt-10 collapse" id="multiCollapseExample4">
-    <div class="product-ratings">
-      <form method="POST" action="">
-        <ul>
-          <li>
-            <div class="checkbox-theme-default custom-checkbox">
-              <input class="checkbox" type="checkbox" id="rating-1" name="rating" value="1" onchange="this.form.submit()">
-              <label for="rating-1">
-                <span class="stars-rating d-flex align-items-center">
-                  <span class="star-icon las la-star active"></span>
-                  <span class="star-icon las la-star active"></span>
-                  <span class="star-icon las la-star active"></span>
-                  <span class="star-icon las la-star active"></span>
-                  <span class="star-icon las la-star active"></span>
-                  <span class="checkbox-text">
-                    and up
-                    <span class="item-numbers"></span>
-                  </span>
-                </span>
-              </label>
-            </div>
-          </li>
-          <li>
-            <div class="checkbox-theme-default custom-checkbox">
-              <input class="checkbox" type="checkbox" id="rating-3" name="rating" value="2" onchange="this.form.submit()">
-              <label for="rating-3">
-                <span class="stars-rating d-flex align-items-center">
-                  <span class="star-icon las la-star active"></span>
-                  <span class="star-icon las la-star active"></span>
-                  <span class="star-icon las la-star active"></span>
-                  <span class="star-icon las la-star active"></span>
-                  <span class="star-icon las la-star inactive"></span>
-                  <span class="checkbox-text">
-                    and up
-                    <span class="item-numbers"></span>
-                  </span>
-                </span>
-              </label>
-            </div>
-          </li>
-          <li>
-            <div class="checkbox-theme-default custom-checkbox">
-              <input class="checkbox" type="checkbox" id="rating-4" name="rating" value="3" onchange="this.form.submit()">
-              <label for="rating-4">
-                <span class="stars-rating d-flex align-items-center">
-                  <span class="star-icon las la-star active"></span>
-                  <span class="star-icon las la-star active"></span>
-                  <span class="star-icon las la-star active"></span>
-                  <span class="star-icon las la-star inactive"></span>
-                  <span class="star-icon las la-star inactive"></span>
-                  <span class="checkbox-text">
-                    and up
-                    <span class="item-numbers"></span>
-                  </span>
-                </span>
-              </label>
-            </div>
-          </li>
-          <li>
-            <div class="checkbox-theme-default custom-checkbox">
-              <input class="checkbox" type="checkbox" id="rating-5" name="rating" value="4" onchange="this.form.submit()">
-              <label for="rating-5">
-                <span class="stars-rating d-flex align-items-center">
-                  <span class="star-icon las la-star active"></span>
-                  <span class="star-icon las la-star active"></span>
-                  <span class="star-icon las la-star inactive"></span>
-                  <span class="star-icon las la-star inactive"></span>
-                  <span class="star-icon las la-star inactive"></span>
-                  <span class="checkbox-text">
-                    and up
-                    <span class="item-numbers"></span>
-                  </span>
-                </span>
-              </label>
-            </div>
-          </li>
-          <li>
-            <div class="checkbox-theme-default custom-checkbox">
-              <input class="checkbox" type="checkbox" id="rating-6" name="rating" value="5" onchange="this.form.submit()">
-              <label for="rating-6">
-                <span class="stars-rating d-flex align-items-center">
-                  <span class="star-icon las la-star active"></span>
-                  <span class="star-icon las la-star inactive"></span>
-                  <span class="star-icon las la-star inactive"></span>
-                  <span class="star-icon las la-star inactive"></span>
-                  <span class="star-icon las la-star inactive"></span>
-                  <span class="checkbox-text">
-                    and up
-                    <span class="item-numbers"></span>
-                  </span>
-                </span>
-              </label>
-            </div>
-          </li>
-        </ul>
-      </form>
-    </div>
-  </div>
-</aside>
+  
 
             </div>
           </div>
@@ -438,7 +414,13 @@ if (isset($_POST['min_price']) && isset($_POST['max_price'])) {
     // Ensure rentprice column is of numeric type in your database
     $sql .= " AND rentprice BETWEEN $min_price AND $max_price";
 
+    // Insert data into cus_ref table for min and max price
+    $sql_pre_min_price = "INSERT INTO cus_ref (keyword, count) VALUES ('Min Price: $min_price', 1) ON DUPLICATE KEY UPDATE count = count + 1";
+    $sql_pre_max_price = "INSERT INTO cus_ref (keyword, count) VALUES ('Max Price: $max_price', 1) ON DUPLICATE KEY UPDATE count = count + 1";
+    $conn->query($sql_pre_min_price);
+    $conn->query($sql_pre_max_price);
 }
+
 
 
 // Other input values processing
@@ -457,33 +439,49 @@ if ($place_search) {
 
 if ($location_search) {
     $sql .= " AND (address1 LIKE '%$location_search%' OR address2 LIKE '%$location_search%' OR address3 LIKE '%$location_search%' OR address4 LIKE '%$location_search%')";
+
+    // Insert data into cus_ref table for location search
+    $sql_pre_location = "INSERT INTO cus_ref (keyword, count) VALUES ('$location_search', 1) ON DUPLICATE KEY UPDATE count = count + 1";
+    $conn->query($sql_pre_location);
 }
+
 if (isset($_GET['category'])) {
     $category = $_GET['category'];
     if ($category !== 'alltype') {
         $sql .= " AND type = '$category'";
-    }else{}
+        // Insert data into cus_ref table for category
+        $sql_pre_category = "INSERT INTO cus_ref (keyword, count) VALUES ('$category', 1) ON DUPLICATE KEY UPDATE count = count + 1";
+        $conn->query($sql_pre_category);
+    }
 }
 if (isset($_POST['n_bedroom'])) {
     $n_bedroom = $_POST['n_bedroom'];
     if ($n_bedroom === '5+') {
         $sql .= " AND n_bedroom >= 5";
+        // Insert data into cus_pre table
+        $sql_pre_bed = "INSERT INTO cus_ref (keyword, count) VALUES ('Bed (5+)', 1) ON DUPLICATE KEY UPDATE count = count + 1";
+        $conn->query($sql_pre_bed);
     } else {
         $sql .= " AND n_bedroom = '$n_bedroom'";
+        // Insert data into cus_pre table
+        $sql_pre_bed = "INSERT INTO cus_ref (keyword, count) VALUES ('Bed ($n_bedroom)', 1) ON DUPLICATE KEY UPDATE count = count + 1";
+        $conn->query($sql_pre_bed);
     }
 }
+
 if (isset($_POST['n_bathroom'])) {
     $n_bathroom = $_POST['n_bathroom'];
     if ($n_bathroom === '5+') {
         $sql .= " AND n_bathroom >= 5";
+          $sql_pre_bed = "INSERT INTO cus_ref (keyword, count) VALUES ('Bathroom (5+)', 1) ON DUPLICATE KEY UPDATE count = count + 1";
+        $conn->query($sql_pre_bed);
     } else {
         $sql .= " AND n_bathroom = '$n_bathroom'";
+           $sql_pre_bed = "INSERT INTO cus_ref (keyword, count) VALUES ('Bathroom ($n_bathroom)', 1) ON DUPLICATE KEY UPDATE count = count + 1";
+        $conn->query($sql_pre_bed);
     }
 }
-if (isset($_POST['rating'])) {
-    $rating = $_POST['rating'];
-    $sql .= " AND rating >= $rating"; // Assuming rating is a numeric value in the database
-}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search'])) {
     $selectSearch = $_POST['select-search'];
 
