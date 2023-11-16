@@ -182,7 +182,13 @@
                  
                 </a>
                </li>
-          
+            <li>
+                <a href="reservation.php" class>
+                     <span class="nav-icon uil uil-user"></span>
+                  <span class="menu-text">Reservation</span>
+                 
+                </a>
+               </li>
                 <li>
                 <a href="renter.php" class>
                      <span class="nav-icon uil uil-user"></span>
