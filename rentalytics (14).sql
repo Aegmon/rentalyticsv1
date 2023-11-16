@@ -320,6 +320,7 @@ CREATE TABLE `tenant` (
   `name` varchar(255) NOT NULL,
   `birthdate` date NOT NULL,
   `gender` varchar(255) NOT NULL,
+    `contact_number`varchar(255) NOT NULL,
   `profile_pic` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
