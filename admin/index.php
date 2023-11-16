@@ -495,18 +495,17 @@ GIS
 
     </script>
  
-    
-   <?php
+<!--     
+    <?php
 $sql = "SELECT address2, type, COUNT(*) as type_count 
         FROM listing 
         GROUP BY address2, type";
 
 $result = $conn->query($sql);
 
-// Initialize variables
 $gender_counts = array();
 
-// Fetch the result and store it in a variable
+
 while ($row = $result->fetch_assoc()) {
     $type = $row['type'];
     $address2 = $row['address2'];
@@ -519,19 +518,16 @@ while ($row = $result->fetch_assoc()) {
     $gender_counts[$type][$address2] = $count;
 }
 
-// Now, you can use the 'address2' values as keys for the inner arrays when generating the chart data.
 $series = array();
 foreach ($gender_counts as $type => $typeData) {
-    $productData = array_values($typeData); // Extract values (counts) for each 'address2'
-    
-    // Use $type as the name for the series
+    $productData = array_values($typeData);
     $series[] = array(
         'name' => $type,
         'data' => $productData,
     );
 }
 
-// Chart options
+
 $options = array(
     'series' => $series,
     'chart' => array(
@@ -573,7 +569,7 @@ $options = array(
         ),
     ),
     'xaxis' => array(
-        'categories' => array_keys(reset($gender_counts)), // Assuming 'address2' is always present
+        'categories' => array_keys(reset($gender_counts)), 
     ),
     'legend' => array(
         'position' => 'right',
@@ -584,13 +580,13 @@ $options = array(
     )
 );
 
-// Render the chart
-?>
-<script>
+
+?>  -->
+<!-- <script>
         var options = <?php echo json_encode($options); ?>;
         var chart = new ApexCharts(document.querySelector("#chartbar"), options);
         chart.render();
-    </script>
+    </script> -->
 
 
           <script>
@@ -953,7 +949,7 @@ foreach ($addressCount as $address => $count) {
 
     <!-- customer preferences -->
     <?php
-// Assuming you have a database connection established ($conn)
+
 $sql_ref = "SELECT keyword, MAX(count) AS max_count
 FROM cus_ref
 GROUP BY keyword;";
@@ -964,12 +960,12 @@ $data = array();
 
 if ($result_ref->num_rows > 0) {
     while ($row_ref = $result_ref->fetch_assoc()) {
-        $categories[] = $row_ref['keyword']; // Remove the extra array wrapping
-        $data[] = intval($row_ref['max_count']); // Use 'max_count' instead of 'count'
+        $categories[] = $row_ref['keyword']; 
+        $data[] = intval($row_ref['max_count']); 
     }
 }
 
-// Construct the chart options
+
 $chart_options = array(
     'series' => array(
         array(
@@ -1012,9 +1008,60 @@ $chart_options_json = json_encode($chart_options);
 ?>
 
 <script>
-    var options = <?php echo $chart_options_json; ?>;
-    var chart = new ApexCharts(document.querySelector("#chartbar2"), options);
-    chart.render();
+    var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560'];
+  var options = {
+    series: [{
+      data: [<?php echo $total_apartment_count ?>, <?php echo  $total_dormitory_count ?>, <?php echo  $total_bedspace_count ?>, <?php echo  $total_boarding_house_count ?>]
+    }],
+    chart: {
+      height: 350,
+      type: 'bar',
+      events: {
+        click: function (chart, w, e) {
+          // console.log(chart, w, e)
+        }
+      }
+    },
+    colors: colors,
+    plotOptions: {
+      bar: {
+        borderRadius: 5,
+        columnWidth: '45%',
+        distributed: true,
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    legend: {
+      show: false
+    },
+    xaxis: {
+      categories: [
+        'Appartment',
+        'Dormitory',
+        'Bed Space',
+        'Boarding House',
+      ],
+      labels: {
+        style: {
+          colors: '#000',
+          fontSize: '18px'
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        formatter: function (val) {
+          return Math.round(val);
+        }
+      }
+    }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#chartbar"), options);
+  chart.render();
+
 </script>
 
 <script>

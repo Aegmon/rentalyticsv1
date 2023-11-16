@@ -419,17 +419,17 @@ GIS
     </script>
  
     
-   <?php
+   <!-- <?php
 $sql = "SELECT address2, type, COUNT(*) as type_count 
         FROM listing 
         GROUP BY address2, type";
 
 $result = $conn->query($sql);
 
-// Initialize variables
+
 $gender_counts = array();
 
-// Fetch the result and store it in a variable
+
 while ($row = $result->fetch_assoc()) {
     $type = $row['type'];
     $address2 = $row['address2'];
@@ -442,19 +442,19 @@ while ($row = $result->fetch_assoc()) {
     $gender_counts[$type][$address2] = $count;
 }
 
-// Now, you can use the 'address2' values as keys for the inner arrays when generating the chart data.
+
 $series = array();
 foreach ($gender_counts as $type => $typeData) {
-    $productData = array_values($typeData); // Extract values (counts) for each 'address2'
+    $productData = array_values($typeData); 
     
-    // Use $type as the name for the series
+
     $series[] = array(
         'name' => $type,
         'data' => $productData,
     );
 }
 
-// Chart options
+
 $options = array(
     'series' => $series,
     'chart' => array(
@@ -496,7 +496,7 @@ $options = array(
         ),
     ),
     'xaxis' => array(
-        'categories' => array_keys(reset($gender_counts)), // Assuming 'address2' is always present
+        'categories' => array_keys(reset($gender_counts)),
     ),
     'legend' => array(
         'position' => 'right',
@@ -507,14 +507,69 @@ $options = array(
     )
 );
 
-// Render the chart
-?>
-<script>
+
+?> -->
+<!-- <script>
         var options = <?php echo json_encode($options); ?>;
         var chart = new ApexCharts(document.querySelector("#chartbar"), options);
         chart.render();
-    </script>
+    </script> -->
+<script>
+    var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560'];
+  var options = {
+    series: [{
+      data: [<?php echo $total_apartment_count ?>, <?php echo  $total_dormitory_count ?>, <?php echo  $total_bedspace_count ?>, <?php echo  $total_boarding_house_count ?>]
+    }],
+    chart: {
+      height: 350,
+      type: 'bar',
+      events: {
+        click: function (chart, w, e) {
+          // console.log(chart, w, e)
+        }
+      }
+    },
+    colors: colors,
+    plotOptions: {
+      bar: {
+        borderRadius: 5,
+        columnWidth: '45%',
+        distributed: true,
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    legend: {
+      show: false
+    },
+    xaxis: {
+      categories: [
+        'Appartment',
+        'Dormitory',
+        'Bed Space',
+        'Boarding House',
+      ],
+      labels: {
+        style: {
+          colors: '#000',
+          fontSize: '18px'
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        formatter: function (val) {
+          return Math.round(val);
+        }
+      }
+    }
+  };
 
+  var chart = new ApexCharts(document.querySelector("#chartbar"), options);
+  chart.render();
+
+</script>
 
           <script>
   
