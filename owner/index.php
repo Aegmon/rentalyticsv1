@@ -216,7 +216,11 @@ if (isset($_POST['add_dormitory'])) {
 
                <div class="row">
          <?php
+<<<<<<< HEAD
 $sql = "SELECT * FROM listing WHERE status = 'active' AND owner_id = '$id'";
+=======
+$sql = "SELECT * FROM listing WHERE status = 'active' and isVerify = 'Verify'";
+>>>>>>> 25496cdb22bb146ded36613c859d0cda70eb24c5
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

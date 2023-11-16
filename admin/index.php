@@ -1,10 +1,13 @@
 <?php
 include('sidebar.php');
+$listing_place_total = $conn->query("SELECT COUNT(*) as total_listing FROM listing WHERE isVerify = 'Verify'");
 $owner_male_result = $conn->query("SELECT COUNT(*) as male_count FROM owner WHERE gender = 'Male'");
 $owner_female_result = $conn->query("SELECT COUNT(*) as female_count FROM owner WHERE gender = 'Female'");
 
 $owner_male_count = $owner_male_result->fetch_assoc()['male_count'];
 $owner_female_count = $owner_female_result->fetch_assoc()['female_count'];
+$lisitng_total_count = $listing_place_total->fetch_assoc()['total_listing'];
+
 
 $tenant_male_result = $conn->query("SELECT COUNT(*) as male_count FROM tenant WHERE gender = 'Male'");
 $tenant_female_result = $conn->query("SELECT COUNT(*) as female_count FROM tenant WHERE gender = 'Female'");
@@ -13,11 +16,16 @@ $tenant_male_count = $tenant_male_result->fetch_assoc()['male_count'];
 $tenant_female_count = $tenant_female_result->fetch_assoc()['female_count'];
 
 // Calculate the total sum
-$total_male_count = $tenant_male_count;
-$total_female_count = $tenant_female_count;
+$total_tenant_male_count = $tenant_male_count;
+$total_tenant_female_count = $tenant_female_count;
+$total_tenant_count = $tenant_male_count + $tenant_female_count;
 
 
+$total_owner_male_count = $owner_male_count;
+$total_owner_female_count = $owner_female_count;
+$total_owner_count = $owner_male_count + $owner_female_count;
 
+$total_listing = $lisitng_total_count;
 $result = $conn->query("SELECT SUM(CASE WHEN gender_req = 'Male' THEN 1 ELSE 0 END) as male_listing_count,
                               SUM(CASE WHEN gender_req = 'Female' THEN 1 ELSE 0 END) as female_listing_count,
                           SUM(CASE WHEN gender_req = 'Both' THEN 1 ELSE 0 END) as both_listing_count
@@ -88,7 +96,7 @@ if ($result->num_rows > 0) {
     // output data of each row
     while ($row = $result->fetch_assoc()) {
         $rent_count = $row['rent_count'];
-        $listing_count = $row["listing_count"];
+        $listing_count = $row['listing_count'];
     }
 } else {
    $rent_count = 0;
@@ -114,12 +122,12 @@ if ($result->num_rows > 0) {
             </div>
           </div>
         </div>
-         <div class="col-xxl-4 col-sm-3 mb-25">
+         <div class="col-xxl-4 col-sm-4 mb-25">
                 <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
                   <div class="overview-content w-100">
                     <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
                       <div class="ap-po-details__titlebar">
-                        <h1><?php echo $listing_count; ?></h1>
+                        <h1><?php echo $total_listing; ?></h1>
                         <h5>Total Listing</h5>
                       </div>
                       <div class="ap-po-details__icon-area">
@@ -135,12 +143,12 @@ if ($result->num_rows > 0) {
          
           
           
-                         <div class="col-xxl-4 col-sm-3 mb-25">
+                         <div class="col-xxl-4 col-sm-4 mb-25">
                 <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
                   <div class="overview-content w-100">
                     <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
                       <div class="ap-po-details__titlebar">
-                        <h1><?php echo $rent_count; ?></h1>
+                        <h1><?php echo $total_tenant_count; ?></h1>
                         <h5>Total Renter</h5>
                       </div>
                       <div class="ap-po-details__icon-area">
@@ -153,12 +161,12 @@ if ($result->num_rows > 0) {
                   </div>
                 </div>
               </div>
-                         <div class="col-xxl-4 col-sm-3 mb-25">
+                         <div class="col-xxl-4 col-sm-4 mb-25">
                 <div class="ap-po-details ap-po-details--2 p-25 radius-xl d-flex justify-content-between">
                   <div class="overview-content w-100">
                     <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
                       <div class="ap-po-details__titlebar">
-                        <h1><?php echo $rent_count; ?></h1>
+                        <h1><?php echo $total_owner_count; ?></h1>
                         <h5>Total Owner</h5>
                       </div>
                       <div class="ap-po-details__icon-area">
@@ -444,7 +452,7 @@ GIS
   while ($row = mysqli_fetch_array($result)) {
     
    
-    echo '["Place Name: ' . $row['listing_name'] . '\n'. "Reservation Fee: " . $row['reservationfee'] .'",' . $row['lat'] . ',' . $row['lng'] . '],';
+    echo '["Place Name: ' . $row['listing_name'] . '\n'. "Reservation Fee: " . $row['reservationfee'] . '\n'. $row['type'] . '' .' ",' . $row['lat'] . ',' . $row['lng'] . '],';
 
   }
   
@@ -655,9 +663,9 @@ $options = array(
 
           <script>
   
-        var colors = ['#26a0fc','#00E396']
+        // var colors = ['#26a0fc','#00E396']
         var options = {
-          series: [<?php echo $total_male_count?>, <?php echo $total_female_count?>],
+          series: [<?php echo $total_tenant_male_count?>, <?php echo $total_tenant_female_count?>],
           chart: {
           width: 380,
           type: 'pie',
@@ -673,10 +681,7 @@ $options = array(
               position: 'bottom'
             }
           }
-        }],
-        fill: {
-          colors: colors
-        }
+        }]
         };
 
         var chart = new ApexCharts(document.querySelector("#chart"), options);
@@ -685,7 +690,7 @@ $options = array(
       
     </script>
               <script>
-      var colors = ['#26a0fc','#00E396', '#ffe15d']
+      // var colors = ['#26a0fc','#00E396', '#ffe15d']
         var options = {
           series: [<?php echo $total_male_listing_count ;?>, <?php echo $total_female_listing_count ;?>,<?php echo $total_both_listing_count ;?>],
           chart: {
@@ -705,10 +710,7 @@ $options = array(
             },
            
         }
-        }],
-        fill:{
-          colors: colors
-        }
+        }]
         };
 
         var chart = new ApexCharts(document.querySelector("#chart1"), options);
@@ -717,7 +719,7 @@ $options = array(
       
     </script>
          <script>
-      var colors = ['#26a0fc','#00E396', '#ffe15d']
+      // var colors = ['#26a0fc','#00E396', '#ffe15d']
       
         var options = {
           series: [<?php echo $total_male_boarding_house_count ;?>, <?php echo $total_female_boarding_house_count ;?>,<?php echo $total_both_boarding_house_count ;?>],
@@ -736,10 +738,7 @@ $options = array(
               position: 'bottom'
             }
           }
-        }],
-        fill:{
-          colors: colors
-        }
+        }]
         };
 
         var chart = new ApexCharts(document.querySelector("#chart2"), options);
@@ -748,13 +747,13 @@ $options = array(
       
     </script>
          <script>
-      var colors = ['#26a0fc','#00E396', '#ffe15d']
+      // var colors = ['#26a0fc','#00E396', '#ffe15d']
       
         var options = {
          series: [<?php echo $total_male_bedspace_count ;?>, <?php echo $total_female_bedspace_count ;?>,<?php echo $total_both_bedspace_count ;?>],
           chart: {
           width: 380,
-          type: 'pie',
+          type: 'donut',
         },
         labels: ['Male', 'Female', 'Both'],
         responsive: [{
@@ -767,11 +766,7 @@ $options = array(
               position: 'bottom',
             }
           }
-        }],
-       
-        fill:{
-          colors: colors
-        }
+        }]
         };
 
         var chart = new ApexCharts(document.querySelector("#chart3"), options);
@@ -780,7 +775,7 @@ $options = array(
       
     </script>
          <script>
-      var colors = ['#26a0fc','#f41fad', '#ffe15d']
+      // var colors = ['#26a0fc','#f41fad', '#ffe15d']
       
         var options = {
            series: [<?php echo $total_male_dormitory_count ;?>, <?php echo $total_female_dormitory_count ;?>,<?php echo $total_both_dormitory_count ;?>],
@@ -799,10 +794,7 @@ $options = array(
               position: 'bottom'
             }
           }
-        }],
-        fill:{
-          colors: colors
-        }
+        }]
         };
 
         var chart = new ApexCharts(document.querySelector("#chart4"), options);
@@ -811,7 +803,7 @@ $options = array(
       
     </script>
          <script>
-      var colors = ['#26a0fc','#f41fad', '#ffe15d']
+      // var colors = ['#26a0fc','#f41fad', '#ffe15d']
       
         var options = {
           series: [<?php echo $total_male_apartment_count;?>, <?php echo $total_female_apartment_count ;?>,<?php echo $total_both_apartment_count ;?>],
@@ -828,10 +820,7 @@ $options = array(
               width: 200
             }
           }
-        }],
-        fill:{
-          colors: colors
-        }
+        }]
         };
 
         var chart = new ApexCharts(document.querySelector("#chart5"), options);
