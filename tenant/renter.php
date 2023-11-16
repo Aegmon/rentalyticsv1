@@ -16,12 +16,10 @@ include('sidebar.php');
         echo "Error: " . $stmt->error;
     }
 }
-      
-if (isset($_GET['feedback'])) {
+if (isset($_POST['add_feedback'])) {
     $listing_id = $_POST['listing_id'];
     $rating = $_POST['rating'];
     $feedback = $_POST['feedback'];
-
 
     $stmt = $conn->prepare("INSERT INTO review (tenant_id, rating, feedback, listing_id) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("iisi", $id, $rating, $feedback, $listing_id);
@@ -31,7 +29,7 @@ if (isset($_GET['feedback'])) {
     } else {
         echo "Error: " . $stmt->error;
     }
-}  
+}
 
 
 ?>
@@ -189,18 +187,20 @@ echo '<input type="hidden" name="amount" value="' . $reservation_fee_in_whole_nu
 }
         echo "</tr>";
 
-        echo '<div class="modal fade" id="reviewModal' . $row["application_id"] . '" tabindex="-1" aria-labelledby="reviewModal' . $row["application_id"] . 'Label" aria-hidden="true">
+        echo '
+ 
+        <div class="modal fade" id="reviewModal' . $row["application_id"] . '" tabindex="-1" aria-labelledby="reviewModal' . $row["application_id"] . 'Label" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="reviewModal' . $row["application_id"] . 'Label">Leave a Review</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                  <form action="" method="post" enctype="multipart/form-data">
+                      <form action="" method="post" enctype="multipart/form-data">   
     <div class="modal-body">
         <div class="new-member-modal">
             <div class="form-group mb-20">
-        <input type="text" class="form-control" name="listing_id" value="' . $row["listing_id"] . '">
+        <input type="hidden" class="form-control" name="listing_id" value="' . $row["listing_id"] . '">
 
                 <input type="number" class="form-control" name="rating" placeholder=" Rating">
             </div>
@@ -214,16 +214,19 @@ echo '<input type="hidden" name="amount" value="' . $reservation_fee_in_whole_nu
          
             </div>
             <div class="button-group d-flex pt-25">
-                <button type="submit" name="feedback" class="btn btn-primary btn-default btn-squared text-capitalize">Add</button>
+                <button type="submit" name="add_feedback" class="btn btn-primary btn-default btn-squared text-capitalize">Add</button>
                 <button type="button" class="btn btn-light btn-default btn-squared fw-400 text-capitalize b-light color-light" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
+        
     </div>
-</form>
+ 
                    
                 </div>
             </div>
-        </div>';
+        </div>
+          </form>
+     ';
     }
 }
 
