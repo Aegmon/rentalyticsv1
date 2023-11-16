@@ -97,7 +97,7 @@ if (isset($_POST['add'])) {
             echo "Failed to upload image file";
         }
     }
-
+    echo '<script>window.location.href = "index.php";</script>';
     } else {
         echo "Error: " . $stmt->error;
     }

@@ -137,13 +137,33 @@ if ($result->num_rows > 0) {
         }
    
 
-if ($row["status"] == "renter") {
-    echo '<td>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal' . $row["application_id"] . '">
-            Add Review
-        </button>
-    </td>';
-} else {
+        if ($row["status"] == "renter") {
+          // Check if there is an existing review for this tenant and listing
+          $existingReviewSql = "SELECT * FROM review WHERE tenant_id = ? AND listing_id = ?";
+          $existingReviewStmt = $conn->prepare($existingReviewSql);
+          $existingReviewStmt->bind_param("ii", $id, $row["listing_id"]);
+          $existingReviewStmt->execute();
+          $existingReviewResult = $existingReviewStmt->get_result();
+          $existingReviewCount = $existingReviewResult->num_rows;
+      
+          if ($existingReviewCount > 0) {
+              // Existing review found, disable the button
+              echo '<td>
+                  <button type="button" class="btn btn-primary" disabled>
+                      Add Review
+                  </button>
+              </td>';
+          } else {
+              // No existing review, enable the button
+              echo '<td>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal' . $row["application_id"] . '">
+                      Add Review
+                  </button>
+              </td>';
+          }
+      
+          $existingReviewStmt->close();
+      } else {
    
 
     $reservation_fee_in_whole_number = $row["reservationfee"] * 100;

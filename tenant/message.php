@@ -235,6 +235,49 @@ $(document).ready(function() {
   });
 
 
+   $('#send-message-btn').on('click', function() {
+      const owner_id = $('.user-list-item.active').data('owner-id'); // Get the active user's owner_id
+      const message = $('#message-input').val(); // Get the message from the input field
+
+      // Check if the message is not empty
+      if (message.trim() !== '') {
+         // AJAX request to send the message
+         $.ajax({
+            type: 'POST',
+            url: 'send_message.php', // Create a new PHP script for handling the message insertion
+            data: { owner_id: owner_id, message: message },
+            success: function(response) {
+               // Clear the input field after successfully sending the message
+               $('#message-input').val('');
+
+               // Fetch and display updated messages
+               fetchAndUpdateMessages(owner_id);
+            },
+            error: function(error) {
+               console.error('Error sending message:', error);
+            }
+         });
+      }
+   });
+
+   // Function to fetch and update messages (reuse this function)
+   function fetchAndUpdateMessages(owner_id) {
+      // AJAX request to fetch and display user messages
+      $.ajax({
+         type: 'GET',
+         url: 'get_user_messages.php',
+         data: { owner_id: owner_id },
+         success: function(data) {
+            // Display the user's messages in the chat area
+            $('.chat-box').html(data);
+         },
+         error: function(error) {
+            console.error('Error fetching user messages:', error);
+         }
+      });
+   }
+
+
   
 });
 

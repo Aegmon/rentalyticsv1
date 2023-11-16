@@ -45,6 +45,9 @@ include('sidebar.php');
             <th data-type="html" data-name="status">
               <span class="userDatatable-title">Date</span>
             </th>
+            <th data-type="html" data-name="status">
+              <span class="userDatatable-title">Payment Method</span>
+            </th>
           
           
           </tr>

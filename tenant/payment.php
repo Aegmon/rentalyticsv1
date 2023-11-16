@@ -7,14 +7,14 @@ $client = new Client();
 
 // Retrieve the monthlyPaymentId from the form
 $application_id = $_POST['application_id'];
-$amount = $_POST['amount']*100; // Replace with the actual amount
+$amount = $_POST['amount']*1; // Replace with the actual amount
 
 // Define other parameters
 $currency = 'PHP'; // Replace with the appropriate currency code
 $description = 'Monthly Subscription Payment'; // Replace with the actual description
 
 $apiKey = 'sk_test_Td7GwHpGcyarL7M7bCq3xW3w'; // Replace with your actual PayMongo secret key
-$success_url = "http://localhost/rentalyticsv1/tenant/renter.php?application_id=" . $application_id;
+$success_url = "http://localhost/rentalytics/tenant/renter.php?application_id=" . $application_id;
 
 
 try {

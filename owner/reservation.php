@@ -113,11 +113,12 @@ $sql = "SELECT
         LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
         LEFT JOIN credentials c ON t.user_id = c.user_id
         LEFT JOIN listing l ON l.listing_id = a.listing_id
-        LEFT JOIN payment p ON a.application_id = p.application_id WHERE owner_id = '$id'";
+        LEFT JOIN payment p ON a.application_id = p.application_id 
+        WHERE l.owner_id = '$id'";
 
 // Add WHERE clause only if $listing_id is set
 if ($listing_id !== null) {
-    $sql .= " WHERE l.listing_id = '$listing_id'";
+    $sql .= " AND l.listing_id = '$listing_id'";
 }
 
 $result = $conn->query($sql);
