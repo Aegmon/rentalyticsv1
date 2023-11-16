@@ -514,62 +514,7 @@ $options = array(
         var chart = new ApexCharts(document.querySelector("#chartbar"), options);
         chart.render();
     </script> -->
-<script>
-    var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560'];
-  var options = {
-    series: [{
-      data: [<?php echo $total_apartment_count ?>, <?php echo  $total_dormitory_count ?>, <?php echo  $total_bedspace_count ?>, <?php echo  $total_boarding_house_count ?>]
-    }],
-    chart: {
-      height: 350,
-      type: 'bar',
-      events: {
-        click: function (chart, w, e) {
-          // console.log(chart, w, e)
-        }
-      }
-    },
-    colors: colors,
-    plotOptions: {
-      bar: {
-        borderRadius: 5,
-        columnWidth: '45%',
-        distributed: true,
-      }
-    },
-    dataLabels: {
-      enabled: false
-    },
-    legend: {
-      show: false
-    },
-    xaxis: {
-      categories: [
-        'Appartment',
-        'Dormitory',
-        'Bed Space',
-        'Boarding House',
-      ],
-      labels: {
-        style: {
-          colors: '#000',
-          fontSize: '18px'
-        }
-      }
-    },
-    yaxis: {
-      labels: {
-        formatter: function (val) {
-          return Math.round(val);
-        }
-      }
-    }
-  };
 
-  var chart = new ApexCharts(document.querySelector("#chartbar"), options);
-  chart.render();
-
-</script>
 
           <script>
   

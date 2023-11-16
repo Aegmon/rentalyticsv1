@@ -33,7 +33,7 @@ try {
                             'quantity' => 1
                         ]
                     ],
-                    'payment_method_types' => ['gcash', 'card'],
+                    'payment_method_types' => ['gcash'],
                     'reference_number' => $application_id,
                     'description' => $description,
                     'success_url' => $success_url
