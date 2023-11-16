@@ -405,7 +405,7 @@ if (isset($_POST['addtogo'])) {
   </div>
   <div class="row product-page-list">
     <?php
- $sql = "SELECT * FROM listing WHERE status = 'active' and isVerify = 'Verify'"; need verify tas active para makita
+ $sql = "SELECT * FROM listing WHERE status = 'active' and isVerify = 'Verify'";
 if (isset($_POST['min_price']) && isset($_POST['max_price'])) {
     // Get the min and max price values from the form
     $min_price = intval($_POST['min_price']);
