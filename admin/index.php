@@ -494,7 +494,71 @@ GIS
    
 
     </script>
- 
+     <!-- customer preferences -->
+    <?php
+// Assuming you have a database connection established ($conn)
+$sql_ref = "SELECT keyword, count
+FROM cus_ref
+ORDER BY keyword DESC";
+$result_ref = $conn->query($sql_ref);
+
+$categories = array();
+$data = array();
+
+if ($result_ref->num_rows > 0) {
+    while ($row_ref = $result_ref->fetch_assoc()) {
+        $categories[] = [$row_ref['keyword']];
+        $data[] = intval($row_ref['count']); // Convert to integer (whole number)
+    }
+}
+
+// Construct the chart options
+$chart_options = array(
+    'series' => array(
+        array(
+            'data' => $data,
+        ),
+    ),
+    'chart' => array(
+        'height' => 350,
+        'type' => 'bar',
+        'events' => array(
+            'click' => 'function(chart, w, e) { }',
+        ),
+    ),
+    'plotOptions' => array(
+        'bar' => array(
+            'borderRadius' => 5,
+            'columnWidth' => '45%',
+            'distributed' => true,
+        ),
+    ),
+    'dataLabels' => array(
+        'enabled' => false,
+    ),
+    'legend' => array(
+        'show' => false,
+    ),
+    'xaxis' => array(
+        'categories' => $categories,
+        'labels' => array(
+            'style' => array(
+                'colors' => '#000',
+                'fontSize' => '18px',
+            ),
+        ),
+    ),
+);
+
+// Convert the options array to JSON
+$chart_options_json = json_encode($chart_options);
+?>
+
+<script>
+    var options = <?php echo $chart_options_json; ?>;
+    var chart = new ApexCharts(document.querySelector("#chartbar2"), options);
+    chart.render();
+</script>
 <!--     
     <?php
 $sql = "SELECT address2, type, COUNT(*) as type_count 
