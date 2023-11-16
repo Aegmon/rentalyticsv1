@@ -142,7 +142,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="form-group mb-20">
                     <label for="phoneNumber">Contact Number</label>
-                    <input type="tel" class="form-control" name="contactNumber" placeholder="09...">
+                    <input type="number" class="form-control" name="contactNumber" placeholder="09...">
                 </div>
 
                 <div class="form-group mb-20">
