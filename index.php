@@ -20,8 +20,13 @@ if (isset($_POST['login']) ) {
             $_SESSION['user_id'] = $row['user_id'];
 
             if ($row['user_type'] == 'owner') {
-                // Code for renter header
-              header('Location: owner/index.php');
+           
+if ($row['isVerify'] == '1') {
+    header('Location: owner/index.php');
+    exit(); // It's important to stop script execution after a header redirect
+} else {
+    echo '<script>alert("Please wait for the admin to verify your account.");</script>';
+}
             } elseif ($row['user_type'] == 'tenant') {
                 // Code for tenant header
                 header('Location: tenant/index.php');
