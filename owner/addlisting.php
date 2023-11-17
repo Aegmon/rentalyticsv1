@@ -53,27 +53,48 @@ if (isset($_POST['add'])) {
                 $amenityStmt->close();
             }
         }
+if (!empty($_FILES['images']['name'][0])) {
+    // Handle main image upload
+    $targetDir = "../uploads/";
+    $fileName11 = basename($_FILES["images"]["name"][0]);
+    $targetFilePath = $targetDir . $fileName11;
 
-         if (!empty($_FILES['images']['name'])) {
-        // Handle image upload
+    if (move_uploaded_file($_FILES["images"]["tmp_name"][0], $targetFilePath)) {
+        // File successfully uploaded
+        $image_sql = "UPDATE listing SET image_url=? WHERE listing_id=?";
+        $imageStmt = $conn->prepare($image_sql);
+        $imageStmt->bind_param("si", $targetFilePath, $last_id);
+        if (!$imageStmt->execute()) {
+            echo "Error updating record: " . $imageStmt->error;
+        }
+        $imageStmt->close();
+    } else {
+        // Failed to upload file
+        echo "Failed to upload main image file";
+    }
+}
+
+// Handle additional images
+for ($i = 1; $i < count($_FILES['images']['name']); $i++) {
+    if (!empty($_FILES['images']['name'][$i])) {
         $targetDir = "../uploads/";
-        $fileName11 = basename($_FILES["images"]["name"]);
-        $targetFilePath =  $targetDir.$fileName11;
+        $fileName = basename($_FILES['images']['name'][$i]);
+        $targetFilePath = $targetDir . $fileName;
 
-        if (move_uploaded_file($_FILES["images"]["tmp_name"], $targetFilePath)) {
+        if (move_uploaded_file($_FILES['images']['tmp_name'][$i], $targetFilePath)) {
             // File successfully uploaded
-            $image_sql = "UPDATE listing SET image_url=? WHERE listing_id=?";
-            $imageStmt = $conn->prepare($image_sql);
-            $imageStmt->bind_param("si", $targetFilePath, $last_id);
-            if (!$imageStmt->execute()) {
-                echo "Error updating record: " . $imageStmt->error;
-            }
+            $imageSql = "INSERT INTO images (listing_id, image_url) VALUES (?, ?)";
+            $imageStmt = $conn->prepare($imageSql);
+            $imageStmt->bind_param("is", $last_id, $targetFilePath);
+            $imageStmt->execute();
             $imageStmt->close();
         } else {
             // Failed to upload file
             echo "Failed to upload image file";
         }
     }
+}
+
 
     if (!empty($_FILES['documents']['name'])) {
          $targetDir = "../uploads/";
@@ -97,7 +118,7 @@ if (isset($_POST['add'])) {
             echo "Failed to upload image file";
         }
     }
-    echo '<script>window.location.href = "index.php";</script>';
+
     } else {
         echo "Error: " . $stmt->error;
     }
@@ -261,7 +282,8 @@ if (isset($_POST['add'])) {
         <p class="color-light mt-0 fs-14">Drop files here to upload</p>
       </div>
       <div class="avatar-up">
-        <input type="file" name="images" class="upload-avatar-input" id="uploadInput" multiple accept="image/*" required>
+ <input type="file" name="images[]" class="upload-avatar-input" id="uploadInput" multiple accept="image/*" required>
+
       </div>
     </div>
   </div>

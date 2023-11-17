@@ -204,11 +204,44 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
   
   </div>
 </div>
-<div class="col-lg-12 mb-4">
+<div class="col-lg-4 mb-4">
   <div class="card">
   <div class="card-header">Customer Preferences</div>
 
-  <div id="chartbar2"></div>
+  <div id="chartBed"></div>
+  
+  </div>
+</div>
+
+<div class="col-lg-4 mb-4">
+  <div class="card">
+  <div class="card-header">Customer Preferences</div>
+
+  <div id="chartBathroom"></div>
+  
+  </div>
+</div>
+<div class="col-lg-4 mb-4">
+  <div class="card">
+  <div class="card-header">Customer Preferences</div>
+
+  <div id="chartPrice"></div>
+  
+  </div>
+</div>
+<div class="col-lg-6 mb-4">
+  <div class="card">
+  <div class="card-header">Customer Preferences</div>
+
+  <div id="chartOther"></div>
+  
+  </div>
+</div>
+<div class="col-lg-6 mb-4">
+  <div class="card">
+  <div class="card-header">Customer Preferences</div>
+
+  <div id="chartBarangay"></div>
   
   </div>
 </div>
@@ -344,75 +377,79 @@ GIS
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-      <script>
-        
-   function initMap() {
-    // Define the center variable with appropriate latitude and longitude values
-    var center = { lat: 15.4755, lng: 120.5963 }; // Update with actual coordinates
+    <script>
+function initMap() {
+  // Define the center variable with appropriate latitude and longitude values
+  var center = { lat: 15.4755, lng: 120.5963 }; // Update with actual coordinates
 
-    var map = new google.maps.Map(document.getElementById('map'), {
-      center: center,
-      zoom: 12,
-    });
-    
-    var locations = [
-  <?php
-  $sql = "SELECT * FROM listing where owner_id = $id";
-  $result = $conn->query($sql);
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: center,
+    zoom: 12,
+  });
 
-  while ($row = mysqli_fetch_array($result)) {
-    
-   
-    echo '["Place Name: ' . $row['listing_name'] . '\n'. "Reservation Fee: " . $row['reservationfee'] .'",' . $row['lat'] . ',' . $row['lng'] . '],';
+  var locations = [
+    <?php
+    $sql = "SELECT * FROM listing where owner_id = $id";
+    $result = $conn->query($sql);
 
-  }
-  
-  ?>
-];
-
-    // Create an array to store the geofences
-    var geofences = [];
-
-    // Add markers and geofences for each location
-    for (var i = 0; i < locations.length; i++) {
-      var location = new google.maps.LatLng(locations[i][1], locations[i][2]);
-      var mark = new google.maps.Marker({
-        position: location,
-        map: map,
-        animation: google.maps.Animation.DROP,
-        title: locations[i][0],
-        
-      });
-      // Check if this marker falls inside any existing geofence
-      var markerInsideAnyGeofence = false;
-      for (var j = 0; j < geofences.length; j++) {
-        var geofenceBounds = geofences[j].getBounds();
-        if (geofenceBounds.contains(location)) {
-          markerInsideAnyGeofence = true;
-          break;
-        }
-      }
-
-      // If the marker is not inside any existing geofence, create a new geofence
-      if (!markerInsideAnyGeofence) {
-        var geofence = new google.maps.Circle({
-          strokeColor: "#FF0000",
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: "#FF0000",
-          fillOpacity: 0.35,
-          map: map,
-          center: location,
-          radius: 600, // 300 meters
-        });
-        geofences.push(geofence);
-      }
+    while ($row = mysqli_fetch_array($result)) {
+      echo '["Place Name: ' . $row['listing_name'] . '\n' . "Reservation Fee: " . $row['reservationfee'] . '",' . $row['lat'] . ',' . $row['lng'] . '],';
     }
+    ?>
+  ];
+
+  var locations2 = [
+    <?php
+    $sql = "SELECT * FROM listing ";
+    $result = $conn->query($sql);
+
+    while ($row = mysqli_fetch_array($result)) {
+      echo '["Place Name: ' . $row['listing_name'] . '\n' . "Reservation Fee: " . $row['reservationfee'] . '",' . $row['lat'] . ',' . $row['lng'] . '],';
+    }
+    ?>
+  ];
+
+  // Create an array to store all markers
+  var allMarkers = [];
+
+  // Add markers for the first array (locations) and store them in allMarkers array
+  for (var i = 0; i < locations.length; i++) {
+    var location = new google.maps.LatLng(locations[i][1], locations[i][2]);
+    var mark = new google.maps.Marker({
+      position: location,
+      map: map,
+      animation: google.maps.Animation.DROP,
+      title: locations[i][0],
+    });
+    allMarkers.push(mark);
+
+    // Create a geofence for each marker in locations
+    var geofence = new google.maps.Circle({
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      fillOpacity: 0.35,
+      map: map,
+      center: location,
+      radius: 600, // 300 meters
+    });
+  }
+
+  // Add markers for the second array (locations2) and store them in allMarkers array
+  for (var i = 0; i < locations2.length; i++) {
+    var location = new google.maps.LatLng(locations2[i][1], locations2[i][2]);
+    var mark = new google.maps.Marker({
+      position: location,
+      map: map,
+      animation: google.maps.Animation.DROP,
+      title: locations2[i][0],
+    });
+    allMarkers.push(mark);
+  }
 }
+</script>
 
-   
-
-    </script>
  
     
     
@@ -573,7 +610,7 @@ $options = array(
 
           <script>
   
-        var colors = ['#26a0fc','#00E396']
+        // var colors = ['#26a0fc','#00E396']
         var options = {
           series: [<?php echo $total_male_count?>, <?php echo $total_female_count?>],
           chart: {
@@ -591,10 +628,7 @@ $options = array(
               position: 'bottom'
             }
           }
-        }],
-        fill: {
-          colors: colors
-        }
+        }]
         };
 
         var chart = new ApexCharts(document.querySelector("#chart"), options);
@@ -603,7 +637,7 @@ $options = array(
       
     </script>
               <script>
-      var colors = ['#26a0fc','#00E396', '#ffe15d']
+      // var colors = ['#26a0fc','#00E396', '#ffe15d']
         var options = {
           series: [<?php echo $total_male_listing_count ;?>, <?php echo $total_female_listing_count ;?>,<?php echo $total_both_listing_count ;?>],
           chart: {
@@ -623,10 +657,7 @@ $options = array(
             },
            
         }
-        }],
-        fill:{
-          colors: colors
-        }
+        }]
         };
 
         var chart = new ApexCharts(document.querySelector("#chart1"), options);
@@ -635,7 +666,7 @@ $options = array(
       
     </script>
          <script>
-      var colors = ['#26a0fc','#00E396', '#ffe15d']
+      // var colors = ['#26a0fc','#00E396', '#ffe15d']
       
         var options = {
           series: [<?php echo $total_male_boarding_house_count ;?>, <?php echo $total_female_boarding_house_count ;?>,<?php echo $total_both_boarding_house_count ;?>],
@@ -654,10 +685,7 @@ $options = array(
               position: 'bottom'
             }
           }
-        }],
-        fill:{
-          colors: colors
-        }
+        }]
         };
 
         var chart = new ApexCharts(document.querySelector("#chart2"), options);
@@ -666,7 +694,7 @@ $options = array(
       
     </script>
          <script>
-      var colors = ['#26a0fc','#00E396', '#ffe15d']
+      // var colors = ['#26a0fc','#00E396', '#ffe15d']
       
         var options = {
          series: [<?php echo $total_male_bedspace_count ;?>, <?php echo $total_female_bedspace_count ;?>,<?php echo $total_both_bedspace_count ;?>],
@@ -685,11 +713,7 @@ $options = array(
               position: 'bottom',
             }
           }
-        }],
-       
-        fill:{
-          colors: colors
-        }
+        }]
         };
 
         var chart = new ApexCharts(document.querySelector("#chart3"), options);
@@ -698,7 +722,7 @@ $options = array(
       
     </script>
          <script>
-      var colors = ['#26a0fc','#f41fad', '#ffe15d']
+      // var colors = ['#26a0fc','#f41fad', '#ffe15d']
       
         var options = {
            series: [<?php echo $total_male_dormitory_count ;?>, <?php echo $total_female_dormitory_count ;?>,<?php echo $total_both_dormitory_count ;?>],
@@ -717,10 +741,7 @@ $options = array(
               position: 'bottom'
             }
           }
-        }],
-        fill:{
-          colors: colors
-        }
+        }]
         };
 
         var chart = new ApexCharts(document.querySelector("#chart4"), options);
@@ -746,10 +767,7 @@ $options = array(
               width: 200
             }
           }
-        }],
-        fill:{
-          colors: colors
-        }
+        }]
         };
 
         var chart = new ApexCharts(document.querySelector("#chart5"), options);
@@ -935,63 +953,291 @@ foreach ($addressCount as $address => $count) {
 $sql_ref = "SELECT keyword, count FROM cus_ref";
 $result_ref = $conn->query($sql_ref);
 
-$categories = array();
-$data = array();
+$labels_bed = array();
+$data_bed = array();
+
+$labels_bathroom = array();
+$data_bathroom = array();
 
 if ($result_ref->num_rows > 0) {
     while ($row_ref = $result_ref->fetch_assoc()) {
-        $categories[] = [$row_ref['keyword']];
-        $data[] = intval($row_ref['count']); // Convert to integer (whole number)
+        $keyword = $row_ref['keyword'];
+        $count = intval($row_ref['count']);
+
+        // Exclude 'bedspace' from both 'Bed' and 'Bathroom' charts
+        if (stripos($keyword, 'Bedspace') === false) {
+            if (stripos($keyword, 'Bed') !== false) {
+                // Keyword contains 'Bed'
+                $labels_bed[] = $keyword;
+                $data_bed[] = $count;
+            } elseif (stripos($keyword, 'Bathroom') !== false) {
+                // Keyword contains 'Bathroom'
+                $labels_bathroom[] = $keyword;
+                $data_bathroom[] = $count;
+            }
+        }
     }
 }
 
-// Construct the chart options
-$chart_options = array(
-    'series' => array(
-        array(
-            'data' => $data,
-        ),
-    ),
+// Construct the chart options for the 'Bed' pie chart
+$chart_options_bed = array(
+    'series' => $data_bed,
     'chart' => array(
         'height' => 350,
-        'type' => 'bar',
+        'type' => 'pie',
         'events' => array(
             'click' => 'function(chart, w, e) { }',
         ),
     ),
-    'plotOptions' => array(
-        'bar' => array(
-            'borderRadius' => 5,
-            'columnWidth' => '45%',
-            'distributed' => true,
-        ),
-    ),
+    'labels' => $labels_bed,
     'dataLabels' => array(
         'enabled' => false,
     ),
     'legend' => array(
-        'show' => false,
+        'show' => true,
+        'position' => 'bottom',
     ),
-    'xaxis' => array(
-        'categories' => $categories,
-        'labels' => array(
-            'style' => array(
-                'colors' => '#000',
-                'fontSize' => '18px',
-            ),
+);
+
+// Convert the options array to JSON for the 'Bed' chart
+$chart_options_bed_json = json_encode($chart_options_bed);
+
+// Construct the chart options for the 'Bathroom' pie chart
+$chart_options_bathroom = array(
+    'series' => $data_bathroom,
+    'chart' => array(
+        'height' => 350,
+        'type' => 'pie',
+        'events' => array(
+            'click' => 'function(chart, w, e) { }',
         ),
+    ),
+    'labels' => $labels_bathroom,
+    'dataLabels' => array(
+        'enabled' => false,
+    ),
+    'legend' => array(
+        'show' => true,
+        'position' => 'bottom',
+    ),
+);
+
+// Convert the options array to JSON for the 'Bathroom' chart
+$chart_options_bathroom_json = json_encode($chart_options_bathroom);
+?>
+
+<script>
+    var options_bed = <?php echo $chart_options_bed_json; ?>;
+    var chart_bed = new ApexCharts(document.querySelector("#chartBed"), options_bed);
+    chart_bed.render();
+
+    var options_bathroom = <?php echo $chart_options_bathroom_json; ?>;
+    var chart_bathroom = new ApexCharts(document.querySelector("#chartBathroom"), options_bathroom);
+    chart_bathroom.render();
+</script>
+
+<?php
+// Assuming you have a database connection established ($conn)
+$sql_ref = "SELECT keyword, count FROM cus_ref";
+$result_ref = $conn->query($sql_ref);
+
+$minPrices = array();
+$maxPrices = array();
+
+while ($row_ref = $result_ref->fetch_assoc()) {
+    $keyword = $row_ref['keyword'];
+    $count = intval($row_ref['count']);
+
+    if (stripos($keyword, 'Min Price:') !== false) {
+        // Extract numeric value following 'Min Price:'
+        preg_match('/Min Price:\s*([\d.]+)/', $keyword, $matches);
+        if (isset($matches[1])) {
+            $minPrices[] = (float)$matches[1];
+        }
+    } elseif (stripos($keyword, 'Max Price:') !== false) {
+        // Extract numeric value following 'Max Price:'
+        preg_match('/Max Price:\s*([\d.]+)/', $keyword, $matches);
+        if (isset($matches[1])) {
+            $maxPrices[] = (float)$matches[1];
+        }
+    }
+}
+
+// Calculate averages
+$averageMinPrice = (!empty($minPrices)) ? array_sum($minPrices) / count($minPrices) : 0;
+$averageMaxPrice = (!empty($maxPrices)) ? array_sum($maxPrices) / count($maxPrices) : 0;
+
+// Construct labels and data for the pie chart
+$labels_price = array('Average Min Price', 'Average Max Price');
+$data_price = array($averageMinPrice, $averageMaxPrice);
+
+// Construct the chart options for the pie chart
+$chart_options_price = array(
+    'series' => $data_price,
+    'chart' => array(
+        'height' => 350,
+        'type' => 'pie',
+        'events' => array(
+            'click' => 'function(chart, w, e) { }',
+        ),
+    ),
+    'labels' => $labels_price,
+    'dataLabels' => array(
+        'enabled' => false,
+    ),
+    'legend' => array(
+        'show' => true,
+        'position' => 'bottom',
     ),
 );
 
 // Convert the options array to JSON
-$chart_options_json = json_encode($chart_options);
+$chart_options_price_json = json_encode($chart_options_price);
 ?>
 
 <script>
-    var options = <?php echo $chart_options_json; ?>;
-    var chart = new ApexCharts(document.querySelector("#chartbar2"), options);
-    chart.render();
+    var options_price = <?php echo $chart_options_price_json; ?>;
+    var chart_price = new ApexCharts(document.querySelector("#chartPrice"), options_price);
+    chart_price.render();
 </script>
+<?php
+// Assuming you have a database connection established ($conn)
+
+// List of excluded keywords
+$excluded_keywords = array('Min Price:', 'Max Price:', 'Bed', 'Bathroom');
+
+// List of excluded barangays
+$excluded_barangays = array(
+    'Aguso', 'Alvindia', 'Amucao', 'Armenia', 'Asturias', 'Atioc', 'Balanti', 'Balete', 'Balibago I',
+    'Balibago II', 'Balingcanaway', 'Banaba', 'Bantog', 'Baras-baras', 'Batang-batang', 'Binauganan',
+    'Bora', 'Buenavista', 'Buhilit', 'Burot', 'Calingcuan', 'Capehan', 'Carangian', 'Care', 'Central',
+    'Culipat', 'Cut-cut I', 'Cut-cut II', 'Dalayap', 'Dela Paz', 'Dolores', 'Laoang', 'Ligtasan', 'Lourdes',
+    'Mabini', 'Maligaya', 'Maliwalo', 'Mapalacsiao', 'Mapalad', 'Matatalaib', 'Paraiso', 'Poblacion', 'Salapungan',
+    'San Carlos', 'San Francisco', 'San Isidro', 'San Jose', 'San Jose de Urquico', 'San Juan Bautista (formerly Matadero)',
+    'San Juan de Mata (formerly Malatiki)', 'San Luis', 'San Manuel', 'San Miguel', 'San Nicolas', 'San Pablo', 'San Pascual',
+    'San Rafael', 'San Roque', 'San Sebastian', 'San Vicente', 'Santa Cruz', 'Santa Maria', 'Santo Cristo', 'Santo Domingo',
+    'Santo Niño', 'Sapang Maragul', 'Sapang Tagalog', 'Sepung Calzada (Panampunan)', 'Sinait', 'Suizo', 'Tariji', 'Tibag', 'Tibagan',
+    'Trinidad', 'Ungot', 'Villa Bacolor'
+);
+
+// Construct the SQL query with excluded keywords and barangays
+$sql_ref = "SELECT keyword, count FROM cus_ref WHERE";
+foreach ($excluded_keywords as $keyword) {
+    $sql_ref .= " NOT keyword LIKE '%$keyword%' AND";
+}
+foreach ($excluded_barangays as $barangay) {
+    $sql_ref .= " NOT keyword = '$barangay' AND";
+}
+// Remove the trailing "AND" from the query
+$sql_ref = rtrim($sql_ref, " AND");
+
+$result_ref = $conn->query($sql_ref);
+
+$labels_other = array();
+$data_other = array();
+
+while ($row_ref = $result_ref->fetch_assoc()) {
+    $keyword = $row_ref['keyword'];
+    $count = intval($row_ref['count']);
+
+    $labels_other[] = $keyword;
+    $data_other[] = $count;
+}
+
+// Construct the chart options for the pie chart
+$chart_options_other = array(
+    'series' => $data_other,
+    'chart' => array(
+        'height' => 350,
+        'type' => 'pie',
+        'events' => array(
+            'click' => 'function(chart, w, e) { }',
+        ),
+    ),
+    'labels' => $labels_other,
+    'dataLabels' => array(
+        'enabled' => false,
+    ),
+    'legend' => array(
+        'show' => true,
+        'position' => 'bottom',
+    ),
+);
+
+// Convert the options array to JSON
+$chart_options_other_json = json_encode($chart_options_other);
+?>
+
+<script>
+    var options_other = <?php echo $chart_options_other_json; ?>;
+    var chart_other = new ApexCharts(document.querySelector("#chartOther"), options_other);
+    chart_other.render();
+</script>
+<?php
+// Assuming you have a database connection established ($conn)
+
+// List of included barangays
+$included_barangays = array(
+    'Aguso', 'Alvindia', 'Amucao', 'Armenia', 'Asturias', 'Atioc', 'Balanti', 'Balete', 'Balibago I',
+    'Balibago II', 'Balingcanaway', 'Banaba', 'Bantog', 'Baras-baras', 'Batang-batang', 'Binauganan',
+    'Bora', 'Buenavista', 'Buhilit', 'Burot', 'Calingcuan', 'Capehan', 'Carangian', 'Care', 'Central',
+    'Culipat', 'Cut-cut I', 'Cut-cut II', 'Dalayap', 'Dela Paz', 'Dolores', 'Laoang', 'Ligtasan', 'Lourdes',
+    'Mabini', 'Maligaya', 'Maliwalo', 'Mapalacsiao', 'Mapalad', 'Matatalaib', 'Paraiso', 'Poblacion', 'Salapungan',
+    'San Carlos', 'San Francisco', 'San Isidro', 'San Jose', 'San Jose de Urquico', 'San Juan Bautista (formerly Matadero)',
+    'San Juan de Mata (formerly Malatiki)', 'San Luis', 'San Manuel', 'San Miguel', 'San Nicolas', 'San Pablo', 'San Pascual',
+    'San Rafael', 'San Roque', 'San Sebastian', 'San Vicente', 'Santa Cruz', 'Santa Maria', 'Santo Cristo', 'Santo Domingo',
+    'Santo Niño', 'Sapang Maragul', 'Sapang Tagalog', 'Sepung Calzada (Panampunan)', 'Sinait', 'Suizo', 'Tariji', 'Tibag', 'Tibagan',
+    'Trinidad', 'Ungot', 'Villa Bacolor'
+);
+
+// Construct the SQL query with included barangays
+$sql_ref = "SELECT keyword, count FROM cus_ref WHERE keyword IN ('" . implode("','", $included_barangays) . "')";
+$result_ref = $conn->query($sql_ref);
+
+$labels_barangay = array();
+$data_barangay = array();
+
+while ($row_ref = $result_ref->fetch_assoc()) {
+    $keyword = $row_ref['keyword'];
+    $count = intval($row_ref['count']);
+
+    $labels_barangay[] = $keyword;
+    $data_barangay[] = $count;
+}
+
+// Construct the chart options for the pie chart
+$chart_options_barangay = array(
+    'series' => $data_barangay,
+    'chart' => array(
+        'height' => 350,
+        'type' => 'pie',
+        'events' => array(
+            'click' => 'function(chart, w, e) { }',
+        ),
+    ),
+    'labels' => $labels_barangay,
+    'dataLabels' => array(
+        'enabled' => false,
+    ),
+    'legend' => array(
+        'show' => true,
+        'position' => 'bottom',
+    ),
+);
+
+// Convert the options array to JSON
+$chart_options_barangay_json = json_encode($chart_options_barangay);
+?>
+
+<script>
+    var options_barangay = <?php echo $chart_options_barangay_json; ?>;
+    var chart_barangay = new ApexCharts(document.querySelector("#chartBarangay"), options_barangay);
+    chart_barangay.render();
+</script>
+
+
+
+
 
 <script>
     $((function() {

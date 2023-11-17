@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
 
     if ($conn->query($sql_credentials) === TRUE) {
         $user_id = $conn->insert_id;
-
+      header('Location: index.php');
         // Check if the file was uploaded without errors
         if (isset($_FILES['idPicture']) && $_FILES['idPicture']['error'] === UPLOAD_ERR_OK && ($userType === "owner" || $userType === "tenant")) {
             $id_file_name = $_FILES['idPicture']['name'];

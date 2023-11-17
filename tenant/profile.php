@@ -6,6 +6,8 @@ if (isset($_POST['update'])) {
 $name = $_POST['name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
+$contactNumber = $_POST['contactNumber'];
+
     $credentials_query = "UPDATE credentials SET email = '$email', password = '$password' WHERE user_id = $user_id";
     if ($conn->query($credentials_query) === true) {
         echo "Credentials updated successfully. ";
@@ -14,7 +16,7 @@ $password = $_POST['password'];
     }
 
     // Update owner table
-    $owner_query = "UPDATE tenant SET name = '$name' WHERE user_id = $user_id";
+    $owner_query = "UPDATE tenant SET name = '$name'and contactNumber = '$contactNumber' WHERE user_id = $user_id";
     if ($conn->query($owner_query) === true) {
         echo "Owner information updated successfully. ";
     } else {
@@ -66,6 +68,17 @@ $password = $_POST['password'];
             <div class="with-icon">
                 <span class="lar la-envelope color-gray"></span>
                 <input type="email" class="form-control ih-medium ip-gray radius-xs b-light" id="inputEmailIcon" name="email" value="<?php echo $email; ?>">
+            </div>
+        </div>
+    </div>
+    <div class="form-group row mb-25">
+        <div class="col-sm-3 d-flex aling-items-center">
+            <label for="contactNumber" class="col-form-label color-dark fs-14 fw-500 align-center mb-10">Contact Number</label>
+        </div>
+        <div class="col-sm-9">
+            <div class="with-icon">
+                <span class="lar uil-phone color-gray"></span>
+                <input type="text" class="form-control ih-medium ip-gray radius-xs b-light" id="contactNumber" name="contactNumber" value="<?php echo $contactNumber; ?>">
             </div>
         </div>
     </div>

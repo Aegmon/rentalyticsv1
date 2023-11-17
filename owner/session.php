@@ -33,6 +33,8 @@ if(isset($_SESSION['user_id'])) {
                 $name = $row_owner['name'];
                 $birthdate = $row_owner['birthdate'];
                 $gender = $row_owner['gender'];
+                $contactNumber = $row_owner['contactNumber'];
+
                     $id = $row_owner['owner_id'];
                          $picture = $row_owner['profile_pic'];
               $sql = "SELECT l.owner_id, COUNT(DISTINCT l.listing_id) AS listing_count, COUNT(a.application_id) AS rent_count,l.status

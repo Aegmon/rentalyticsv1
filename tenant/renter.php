@@ -135,7 +135,6 @@ if ($result->num_rows > 0) {
         }
    
 
-<<<<<<< HEAD
         if ($row["status"] == "renter") {
           // Check if there is an existing review for this tenant and listing
           $existingReviewSql = "SELECT * FROM review WHERE tenant_id = ? AND listing_id = ?";
@@ -163,7 +162,7 @@ if ($result->num_rows > 0) {
       
           $existingReviewStmt->close();
       } else {
-=======
+        
 if ($row["status"] == "renter") {
     // Check if there is an existing review for this tenant and listing
     $existingReviewSql = "SELECT * FROM review WHERE tenant_id = ? AND listing_id = ?";
@@ -191,9 +190,7 @@ if ($row["status"] == "renter") {
 
     
 } else {
->>>>>>> 25496cdb22bb146ded36613c859d0cda70eb24c5
-   
-
+}
     $reservation_fee_in_whole_number = $row["reservationfee"] * 100;
 if ($payment_result->num_rows > 0) {
  echo '<td>
@@ -232,7 +229,7 @@ echo '<input type="hidden" name="amount" value="' . $reservation_fee_in_whole_nu
             <div class="form-group mb-20">
         <input type="hidden" class="form-control" name="listing_id" value="' . $row["listing_id"] . '">
 
-                <input type="number" class="form-control" name="rating" placeholder=" Rating">
+                <input type="number" class="form-control" min="1" max="5" name="rating" placeholder=" Rating">
             </div>
            
             <div class="form-group mb-20">

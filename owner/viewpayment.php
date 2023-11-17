@@ -65,7 +65,6 @@ $sql = "SELECT
                l.reservationfee,
             a.application_id,
             p.payment_id,
-              p.ref_number,
                 p.payment_date,
             a.date_of_application
         FROM application a
@@ -85,6 +84,8 @@ if ($result->num_rows > 0) {
         echo "<td><div class='userDatatable-content'>" . $row["application_id"] . "</div></td>";
              echo "<td><div class='userDatatable-content'>Php. " . $row["reservationfee"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["payment_date"] . "</div></td>";
+        echo "<td><div class='userDatatable-content'>Gcash</div></td>";
+
 
 
 ;

@@ -201,38 +201,61 @@ if ($result->num_rows > 0) {
                 <div class="row">
                   <div class="col-lg-4">
                     <div class="product-item__image">
-                      <div class="wrap-gallery-article carousel slide carousel-fade" id="carouselExampleCaptions" data-bs-ride="carousel">
+                    <div class="wrap-gallery-article carousel slide carousel-fade" id="carouselExampleCaptions" data-bs-ride="carousel">
                         <div>
-                          <div class="carousel-inner">
-                            <div class="carousel-item active">
-                              <img class="img-fluid d-flex bg-opacity-primary " src="../uploads/<?php echo $image_url;?>" alt="Card image cap" title>
-                            </div>
-                            <div class="carousel-item">
-                              <img class="img-fluid d-flex bg-opacity-primary" src="../uploads/<?php echo $image_url;?>" alt="Card image cap" title>
-                            </div>
-                            <div class="carousel-item">
-                              <img class="img-fluid d-flex bg-opacity-primary" src="../uploads/<?php echo $image_url;?>"alt="Card image cap" title>
-                            </div>
-                          </div>
+                        <?php
+// Assuming $last_id contains the listing ID
+$imageQuery = "SELECT image_url FROM images WHERE listing_id = ?";
+$imageStmt = $conn->prepare($imageQuery);
+$imageStmt->bind_param("i", $listing_id);
+$imageStmt->execute();
+$imageResult = $imageStmt->get_result();
+
+$imageUrls = array();
+
+while ($row = $imageResult->fetch_assoc()) {
+    $imageUrls[] = $row['image_url'];
+}
+
+$imageStmt->close();
+?>
+
+<div class="carousel-inner">
+    <?php foreach ($imageUrls as $index => $imageUrl): ?>
+        <div class="carousel-item<?php echo $index === 0 ? ' active' : ''; ?>">
+            <img class="img-fluid d-flex bg-opacity-primary" src="../uploads/<?php echo $imageUrl; ?>" alt="Card image cap" title="">
+        </div>
+    <?php endforeach; ?>
+</div>
+
                         </div>
                         <div class="overflow-hidden">
-                          <ul class="reset-ul d-flex flex-wrap list-thumb-gallery">
-                            <li>
-                              <a href="#" class="thumbnail active" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1">
-                                <img class="img-fluid d-flex" src="../uploads/<?php echo $image_url;?>" alt>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#" class="thumbnail " data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2">
-                                <img class="img-fluid d-flex"  src="../uploads/<?php echo $image_url;?>" alt>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#" class="thumbnail " data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3">
-                                <img class="img-fluid d-flex" src="../uploads/<?php echo $image_url;?>"alt>
-                              </a>
-                            </li>
-                          </ul>
+                       <?php
+// Assuming $last_id contains the listing ID
+$imageQuery = "SELECT image_url FROM images WHERE listing_id = ?";
+$imageStmt = $conn->prepare($imageQuery);
+$imageStmt->bind_param("i", $listing_id);
+$imageStmt->execute();
+$imageResult = $imageStmt->get_result();
+
+$imageUrls = array();
+
+while ($row = $imageResult->fetch_assoc()) {
+    $imageUrls[] = $row['image_url'];
+}
+
+
+?>
+
+<ul class="reset-ul d-flex flex-wrap list-thumb-gallery">
+    <?php foreach ($imageUrls as $index => $imageUrl): ?>
+        <li>
+            <a href="#" class="thumbnail<?php echo $index === 0 ? ' active' : ''; ?>" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="<?php echo $index; ?>" aria-label="Slide <?php echo $index + 1; ?>">
+                <img class="img-fluid d-flex" src="../uploads/<?php echo $imageUrl; ?>" alt="">
+            </a>
+        </li>
+    <?php endforeach; ?>
+</ul>
                         </div>
                       </div>
                     </div>
@@ -358,10 +381,17 @@ if ($result->num_rows > 0) {
                    
                         <div class="product-item__button mt-lg-30 mt-sm-25 mt-20 d-flex flex-wrap">
                             <div class=" d-flex flex-wrap product-item__action align-items-center">
-                              <form method="post">
-                                <input type="hidden" value="<?php echo $listing_id; ?>">
-                              <button type="submit" name="verify" class="btn btn-success btn-default btn-squared border-0 me-10 my-sm-0 my-2">Verify</button>
-             </form>
+                            <form method="post">
+                <input type="hidden" value="<?php echo $listing_id; ?>">
+                <?php
+                // Check if the listing is already verified
+                if ($isVerify !== 'Verify') {
+                    echo '<button type="submit" name="verify" class="btn btn-success btn-default btn-squared border-0 me-10 my-sm-0 my-2">Verify</button>';
+                } else {
+                    echo '<button type="button" class="btn btn-success btn-default btn-squared border-0 me-10 my-sm-0 my-2" disabled>Verified</button>';
+                }
+                ?>
+            </form>
               <button data-bs-toggle='modal' data-bs-target="#ownerModal<?php echo $listing_id; ?>" class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2">View Documents</button>
                             </div>
                            

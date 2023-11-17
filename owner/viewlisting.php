@@ -141,36 +141,59 @@ if ($result->num_rows > 0) {
                     <div class="product-item__image">
                       <div class="wrap-gallery-article carousel slide carousel-fade" id="carouselExampleCaptions" data-bs-ride="carousel">
                         <div>
-                          <div class="carousel-inner">
-                            <div class="carousel-item active">
-                              <img class="img-fluid d-flex bg-opacity-primary " src="../uploads/<?php echo $image_url;?>" alt="Card image cap" title>
-                            </div>
-                            <div class="carousel-item">
-                              <img class="img-fluid d-flex bg-opacity-primary" src="../uploads/<?php echo $image_url;?>" alt="Card image cap" title>
-                            </div>
-                            <div class="carousel-item">
-                              <img class="img-fluid d-flex bg-opacity-primary" src="../uploads/<?php echo $image_url;?>"alt="Card image cap" title>
-                            </div>
-                          </div>
+                        <?php
+// Assuming $last_id contains the listing ID
+$imageQuery = "SELECT image_url FROM images WHERE listing_id = ?";
+$imageStmt = $conn->prepare($imageQuery);
+$imageStmt->bind_param("i", $listing_id);
+$imageStmt->execute();
+$imageResult = $imageStmt->get_result();
+
+$imageUrls = array();
+
+while ($row = $imageResult->fetch_assoc()) {
+    $imageUrls[] = $row['image_url'];
+}
+
+$imageStmt->close();
+?>
+
+<div class="carousel-inner">
+    <?php foreach ($imageUrls as $index => $imageUrl): ?>
+        <div class="carousel-item<?php echo $index === 0 ? ' active' : ''; ?>">
+            <img class="img-fluid d-flex bg-opacity-primary" src="../uploads/<?php echo $imageUrl; ?>" alt="Card image cap" title="">
+        </div>
+    <?php endforeach; ?>
+</div>
+
                         </div>
                         <div class="overflow-hidden">
-                          <ul class="reset-ul d-flex flex-wrap list-thumb-gallery">
-                            <li>
-                              <a href="#" class="thumbnail active" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1">
-                                <img class="img-fluid d-flex" src="../uploads/<?php echo $image_url;?>" alt>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#" class="thumbnail " data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2">
-                                <img class="img-fluid d-flex"  src="../uploads/<?php echo $image_url;?>" alt>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="#" class="thumbnail " data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3">
-                                <img class="img-fluid d-flex" src="../uploads/<?php echo $image_url;?>"alt>
-                              </a>
-                            </li>
-                          </ul>
+                       <?php
+// Assuming $last_id contains the listing ID
+$imageQuery = "SELECT image_url FROM images WHERE listing_id = ?";
+$imageStmt = $conn->prepare($imageQuery);
+$imageStmt->bind_param("i", $listing_id);
+$imageStmt->execute();
+$imageResult = $imageStmt->get_result();
+
+$imageUrls = array();
+
+while ($row = $imageResult->fetch_assoc()) {
+    $imageUrls[] = $row['image_url'];
+}
+
+
+?>
+
+<ul class="reset-ul d-flex flex-wrap list-thumb-gallery">
+    <?php foreach ($imageUrls as $index => $imageUrl): ?>
+        <li>
+            <a href="#" class="thumbnail<?php echo $index === 0 ? ' active' : ''; ?>" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="<?php echo $index; ?>" aria-label="Slide <?php echo $index + 1; ?>">
+                <img class="img-fluid d-flex" src="../uploads/<?php echo $imageUrl; ?>" alt="">
+            </a>
+        </li>
+    <?php endforeach; ?>
+</ul>
                         </div>
                       </div>
                     </div>

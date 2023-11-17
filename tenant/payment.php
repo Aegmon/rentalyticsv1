@@ -22,7 +22,7 @@ try {
         'body' => json_encode([
             'data' => [
                 'attributes' => [
-                    'send_email_receipt' => false,
+                    'send_email_receipt' => true,
                     'show_description' => true,
                     'show_line_items' => true,
                     'line_items' => [

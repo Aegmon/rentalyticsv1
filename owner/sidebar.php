@@ -43,7 +43,9 @@
             <a class="navbar-brand" href="index-2.html">
               <!-- <img class="dark" src="img/logo-dark.png" alt="logo">
               <img class="light" src="img/logo-white.png" alt="logo"> -->
-              <h3>Rentalytics Logo</h3>
+              <div>
+                <img src="/img/lOGO.png" alt="">
+              </div>
             </a> 
             <a href="#" class="sidebar-toggle">
               <img class="svg" src="img/svg/align-center-alt.svg" alt="img"></a>

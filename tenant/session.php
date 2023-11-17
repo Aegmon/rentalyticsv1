@@ -21,6 +21,7 @@ if(isset($_SESSION['user_id'])) {
                 $name = $row_tenant['name'];
                 $birthdate = $row_tenant['birthdate'];
                 $gender = $row_tenant['gender'];
+                $contactNumber =$row_tenant['contactNumber'];
                    $id = $row_tenant['tenant_id'];
                    $picture = $row_tenant['profile_pic'];
             }
