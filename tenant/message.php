@@ -44,7 +44,6 @@ include('sidebar.php');
                         <a class="nav-link active" id="first-tab" data-bs-target="#panel_b_first" data-secondary="#panel_a_first" data-bs-toggle="tab"
                          href="#first" role="tab" aria-selected="true">Owner</a>
                       </li>
-                  
                     </ul>
                   </div>
                   <div class="search-body">
@@ -139,8 +138,8 @@ if ($result->num_rows > 0) {
                           <div class="chat-type-text__btn">
                         
                            <button type="button" id="send-message-btn" class="border-0 btn-primary wh-50 p-10 rounded-circle">
-   <img class="svg" src="img/svg/send.svg" alt="send">
-</button>
+                      <img class="svg" src="img/svg/send.svg" alt="send">
+                   </button>
                           </div>
                         </div>
                       </div>
@@ -205,8 +204,8 @@ if ($result->num_rows > 0) {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
-  $('.user-list-item').on('click', function() {
-    $('.user-list-item').removeClass('active');
+  $('.list-group-item').on('click', function() {
+    $('.list-group-item').removeClass('active');
     $(this).addClass('active');
     const name = $(this).find('h6').text();
     const time = $(this).find('small').text();

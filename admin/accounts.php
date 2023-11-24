@@ -114,7 +114,7 @@ if ($result->num_rows > 0) {
         <ul >
                 <form action='' method='post'>
                     <input type='hidden' name='user_id' value='" . $row["user_id"] . "'>
-                    <button type='submit' name='verify' value='1' class='btn btn-primary btn-default btn-rounded btn-transparent-primary '><i class='uil uil-check'></i></button>
+                    <button type='submit' name='verify' value='1' class='btn btn-primary btn-default btn-rounded btn-transparent-primary '>Verify</button>
                     <button type='submit' name='unverify' value='0'  class='btn btn-primary btn-default btn-rounded btn-transparent-primary '><i class='uil uil-trash'></i></button> ";
 
         if ($row["user_type"] == 'owner') {

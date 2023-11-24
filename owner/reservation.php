@@ -126,6 +126,18 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row
     while ($row = $result->fetch_assoc()) {
+         $applicationDate = strtotime($row["date_of_application"]);
+        $currentDate = time();
+        $threeDaysLater = strtotime('+3 days', $applicationDate);
+
+        if ($currentDate > $threeDaysLater && $row["status"] != 'approved' && $row["status"] != 'rejected') {
+            // Update the status to 'rejected'
+            $applicationId = $row["application_id"];
+            $updateStatusQuery = "UPDATE application SET status = 'rejected' WHERE application_id = '$applicationId'";
+            $conn->query($updateStatusQuery);
+            // Optionally, you can log or notify about the status change.
+        }
+
         echo "<tr>";
         echo "<td><div class='userDatatable-content'>" . $row["email"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["tenant_name"] . "</div></td>";

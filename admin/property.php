@@ -194,7 +194,7 @@ if ($result->num_rows > 0) {
                     
                     <p class="mb-0">'.$row["description"].'</p>
                     <div class="users-list-body__bottom">
-                        <span><span class="fw-600">Price:</span>
+                        <span><span class="fw-600">Monthly Price:</span>
                         <span><span class="fw-600">₱'.$row["rentprice"].'</span></span>
                         <br>
                   <span class="fw-600"> Reservation Fee: </span>₱'.$row["reservationfee"].'

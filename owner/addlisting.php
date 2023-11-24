@@ -18,9 +18,11 @@ if (isset($_POST['add'])) {
     $no_bed = $_POST['no_bed'];
     $no_bath = $_POST['no_bath'];
     $house_rules = $_POST['house_rules'];
+       $house_rules_str = implode(", ", $house_rules);
+
     $lat = $_POST['lat'];
     $lng = $_POST['lng'];
-    $sql = "INSERT INTO listing (listing_name, address1, address2, address3, address4, description, n_bedroom, n_bathroom, house_rules, rentprice, reservationfee, owner_id, gender_req, type, lat, lng) 
+   $sql = "INSERT INTO listing (listing_name, address1, address2, address3, address4, description, n_bedroom, n_bathroom, house_rules, rentprice, reservationfee, owner_id, gender_req, type, lat, lng) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(
@@ -33,7 +35,7 @@ if (isset($_POST['add'])) {
         $desc,
         $no_bed,
         $no_bath,
-        $house_rules,
+        $house_rules_str, // Use the comma-separated string here
         $price,
         $reservation,
         $id,
@@ -216,64 +218,173 @@ for ($i = 1; $i < count($_FILES['images']['name']); $i++) {
                           <input type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" name="no_bath" required>
                         </div>
                       </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label for="a9" class="il-gray fs-14 fw-500 align-center mb-10">Amenities</label>
-                        <div class="checkbox-list">
-    <div class="checkbox-list__single mb-3">
-        <div class="checkbox-group d-flex">
-            <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
-                <input class="checkbox" type="checkbox" id="check-grp-4" name="amenities[]" value="Internet">
-                <label for="check-grp-4">
-                    <span class="checkbox-text">Internet</span>
-                </label>
+                    <div class="col-md-6">
+    <div class="form-group">
+        <label for="a9" class="il-gray fs-14 fw-500 align-center mb-10">Amenities</label>
+        <div class="checkbox-list">
+            <div class="checkbox-list__single mb-3">
+                <div class="checkbox-group d-flex">
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="check-grp-4" name="amenities[]" value="Internet">
+                        <label for="check-grp-4">
+                            <span class="checkbox-text">Internet</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="check-grp-5" name="amenities[]" value="Kitchen">
+                        <label for="check-grp-5">
+                            <span class="checkbox-text">Kitchen</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="check-grp-6" name="amenities[]" value="Bed">
+                        <label for="check-grp-6">
+                            <span class="checkbox-text">Bed</span>
+                        </label>
+                    </div>
+                </div>
             </div>
-            <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
-                <input class="checkbox" type="checkbox" id="check-grp-5" name="amenities[]" value="Kitchen">
-                <label for="check-grp-5">
-                    <span class="checkbox-text">Kitchen</span>
-                </label>
+            <div class="checkbox-list__single mb-3">
+                <div class="checkbox-group d-flex">
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="check-grp-7" name="amenities[]" value="Parking">
+                        <label for="check-grp-7">
+                            <span class="checkbox-text">Parking</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="check-grp-8" name="amenities[]" value="Pool">
+                        <label for="check-grp-8">
+                            <span class="checkbox-text">Pool</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="check-grp-9" name="amenities[]" value="Laundry Facilities">
+                        <label for="check-grp-9">
+                            <span class="checkbox-text">Laundry Facilities</span>
+                        </label>
+                    </div>
+                </div>
             </div>
-            <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
-                <input class="checkbox" type="checkbox" id="check-grp-6" name="amenities[]" value="Bed">
-                <label for="check-grp-6">
-                    <span class="checkbox-text">Bed</span>
-                </label>
+            <!-- New Amenities -->
+            <div class="checkbox-list__single mb-3">
+                <div class="checkbox-group d-flex">
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="check-grp-10" name="amenities[]" value="Fire alarm">
+                        <label for="check-grp-10">
+                            <span class="checkbox-text">Fire alarm</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="check-grp-11" name="amenities[]" value="Fire exits">
+                        <label for="check-grp-11">
+                            <span class="checkbox-text">Fire exits</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="check-grp-12" name="amenities[]" value="CCTV">
+                        <label for="check-grp-12">
+                            <span class="checkbox-text">CCTV</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="check-grp-13" name="amenities[]" value="Lobby">
+                        <label for="check-grp-13">
+                            <span class="checkbox-text">Lobby</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="check-grp-14" name="amenities[]" value="Parking lot">
+                        <label for="check-grp-14">
+                            <span class="checkbox-text">Parking lot</span>
+                        </label>
+                    </div>
+                </div>
             </div>
+            <!-- End New Amenities -->
         </div>
     </div>
-    <div class="checkbox-list__single mb-3">
-        <div class="checkbox-group d-flex">
-            <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
-                <input class="checkbox" type="checkbox" id="check-grp-7" name="amenities[]" value="Parking">
-                <label for="check-grp-7">
-                    <span class="checkbox-text">Parking</span>
-                </label>
+</div>
+
+      <div class="col-md-12">
+    <div class="form-group">
+        <label for="a8" class="il-gray fs-14 fw-500 align-center mb-10">House Rules</label>
+        <div class="checkbox-list d-flex">
+            <div class="checkbox-list__single">
+                <div class="checkbox-group">
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="rule-check-1" name="house_rules[]" value="Observe Silence">
+                        <label for="rule-check-1">
+                            <span class="checkbox-text">Observe Silence</span>
+                        </label>
+                    </div>
+                </div>
             </div>
-            <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
-                <input class="checkbox" type="checkbox" id="check-grp-8" name="amenities[]" value="Pool">
-                <label for="check-grp-8">
-                    <span class="checkbox-text">Pool</span>
-                </label>
+            <div class="checkbox-list__single">
+                <div class="checkbox-group">
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="rule-check-2" name="house_rules[]" value="Visitor Not Allowed">
+                        <label for="rule-check-2">
+                            <span class="checkbox-text">Visitor Not Allowed</span>
+                        </label>
+                    </div>
+                </div>
             </div>
-            <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
-                <input class="checkbox" type="checkbox" id="check-grp-9" name="amenities[]" value="Laundry Facilities">
-                <label for="check-grp-9">
-                    <span class="checkbox-text">Laundry Facilities</span>
-                </label>
+            <div class="checkbox-list__single">
+                <div class="checkbox-group">
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="rule-check-3" name="house_rules[]" value="Maintain Cleanliness">
+                        <label for="rule-check-3">
+                            <span class="checkbox-text">Maintain Cleanliness</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="checkbox-list__single">
+                <div class="checkbox-group">
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="rule-check-4" name="house_rules[]" value="No Smoking">
+                        <label for="rule-check-4">
+                            <span class="checkbox-text">No Smoking</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="checkbox-list__single">
+                <div class="checkbox-group">
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="rule-check-5" name="house_rules[]" value="Liquor Not Allowed">
+                        <label for="rule-check-5">
+                            <span class="checkbox-text">Liquor Not Allowed</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="checkbox-list__single">
+                <div class="checkbox-group">
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="rule-check-6" name="house_rules[]" value="Room Inspections">
+                        <label for="rule-check-6">
+                            <span class="checkbox-text">Room Inspections</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="checkbox-list__single">
+                <div class="checkbox-group">
+                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single">
+                        <input class="checkbox" type="checkbox" id="rule-check-7" name="house_rules[]" value="No Pets Allowed">
+                        <label for="rule-check-7">
+                            <span class="checkbox-text">No Pets Allowed</span>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label for="a8" class="il-gray fs-14 fw-500 align-center mb-10">House Rules</label>
-                          <textarea class="form-control ih-medium ip-light radius-xs b-light px-15" name="house_rules" required></textarea>
-                        </div>
-                      </div>
+
              <div class="col-md-12">
   <div class="form-group">
     <label for="a8" class="il-gray fs-14 fw-500 align-center mb-10">Images</label>

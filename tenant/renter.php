@@ -215,45 +215,58 @@ echo '<input type="hidden" name="amount" value="' . $reservation_fee_in_whole_nu
         echo "</tr>";
 
         echo '
- 
-        <div class="modal fade" id="reviewModal' . $row["application_id"] . '" tabindex="-1" aria-labelledby="reviewModal' . $row["application_id"] . 'Label" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="reviewModal' . $row["application_id"] . 'Label">Leave a Review</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                      <form action="" method="post" enctype="multipart/form-data">   
-    <div class="modal-body">
-        <div class="new-member-modal">
-            <div class="form-group mb-20">
-        <input type="hidden" class="form-control" name="listing_id" value="' . $row["listing_id"] . '">
 
-                <input type="number" class="form-control" min="1" max="5" name="rating" placeholder=" Rating">
+<div class="modal fade" id="reviewModal' . $row["application_id"] . '" tabindex="-1" aria-labelledby="reviewModal' . $row["application_id"] . 'Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModal' . $row["application_id"] . 'Label">Leave a Review</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-           
-            <div class="form-group mb-20">
-                <textarea class="form-control" name="feedback" rows="3" placeholder="Feeback...."></textarea>
-            </div>
-          
-        
-         
-         
-            </div>
-            <div class="button-group d-flex pt-25">
-                <button type="submit" name="add_feedback" class="btn btn-primary btn-default btn-squared text-capitalize">Add</button>
-                <button type="button" class="btn btn-light btn-default btn-squared fw-400 text-capitalize b-light color-light" data-bs-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-        
-    </div>
- 
-                   
+            <form action="" method="post" enctype="multipart/form-data">   
+                <div class="modal-body">
+                    <div class="new-member-modal">
+                        <div class="form-group mb-20">
+                            <input type="hidden" class="form-control" name="listing_id" value="' . $row["listing_id"] . '">
+                            
+                            <!-- Rating for Amenities -->
+                            <label for="rating_amenities" class="il-gray fs-14 fw-500 align-center mb-10">Amenities</label>
+                            <input type="number" class="form-control" min="1" max="5" name="rating_amenities" placeholder=" Rating">
+                            
+                           <!-- Rating for Price -->
+<label for="rating_price" class="il-gray fs-14 fw-500 align-center mb-10">Price</label>
+<input type="number" class="form-control" min="1" max="5" name="rating_price" placeholder=" Rating">
+
+<!-- Rating for Location -->
+<label for="rating_location" class="il-gray fs-14 fw-500 align-center mb-10">Location</label>
+<input type="number" class="form-control" min="1" max="5" name="rating_location" placeholder=" Rating">
+
+<!-- Rating for Cleanliness -->
+<label for="rating_cleanliness" class="il-gray fs-14 fw-500 align-center mb-10">Cleanliness</label>
+<input type="number" class="form-control" min="1" max="5" name="rating_cleanliness" placeholder=" Rating">
+
+<!-- Rating for Safety -->
+<label for="rating_safety" class="il-gray fs-14 fw-500 align-center mb-10">Safety</label>
+<input type="number" class="form-control" min="1" max="5" name="rating_safety" placeholder=" Rating">
+
+
+                            <div class="form-group mt-3">
+                                <textarea class="form-control" name="feedback" rows="3" placeholder="Feedback...."></textarea>
+                            </div>
+                        </div>
+                        <div class="button-group d-flex pt-25">
+                            <button type="submit" name="add_feedback" class="btn btn-primary btn-default btn-squared text-capitalize">Add</button>
+                            <button type="button" class="btn btn-light btn-default btn-squared fw-400 text-capitalize b-light color-light" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
-          </form>
-     ';
+    </div>
+</div>
+
+';
+
     }
 }
 

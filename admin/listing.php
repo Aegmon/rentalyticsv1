@@ -211,7 +211,7 @@ if ($result->num_rows > 0) {
                         <span>'.$row["location"].'</span>
                         <p class="mb-0">'.$row["description"].'</p>
                         <div class="users-list-body__bottom">
-                               <span ><span class="fw-600">Price:</span>
+                               <span ><span class="fw-600">Monthly Price:</span>
                           <span><span class="fw-600">₱'.$row["monthly_rent"].'</span></span>
                    
                         </div>

@@ -25,6 +25,9 @@
     .image-hover-effect:hover {
         transform: scale(1.03);
     }
+       .checkbox-list__single {
+        margin-right: 15px; /* Adjust the margin as needed */
+    }
 </style>
 
   </head>

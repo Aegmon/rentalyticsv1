@@ -242,7 +242,7 @@ while ($row = $imageResult->fetch_assoc()) {
 
                       
                           <span class="product-desc-price">
-                          ₱     <?php echo $rentprice;?></span>
+                        Monthly Price:  ₱     <?php echo $rentprice;?></span>
                           <div class="d-flex align-items-center mb-2">
                            
                             <span class="product-discount">Reservation Fee : ₱     <?php echo $reservationfee;?></span>

@@ -303,7 +303,7 @@ while ($row = $imageResult->fetch_assoc()) {
 </div>
 
                       
-                          <span class="product-desc-price">
+                          <span class="product-desc-price">Monthly Price:
                           ₱     <?php echo $rentprice;?></span>
                           <div class="d-flex align-items-center mb-2">
                            

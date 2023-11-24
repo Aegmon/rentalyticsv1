@@ -1,5 +1,4 @@
 <?php
-// Make sure the 'connection.php' file path is correct
 include('connection.php');
 
 if (isset($_POST['submit'])) {
@@ -12,12 +11,21 @@ if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+    // Check if the email already exists
+    $check_email_query = "SELECT COUNT(*) as count FROM credentials WHERE email = '$email'";
+    $result = $conn->query($check_email_query);
+    $row = $result->fetch_assoc();
+    $email_count = $row['count'];
 
-    // Insert into credentials table
-    $sql_credentials = "INSERT INTO credentials (email, password, user_type) VALUES ('$email', '$password', '$userType')";
+    if ($email_count > 0) {
+        // Email already exists, display JavaScript alert
+        echo "<script>alert('Email already exists.');</script>";
+    } else {
+        // Insert into credentials table
+        $sql_credentials = "INSERT INTO credentials (email, password, user_type) VALUES ('$email', '$password', '$userType')";
 
-    if ($conn->query($sql_credentials) === TRUE) {
-        $user_id = $conn->insert_id;
+        if ($conn->query($sql_credentials) === TRUE) {
+            $user_id = $conn->insert_id;
       header('Location: index.php');
         // Check if the file was uploaded without errors
         if (isset($_FILES['idPicture']) && $_FILES['idPicture']['error'] === UPLOAD_ERR_OK && ($userType === "owner" || $userType === "tenant")) {
@@ -74,9 +82,12 @@ if (isset($_POST['submit'])) {
                 echo "Error uploading profile picture.";
             }
         }
-    } else {
-        echo "Error: " . $sql_credentials . "<br>" . $conn->error;
+      } else {
+            // Display JavaScript alert for SQL error
+            echo "<script>alert('Error: " . $sql_credentials . "\\n" . $conn->error . "');</script>";
+        }
     }
+
     $conn->close();
 }
 ?>
@@ -165,12 +176,16 @@ if (isset($_POST['submit'])) {
                     <label for="email">Email Address</label>
                     <input type="text" class="form-control" name="email" placeholder="name@example.com" required>
                 </div>
-                <div class="form-group mb-15">
-                    <label for="password">Password</label>
-                    <div class="position-relative">
-                        <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
-                    </div>
-                </div>
+         
+
+<!-- Your existing password input field -->
+<div class="form-group mb-15">
+  <label for="password">Password</label>
+  <div class="position-relative">
+    <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
+  </div>
+</div>
+    <div id="password-strength-message" class="mb-15"></div>
                 <div class="admin-condition">
                     <div class="checkbox-theme-default custom-checkbox">
                         <input class="checkbox" type="checkbox" id="admin-1" required>
@@ -283,6 +298,27 @@ changes by email or by posting the changes on the RENTALYTICS website.</p>
             idPictureUpload.style.display = 'none';
         }
     });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('password').addEventListener('input', function() {
+      validatePasswordStrength(this.value);
+    });
+  });
+
+  function validatePasswordStrength(password) {
+    // Password strength criteria
+    var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+
+    // Check if the password meets the criteria
+    if (strongRegex.test(password)) {
+      document.getElementById('password-strength-message').innerText = 'Password strength: Strong';
+      document.getElementById('password-strength-message').style.color = 'green';
+    } else {
+      document.getElementById('password-strength-message').innerText = 'Password strength: Weak (at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character)';
+      document.getElementById('password-strength-message').style.color = 'red';
+    }
+  }
 </script>
   </body>
 
