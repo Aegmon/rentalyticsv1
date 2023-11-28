@@ -1,37 +1,44 @@
 <?php
 include('sidebar.php');
 
-    if (isset($_GET['application_id'])) {
+if (isset($_GET['application_id'])) {
     $application_id = $_GET['application_id'];
     $payment_date = date('Y-m-d'); // Current date
 
- 
     $stmt = $conn->prepare("INSERT INTO payment (application_id, payment_date) VALUES (?, ?)");
     $stmt->bind_param("is", $application_id, $payment_date);
 
     // Execute the statement
     if ($stmt->execute() === TRUE) {
-        echo "New record created successfully";
+        echo "New payment record created successfully";
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Payment Error: " . $stmt->error;
     }
 }
+
 if (isset($_POST['add_feedback'])) {
     $listing_id = $_POST['listing_id'];
-    $rating = $_POST['rating'];
     $feedback = $_POST['feedback'];
 
-    $stmt = $conn->prepare("INSERT INTO review (tenant_id, rating, feedback, listing_id) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("iisi", $id, $rating, $feedback, $listing_id);
+    $rating_amenities = $_POST['rating_amenities'];
+    $rating_price = $_POST['rating_price'];
+    $rating_location = $_POST['rating_location'];
+    $rating_cleanliness = $_POST['rating_cleanliness'];
+    $rating_safety = $_POST['rating_safety'];
+
+    $average_rating = ($rating_amenities + $rating_price + $rating_location + $rating_cleanliness + $rating_safety) / 5;
+
+    $stmt = $conn->prepare("INSERT INTO review (tenant_id, rating, feedback, listing_id, Amenities, Price, Location, Clealiness, Safety) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("issiiiiii", $id, $average_rating, $feedback, $listing_id, $rating_amenities, $rating_price, $rating_location, $rating_cleanliness, $rating_safety);
+
+    var_dump($id, $average_rating, $feedback, $listing_id, $rating_amenities, $rating_price, $rating_location, $rating_cleanliness, $rating_safety);
 
     if ($stmt->execute() === TRUE) {
-        echo "New record created successfully";
+        echo "New review record created successfully";
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Review Error: " . $stmt->error;
     }
 }
-
-
 ?>
 
 <div class="contents">

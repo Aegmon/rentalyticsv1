@@ -76,6 +76,8 @@ $total_apartment_count = isset($gender_counts['apartment']) ? array_sum($gender_
 $total_dormitory_count = isset($gender_counts['dormitory']) ? array_sum($gender_counts['dormitory']) : 0;
 $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_counts['bedspace']) : 0;
 ?>
+
+
 <div class="contents">
   <div class="container-fluid mb-4">
     <div class="social-dash-wrap">
@@ -94,6 +96,39 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
           </div>
         </div>
       </div>
+  <div class="row mb-4">
+        <div class="col-md-12">
+          <div class="card">
+          <div class="card-body">
+            <div class="row">
+                   <div class="mb-4">
+   Success Rate
+    </div>
+<div class="col-lg-12 mb-4">
+  <div class="card">
+ 
+
+  
+        <div id="multiline"></div>
+ 
+  
+  </div>
+</div>
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      
+    </div>
+
+
       <div class="row">
         <div class="col-md-12">
           <div class="card">
@@ -1172,6 +1207,111 @@ $chart_options_other_json = json_encode($chart_options_other);
     var options_other = <?php echo $chart_options_other_json; ?>;
     var chart_other = new ApexCharts(document.querySelector("#chartOther"), options_other);
     chart_other.render();
+<?php
+$sql = "SELECT 
+            MONTH(a.date_of_application) AS month,
+            COUNT(*) AS total,
+            SUM(CASE WHEN a.status = 'approved' THEN 1 ELSE 0 END) AS approved,
+            SUM(CASE WHEN a.status = 'rejected' THEN 1 ELSE 0 END) AS rejected,
+            SUM(CASE WHEN a.status = 'renter' THEN 1 ELSE 0 END) AS renter
+        FROM application a
+        LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
+        LEFT JOIN credentials c ON t.user_id = c.user_id
+        LEFT JOIN listing l ON l.listing_id = a.listing_id
+        LEFT JOIN payment p ON a.application_id = p.application_id
+        WHERE l.owner_id = '$id' AND a.status IN ('approved', 'rejected', 'renter')
+        GROUP BY month
+        ORDER BY month";
+
+// Execute the SQL query
+$result = mysqli_query($conn, $sql);
+
+// Fetch the result and format it for JavaScript
+$data = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $data[] = $row;
+}
+
+// Convert the PHP array to a JSON string
+$jsonData = json_encode($data);
+?>
+    var chartData = <?php echo $jsonData; ?>;
+
+    var optionss = {
+        series: [
+            {
+                name: 'Approved',
+                data: chartData.map(item => item.approved)
+            },
+            {
+                name: 'Rejected',
+                data: chartData.map(item => item.rejected)
+            },
+            {
+                name: 'Renter',
+                data: chartData.map(item => item.renter)
+            }
+        ],
+          chart: {
+          height: 350,
+          type: 'line',
+          dropShadow: {
+            enabled: true,
+            color: '#000',
+            top: 18,
+            left: 7,
+            blur: 10,
+            opacity: 0.2
+          },
+          toolbar: {
+            show: false
+          }
+        },
+        colors: ['#28a745', '#dc3545','#545454'],
+        dataLabels: {
+          enabled: true,
+        },
+        stroke: {
+          curve: 'smooth'
+        },
+        title: {
+          text: 'Success Vs Void',
+          align: 'left'
+        },
+        grid: {
+          borderColor: '#e7e7e7',
+          row: {
+            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+            opacity: 0.5
+          },
+        },
+        markers: {
+          size: 1
+        },
+     xaxis: {
+                categories: chartData.map(item => item.month),
+                title: {
+                    text: 'Month'
+                }
+            },
+        yaxis: {
+          title: {
+            text: ''
+          },
+          min: 5,
+          max: 40
+        },
+        legend: {
+          position: 'top',
+          horizontalAlign: 'right',
+          floating: true,
+          offsetY: -25,
+          offsetX: -5
+        }
+        };
+
+        var charts = new ApexCharts(document.querySelector("#multiline"), optionss);
+        charts.render();
 </script>
 <?php
 // Assuming you have a database connection established ($conn)
@@ -1301,7 +1441,8 @@ $chart_options_barangay_json = json_encode($chart_options_barangay);
     });
 
 
-    
+      
+      
 </script>
 <script>
 function updateQuery() {

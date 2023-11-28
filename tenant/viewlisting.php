@@ -304,6 +304,8 @@ if ($result->num_rows > 0) {
 
      <div class="product-item__button mt-lg-30 mt-sm-25 mt-20 d-flex flex-wrap">
                             <div class=" d-flex flex-wrap product-item__action align-items-center">
+                               <a href="viewcalendar.php?listing_id=<?php echo $listing_id;?>"class="btn btn-gray fs-6 text-white btn-default btn-squared border-0 ms-0">View Calendar
+                                </a>
                                <form method="post">
                                   <input type ="hidden" name="listing_id" value="<?php echo $listing_id;?>">
                                   
