@@ -2,6 +2,31 @@
 
 include('sidebar.php');
    $listing_id = $_GET['listing_id'];
+   if (isset($_POST['rentnow'])) {
+    // Retrieve the listing_id and tenant_id from the POST data
+    $listing_id = $_POST['listing_id'];
+
+    $start_date = $_POST['start_date'];
+     $end_date = $_POST['end_date'];
+    // Check if the record already exists
+    $check_sql = "SELECT * FROM `application` WHERE `tenant_id` = ? AND `listing_id` = ?";
+    $check_stmt = $conn->prepare($check_sql);
+    $check_stmt->bind_param("ii",$id, $listing_id);
+    $check_stmt->execute();
+    $check_result = $check_stmt->get_result();
+    
+    // If a record is found, display an alert and don't insert again
+    if ($check_result->num_rows > 0) {
+        echo '<script>alert("Already sent your application.");</script>';
+    } else {
+        // Prepare and execute the SQL statement for inserting the new application
+        $insert_sql = "INSERT INTO `application`(`tenant_id`, `listing_id`,`start_date`, `end_date`) VALUES (?, ?,?,?)";
+        $insert_stmt = $conn->prepare($insert_sql);
+        $insert_stmt->bind_param("iiss",$id, $listing_id,$start_date,$end_date);
+        $insert_stmt->execute();
+        echo '<script>window.location.href = "renter.php";</script>';
+    }
+}
 ?>
 
 <div class="contents">
@@ -10,12 +35,12 @@ include('sidebar.php');
       <div class="row">
         <div class="col-lg-12">
           <div class="breadcrumb-main">
-            <h4 class="text-capitalize breadcrumb-title">Renter</h4>
+            <h4 class="text-capitalize breadcrumb-title">Calendar</h4>
             <div class="breadcrumb-action justify-content-center flex-wrap">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="#"><i class="uil uil-estate"></i>Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Renter</li>
+                  <li class="breadcrumb-item active" aria-current="page">Calendar</li>
                 </ol>
               </nav>
             </div>
@@ -23,7 +48,31 @@ include('sidebar.php');
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
+           <div class="col-md-3">
+      <div class="card card-default card-md mb-4">
+               <div class="card-body">
+    <form method="post">
+        <input type="hidden" name="listing_id" value="<?php echo $listing_id; ?>">
+        
+        <div class="input-group mb-3">
+            <label for="start_date" class="form-label m-2">Start Date</label>
+            <input type="date" class="form-control" name="start_date" id="start_date" placeholder="Start Date" style="background-color: transparent;">
+        </div>
+
+        <div class="input-group mb-3">
+            <label for="end_date" class="form-label  m-2">End Date</label>
+            <input type="date" class="form-control" name="end_date" id="end_date" placeholder="End Date" style="background-color: transparent;">
+        </div>
+
+        <div class="input-group">
+            <button type="submit" name="rentnow" class="btn btn-success fs-6 text-white btn-default btn-squared border-1=0 ms-0">Rent Now</button>
+        </div>
+    </form>
+</div>
+
+                </div>
+      </div>
+        <div class="col-md-9">
       <div class="card card-default card-md mb-4">
                   <div class="card-body">
                     <div id="full-calendar"></div>
@@ -143,108 +192,94 @@ include('sidebar.php');
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
     <script src="js/plugins.min.js"></script>
     <script src="js/script.min.js"></script>
+    <?php 
+    
+    $sql = "SELECT 
+    a.tenant_id,
+    t.name AS tenant_name,
+    a.status as status,
+    l.listing_id,
+    l.listing_name,
+    l.rentprice,
+    l.reservationfee,
+    a.application_id,
+    a.date_of_application,
+    a.start_date,
+    a.end_date
+FROM application a
+LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
+LEFT JOIN listing l ON l.listing_id = a.listing_id
+WHERE l.listing_id = '$listing_id' AND a.status = 'approved'";
+$result = $conn->query($sql);
+    ?>
+
 <script>
-    ! function(t) {
-  t("#external-events .fc-event").each((function() {
-    t(this).data("event", {
-      title: t.trim(t(this).text()),
-      stick: !0
-    }), t(this).draggable({
-      zIndex: 999,
-      revert: !0,
-      revertDuration: 0
-    })
-  }));
-  new Date;
-  let e = {
-      id: 1,
-      events: [{
-        id: "1",
-        start: moment().format("YYYY-MM-17") + "T08:30:00",
-        title: "Family Events"
-      }, {
-        id: "2",
-        start: moment().format("YYYY-MM-DD") + "T10:30:00",
-        end: moment().format("YYYY-MM-DD") + "T12:00:00",
-        title: "Dinner with Family"
-      }],
-      className: "primary",
-      textColor: "#5F63F2"
-    },
-    n = {
-      id: 2,
-      events: [{
-        id: "1",
-        start: moment().format("YYYY-MM-20") + "T01:00:00",
-        title: "Product Lunch"
-      }],
-      className: "secondary",
-      textColor: "#FF69A5"
-    },
-    a = {
-      id: 3,
-      events: [{
-        id: "1",
-        start: moment().format("YYYY-MM-DD") + "T18:30:00",
-        title: "Team Meeting"
-      }],
-      className: "success",
-      textColor: "#20C997"
-    },
-    i = {
-      id: 4,
-      events: [{
-        id: "1",
-        start: moment().format("YYYY-MM-25") + "T11:00:00",
-        title: "Team Meeting"
-      }, {
-        id: "2",
-        start: moment().format("YYYY-MM-DD") + "T07:00:00",
-        end: moment().format("YYYY-MM-DD") + "T08:30:00",
-        title: "HexaDash Calendar App"
-      }],
-      className: "warning",
-      textColor: "#FA8B0C"
-    };
-  document.addEventListener("DOMContentLoaded", (function() {
-    var l = document.getElementById("full-calendar");
-    if (l) {
-      var o = new FullCalendar.Calendar(l, {
-        headerToolbar: {
-          left: "today,prev,title,next"
-        },
-        views: {
-          listMonth: {
-            buttonText: "Schedule",
-            titleFormat: {
-              month: "short",
-              weekday: "short"
-            }
-          }
-        },
-        listDayFormat: !0,
-        listDayAltFormat: !0,
-        allDaySlot: !1,
-        editable: !0,
-        eventSources: [e, n, a, i],
-        contentHeight: 800,
-        initialView: "dayGridMonth", // Set to "dayGridMonth" for Month view
-        eventDidMount: function(e) {
-          t(".fc-list-day").each((function() {}))
-        },
-        eventClick: function(e) {
-          console.log(e.event.title);
-          let n = t("#e-info-modal");
-          n.modal("show"), console.log(n.find(".e-info-title")), n.find(".e-info-title").text(e.event.title)
-        }
-      });
-      o.render(), t(".fc-button-group .fc-listMonth-button").prepend('<i class="las la-list"></i>')
+    var eventsData = <?php echo json_encode($result->fetch_all(MYSQLI_ASSOC)); ?>;
+
+    console.log("Events Data:", eventsData);
+
+    function getColorBasedOnApplication(application_id) {
+        // Assuming you have a predefined set of colors
+        var colors = ['#FF33A1', '#3366FF', '#FF5733', '#FF33A1', '#33FFFF'];
+        
+        // Use the remainder of application_id to select a color
+        var colorIndex = application_id % colors.length;
+
+        console.log("Application ID:", application_id, "Color Index:", colorIndex);
+
+        return colors[colorIndex];
     }
-  }))
-}(jQuery);
+
+    !(function(t) {
+        document.addEventListener("DOMContentLoaded", (function() {
+            var l = document.getElementById("full-calendar");
+            if (l) {
+                var o = new FullCalendar.Calendar(l, {
+                    headerToolbar: {
+                        left: "today,prev,title,next"
+                    },
+                    views: {
+                        listMonth: {
+                            buttonText: "Schedule",
+                            titleFormat: {
+                                month: "short",
+                                weekday: "short"
+                            }
+                        }
+                    },
+                    listDayFormat: true,
+                    listDayAltFormat: true,
+                    allDaySlot: false,
+                    editable: false,  // Set to false to make the calendar not draggable
+                    events: eventsData.map(function(event) {
+                        return {
+                            id: event.application_id,
+                            title: event.listing_name,
+                            start: event.start_date,
+                            end: event.end_date,
+                            color: getColorBasedOnApplication(event.application_id),
+                            // Other event properties as needed
+                        };
+                    }),
+                    contentHeight: 800,
+                    initialView: "dayGridMonth",
+                    eventDidMount: function(e) {
+                        t(".fc-list-day").each((function() {}))
+                    },
+                    eventClick: function(e) {
+                        console.log(e.event.title);
+                        let n = t("#e-info-modal");
+                        n.modal("show");
+                        console.log(n.find(".e-info-title"));
+                        n.find(".e-info-title").text(e.event.title);
+                    }
+                });
+                o.render();
+                t(".fc-button-group .fc-listMonth-button").prepend('<i class="las la-list"></i>')
+            }
+        }));
+    }(jQuery));
 </script>
-
-
 
 
   </body>

@@ -306,14 +306,7 @@ if ($result->num_rows > 0) {
                             <div class=" d-flex flex-wrap product-item__action align-items-center">
                                <a href="viewcalendar.php?listing_id=<?php echo $listing_id;?>"class="btn btn-gray fs-6 text-white btn-default btn-squared border-0 ms-0">View Calendar
                                 </a>
-                               <form method="post">
-                                  <input type ="hidden" name="listing_id" value="<?php echo $listing_id;?>">
-                                  
-                             
-
-                                <button type="submit" name="rentnow"class="btn btn-success fs-6 text-white btn-default btn-squared border-1=0 ms-0">rent now
-                                </button>
-                                </form>
+             
                               <button class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2" 
                               data-bs-toggle="modal" data-bs-target="#editModal<?php echo $owner_id;?>">Message Owner</button>
                            
