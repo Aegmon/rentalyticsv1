@@ -1,6 +1,69 @@
 <?php
 include('sidebar.php');
    $listing_id = $_GET['listing_id'];
+   $currentMonth = date('m');
+$currentYear = date('Y');
+
+$sql1 = "SELECT 
+            CASE WHEN MONTH(a.date_of_application) IN (1,2,3,4,5,6) THEN 'First Half' ELSE 'Second Half' END AS semi_annual_period,
+            COUNT(*) AS total,
+            SUM(CASE WHEN a.status = 'approved' THEN 1 ELSE 0 END) AS approved,
+            SUM(CASE WHEN a.status = 'rejected' THEN 1 ELSE 0 END) AS rejected,
+            SUM(CASE WHEN a.status = 'renter' THEN 1 ELSE 0 END) AS renter,
+            l.n_bedroom
+        FROM application a
+        LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
+        LEFT JOIN credentials c ON t.user_id = c.user_id
+        LEFT JOIN listing l ON l.listing_id = a.listing_id
+        LEFT JOIN payment p ON a.application_id = p.application_id
+        WHERE l.listing_id = '$listing_id' 
+        AND a.status IN ('approved', 'rejected', 'renter')
+        GROUP BY semi_annual_period
+        ORDER BY semi_annual_period";
+
+$result1 = mysqli_query($conn, $sql1);
+
+// Check if the query was successful
+if ($result1) {
+    // Initialize overall success count to zero
+    $overall_success_count = 0;
+
+    // Initialize first half success count to zero
+    $first_half_success_count = 0;
+
+    // Initialize n_bedroom variable
+    $noofbedroom = 0;
+
+    // Fetch the result as an associative array
+    while ($row1 = mysqli_fetch_assoc($result1)) {
+        // Access the 'approved' column from the result
+        $approved_count = $row1['approved'];
+
+        // Add the approved count to the overall success count
+        $overall_success_count += $approved_count;
+
+        // Check if it's the first half and update the first half success coun
+        if ($row1['semi_annual_period'] == 'First Half') {
+            $first_half_success_count = $approved_count;
+        }
+
+        // Update the n_bedroom variable
+        $noofbedroom = $row1['n_bedroom'];
+    }
+
+    // Calculate forecast based on the first half success count
+ 
+    $previousforecast = (0.8 * $first_half_success_count) + (0.2 * $first_half_success_count);
+       $forecast = (0.8 * $overall_success_count) + (0.2 * $overall_success_count);
+    // Calculate occupancy rate
+    $occupancy_rate = ($overall_success_count / $noofbedroom) * 100;
+
+    // Output the results
+ 
+} 
+
+
+
 ?>
 <?php
 if (isset($_POST['update_listing'])) {
@@ -118,6 +181,7 @@ if ($result->num_rows > 0) {
             <div class="col-lg-12">
               <div class="shop-breadcrumb">
                 <div class="breadcrumb-main">
+                  
                   <h4 class="text-capitalize breadcrumb-title">See Place</h4>
                   <div class="breadcrumb-action justify-content-center flex-wrap">
                     <nav aria-label="breadcrumb">
@@ -452,6 +516,25 @@ if ($result->num_rows > 0) {
 
                        </div>
                 </div>
+                <hr>
+<div style="text-align: center; margin-bottom: 1px;height:20px">
+    <span style="background-color: #ffffff; padding: 0 10px;">
+        <h3 style="display: inline;">Forcasting</h3>
+    </span>
+</div>
+<hr>
+ <div class="row">
+      <div class="card">
+         <div class="card-body">
+<div class="text-center">
+  Occupancy Rate 
+  <strong><?php echo $occupancy_rate?> %</strong>
+</div>
+<div id="areaChartBasic1"></div>
+
+          </div>
+          </div>
+  </div>
 <hr>
 <div style="text-align: center; margin-bottom: 5px;height:50px">
     <span style="background-color: #ffffff; padding: 0 10px;">
@@ -575,9 +658,11 @@ if ($result->num_rows > 0) {
     </div>
   </div>
 </div>
-
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="js/plugins.min.js"></script>
 <script src="js/script.min.js"></script>
+
 
 <script>
   document.getElementById('uploadInput').addEventListener('change', handleFileSelect, false);
@@ -640,6 +725,52 @@ if ($result->num_rows > 0) {
     async defer></script>
 
 
+<script>
+    var options = {
+        series: [{
+            name: "Forecast Occupancy Rate",
+            data: [<?php echo $previousforecast?>, <?php echo $forecast?>]
+        }],
+        chart: {
+            type: 'area',
+            height: 350,
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth' // Changed to 'smooth' for a smoother curve
+        },
+        title: {
+            text: 'Forecast Occupancy Rate ',
+            align: 'left'
+        },
+       
+        labels: ["july - Dec 2023", "jan - june 2024"],
+        xaxis: {
+            type: 'category', // Changed to 'category' since your labels are not timestamps
+        },
+        yaxis: {
+            opposite: true
+        },
+        legend: {
+            horizontalAlign: 'Right'
+        }
+    };
+
+    // Ensure the container with ID "areaChartBasic1" exists
+    var chartContainer = document.querySelector("#areaChartBasic1");
+    
+    if (chartContainer) {
+        var chart = new ApexCharts(chartContainer, options);
+        chart.render();
+    } else {
+        console.error("Chart container not found.");
+    }
+</script>
 
 
 
