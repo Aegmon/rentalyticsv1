@@ -138,6 +138,50 @@ $total_apartment_count = isset($gender_counts['apartment']) ? array_sum($gender_
 $total_dormitory_count = isset($gender_counts['dormitory']) ? array_sum($gender_counts['dormitory']) : 0;
 $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_counts['bedspace']) : 0;
 ?>
+<?php
+// Get the current month and year
+$currentMonth = date('m');
+$currentYear = date('Y');
+
+$sql1 = "SELECT 
+            MONTH(a.date_of_application) AS month,
+            COUNT(*) AS total,
+            SUM(CASE WHEN a.status = 'approved' THEN 1 ELSE 0 END) AS approved,
+            SUM(CASE WHEN a.status = 'rejected' THEN 1 ELSE 0 END) AS rejected,
+            SUM(CASE WHEN a.status = 'renter' THEN 1 ELSE 0 END) AS renter
+        FROM application a
+        LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
+        LEFT JOIN credentials c ON t.user_id = c.user_id
+        LEFT JOIN listing l ON l.listing_id = a.listing_id
+        LEFT JOIN payment p ON a.application_id = p.application_id
+        WHERE l.owner_id = '$id' 
+        AND a.status IN ('approved', 'rejected', 'renter')
+        AND MONTH(a.date_of_application) = '$currentMonth'
+        AND YEAR(a.date_of_application) = '$currentYear'
+        GROUP BY month
+        ORDER BY month";
+
+// Execute the SQL query
+$result1 = mysqli_query($conn, $sql1);
+
+
+$success_count = 0; // Variable to store the count of approved applications
+$total_count = 0; // Variable to store the total number of applications this month
+
+while ($row1 = mysqli_fetch_assoc($result1)) {
+ 
+    
+    // Update the total count
+    $total_count += $row1['total'];
+    
+    // Update the success count for approved applications
+    $success_count += $row1['approved'];
+}
+
+$rate = ($success_count /$total_count )*100;
+?>
+
+
 
 
 <div class="contents">
@@ -164,7 +208,7 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
           <div class="card-body">
             <div class="row">
                    <div class="mb-4">
-   Success Rate
+   Monthyl Success Rate : <strong style="color: lightgreen"><?php echo $rate ; ?>%</strong>
     </div>
     <div class="mb-4">
       <!-- <div class="d-flex justify-content-end">

@@ -56,12 +56,20 @@ include('sidebar.php');
         
         <div class="input-group mb-3">
             <label for="start_date" class="form-label m-2">Start Date</label>
+<<<<<<< HEAD
             <input type="date" class="form-control" name="start_date" id="start_date" placeholder="Start Date"req style="background-color: transparent;" required>
+=======
+            <input type="date" class="form-control" name="start_date" id="start_date" placeholder="Start Date" style="background-color: transparent;">
+>>>>>>> d285861cfefcb4e7511bd9af61dc356f829543fc
         </div>
 
         <div class="input-group mb-3">
             <label for="end_date" class="form-label  m-2">End Date</label>
+<<<<<<< HEAD
             <input type="date" class="form-control" name="end_date" id="end_date" placeholder="End Date" style="background-color: transparent;"required>
+=======
+            <input type="date" class="form-control" name="end_date" id="end_date" placeholder="End Date" style="background-color: transparent;">
+>>>>>>> d285861cfefcb4e7511bd9af61dc356f829543fc
         </div>
 
         <div class="input-group">
