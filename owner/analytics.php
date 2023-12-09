@@ -18,7 +18,7 @@ $total_female_count = $tenant_female_count;
 
 
 
-$dateToday = Date('Y / m / d ');
+$dateToday = Date('Y / m / d');
 
 // Calculate the first day of the previous month
 $firstDayOfPreviousMonth = date('Y-m-01', strtotime('-1 month'));
@@ -46,36 +46,37 @@ $previousApproved = $approvedPrev->fetch_assoc()['approved_previous'];
 $previousRejected = $rejectedPrev->fetch_assoc()['rejected_previous'];
 
 
-$totalPrev_reserve_count = $previousApproved +$previousRejected;
+$totalPrev_reserve_count = $previousApproved + $previousRejected;
 
 
-// $currentMonth = date('Y-m'); // Get the current month in the format 'YYYY-MM'
+$currentMonth = date('Y-m'); // Get the current month in the format 'YYYY-MM'
 
 $query = "SELECT COUNT(*) as approved_counts 
           FROM application 
           WHERE status = 'approved' 
-          AND DATE_FORMAT(date_of_application, '%Y-%m') = '$$dateToday'";
+          AND DATE_FORMAT(date_of_application, '%Y-%m') = '$currentMonth'";
 
 $approvedCount = $conn->query($query);
 
 $query = "SELECT COUNT(*) as rejected_counts 
           FROM application 
           WHERE status = 'rejected' 
-          AND DATE_FORMAT(date_of_application, '%Y-%m') = '$$dateToday'";
+          AND DATE_FORMAT(date_of_application, '%Y-%m') = '$currentMonth'";
 
 $rejectedCount = $conn->query($query);
 $query = "SELECT COUNT(*) as renter_counts 
           FROM application 
           WHERE status = 'renter' 
-          AND DATE_FORMAT(date_of_application, '%Y-%m') = '$$dateToday'";
+          AND DATE_FORMAT(date_of_application, '%Y-%m') = '$currentMonth'";
 
 $renterCount = $conn->query($query);
 
-$renter = $renterCount->fetch_assoc()['renter_counts'];
+
 $approved = $approvedCount->fetch_assoc()['approved_counts'];
 $rejected = $rejectedCount->fetch_assoc()['rejected_counts'];
+$renter = $renterCount->fetch_assoc()['renter_counts'];
 
-$total_approved_count = $approved + $renter;
+$total_approved_count = $approved;
 $total_reserved_count = $approved + $rejected;
 
 
@@ -140,45 +141,45 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
 ?>
 <?php
 // Get the current month and year
-$currentMonth = date('m');
-$currentYear = date('Y');
+// $currentMonth = date('m');
+// $currentYear = date('Y');
 
-$sql1 = "SELECT 
-            MONTH(a.date_of_application) AS month,
-            COUNT(*) AS total,
-            SUM(CASE WHEN a.status = 'approved' THEN 1 ELSE 0 END) AS approved,
-            SUM(CASE WHEN a.status = 'rejected' THEN 1 ELSE 0 END) AS rejected,
-            SUM(CASE WHEN a.status = 'renter' THEN 1 ELSE 0 END) AS renter
-        FROM application a
-        LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
-        LEFT JOIN credentials c ON t.user_id = c.user_id
-        LEFT JOIN listing l ON l.listing_id = a.listing_id
-        LEFT JOIN payment p ON a.application_id = p.application_id
-        WHERE l.owner_id = '$id' 
-        AND a.status IN ('approved', 'rejected', 'renter')
-        AND MONTH(a.date_of_application) = '$currentMonth'
-        AND YEAR(a.date_of_application) = '$currentYear'
-        GROUP BY month
-        ORDER BY month";
+// $sql1 = "SELECT 
+//             MONTH(a.date_of_application) AS month,
+//             COUNT(*) AS total,
+//             SUM(CASE WHEN a.status = 'approved' THEN 1 ELSE 0 END) AS approved,
+//             SUM(CASE WHEN a.status = 'rejected' THEN 1 ELSE 0 END) AS rejected,
+//             SUM(CASE WHEN a.status = 'renter' THEN 1 ELSE 0 END) AS renter
+//         FROM application a
+//         LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
+//         LEFT JOIN credentials c ON t.user_id = c.user_id
+//         LEFT JOIN listing l ON l.listing_id = a.listing_id
+//         LEFT JOIN payment p ON a.application_id = p.application_id
+//         WHERE l.owner_id = '$id' 
+//         AND a.status IN ('approved', 'rejected', 'renter')
+//         AND MONTH(a.date_of_application) = '$currentMonth'
+//         AND YEAR(a.date_of_application) = '$currentYear'
+//         GROUP BY month
+//         ORDER BY month";
 
-// Execute the SQL query
-$result1 = mysqli_query($conn, $sql1);
+// // Execute the SQL query
+// $result1 = mysqli_query($conn, $sql1);
 
 
-$success_count = 0; // Variable to store the count of approved applications
-$total_count = 0; // Variable to store the total number of applications this month
+// $success_count = 0; // Variable to store the count of approved applications
+// $total_count = 0; // Variable to store the total number of applications this month
 
-while ($row1 = mysqli_fetch_assoc($result1)) {
+// while ($row1 = mysqli_fetch_assoc($result1)) {
  
     
-    // Update the total count
-    $total_count += $row1['total'];
+//     // Update the total count
+//     $total_count += $row1['total'];
     
-    // Update the success count for approved applications
-    $success_count += $row1['approved'];
-}
+//     // Update the success count for approved applications
+//     $success_count += $row1['approved'];
+// }
 
-$rate = ($success_count /$total_count )*100;
+// $rate = ($success_count / $total_count )*100;
 ?>
 
 
@@ -207,9 +208,9 @@ $rate = ($success_count /$total_count )*100;
           <div class="card">
           <div class="card-body">
             <div class="row">
-                   <div class="mb-4">
+                   <!-- <div class="mb-4">
    Monthyl Success Rate : <strong style="color: lightgreen"><?php echo $rate ; ?>%</strong>
-    </div>
+    </div> -->
     <div class="mb-4">
       <!-- <div class="d-flex justify-content-end">
       <select id="yearDropdown">
@@ -226,6 +227,9 @@ $rate = ($success_count /$total_count )*100;
        
       <p><?php echo "Date Today: " . '<span class="color-dark">'. $dateToday . '</span>'?></p>
       </div>
+
+
+
         <?php
 
 // Function to percentage
