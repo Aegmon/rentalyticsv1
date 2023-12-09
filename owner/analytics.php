@@ -18,6 +18,68 @@ $total_female_count = $tenant_female_count;
 
 
 
+$dateToday = Date('Y / m / d ');
+
+// Calculate the first day of the previous month
+$firstDayOfPreviousMonth = date('Y-m-01', strtotime('-1 month'));
+
+// Calculate the last day of the previous month
+$lastDayOfPreviousMonth = date('Y-m-t', strtotime('-1 month'));
+// SQL query to select data from the previous month
+$query = "SELECT COUNT(*) as approved_previous 
+          FROM application 
+          WHERE status = 'approved' 
+          AND date_of_application >= '$firstDayOfPreviousMonth' 
+          AND date_of_application <= '$lastDayOfPreviousMonth'";
+
+$approvedPrev = $conn->query($query);
+//rejected prev
+$query = "SELECT COUNT(*) as rejected_previous 
+          FROM application 
+          WHERE status = 'rejected' 
+          AND date_of_application >= '$firstDayOfPreviousMonth' 
+          AND date_of_application <= '$lastDayOfPreviousMonth'";
+
+$rejectedPrev = $conn->query($query);
+
+$previousApproved = $approvedPrev->fetch_assoc()['approved_previous'];
+$previousRejected = $rejectedPrev->fetch_assoc()['rejected_previous'];
+
+
+$totalPrev_reserve_count = $previousApproved +$previousRejected;
+
+
+// $currentMonth = date('Y-m'); // Get the current month in the format 'YYYY-MM'
+
+$query = "SELECT COUNT(*) as approved_counts 
+          FROM application 
+          WHERE status = 'approved' 
+          AND DATE_FORMAT(date_of_application, '%Y-%m') = '$$dateToday'";
+
+$approvedCount = $conn->query($query);
+
+$query = "SELECT COUNT(*) as rejected_counts 
+          FROM application 
+          WHERE status = 'rejected' 
+          AND DATE_FORMAT(date_of_application, '%Y-%m') = '$$dateToday'";
+
+$rejectedCount = $conn->query($query);
+$query = "SELECT COUNT(*) as renter_counts 
+          FROM application 
+          WHERE status = 'renter' 
+          AND DATE_FORMAT(date_of_application, '%Y-%m') = '$$dateToday'";
+
+$renterCount = $conn->query($query);
+
+$renter = $renterCount->fetch_assoc()['renter_counts'];
+$approved = $approvedCount->fetch_assoc()['approved_counts'];
+$rejected = $rejectedCount->fetch_assoc()['rejected_counts'];
+
+$total_approved_count = $approved + $renter;
+$total_reserved_count = $approved + $rejected;
+
+
+
 $result = $conn->query("SELECT SUM(CASE WHEN gender_req = 'Male' THEN 1 ELSE 0 END) as male_listing_count,
                               SUM(CASE WHEN gender_req = 'Female' THEN 1 ELSE 0 END) as female_listing_count,
                           SUM(CASE WHEN gender_req = 'Both' THEN 1 ELSE 0 END) as both_listing_count
@@ -104,11 +166,144 @@ $total_bedspace_count = isset($gender_counts['bedspace']) ? array_sum($gender_co
                    <div class="mb-4">
    Success Rate
     </div>
+    <div class="mb-4">
+      <!-- <div class="d-flex justify-content-end">
+      <select id="yearDropdown">
+        <option value="" selected disabled>Select Year</option>
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+      </select>
+      </div> -->
+      <div class="text-end">
+       
+      <p><?php echo "Date Today: " . '<span class="color-dark">'. $dateToday . '</span>'?></p>
+      </div>
+        <?php
+
+// Function to percentage
+
+function successRatio($approved, $total_reserved_count)
+{
+    if ($total_reserved_count != 0) {
+        $percentage = ($approved/$total_reserved_count) * 100;
+        return $percentage;
+    } else {
+        return 0; // Avoid division by zero error
+    }
+    
+}
+$rationReserved = $approved;  // the actual amount
+$rationTotal = $total_reserved_count;     // total available amount
+
+// Calculate percentage
+$successPercentage = successRatio($rationReserved, $rationTotal);
+
+//change color base on percentage 
+$textColor = '';
+$arrowSymbol = '';
+
+if ($successPercentage > 35) {
+    $textColor = 'green';
+    $arrowSymbol = ' &#8593;'; // Up arrow symbol
+} elseif ($successPercentage < 35) {
+    $textColor = 'red';
+    $arrowSymbol = ' &#8595;'; // Down arrow symbol
+}
+?>
+<?php
+
+// Function to percentage now
+
+function prevRatio($previousApproved, $totalPrev_reserve_count)
+{
+    if ($totalPrev_reserve_count != 0) {
+        $percentagePrev = ($previousApproved/$totalPrev_reserve_count) * 100;
+        return $percentagePrev;
+    } else {
+        return 0; // Avoid division by zero error
+    }
+    
+}
+$rationReservedPrev = $previousApproved;  // the actual amount
+$rationTotalPrev = $totalPrev_reserve_count;     // total available amount
+
+// Calculate percentage
+$successPercentagePrev = prevRatio($rationReservedPrev, $rationTotalPrev);
+
+//change color base on percentage 
+$textColor1 = '';
+$arrowSymbol1 = '';
+
+if ($successPercentagePrev == 0) {
+  $textColor1 = '#666d92';
+  $arrowSymbol1 = ''; // Up arrow symbol
+} elseif ($successPercentagePrev < 35) {
+  $textColor1 = 'red';
+  $arrowSymbol1 = ' &#8595;'; // Down arrow symbol
+} elseif ($successPercentagePrev > 35) {
+  $textColor1 = 'green';
+  $arrowSymbol1 = ' &#8593;'; // Up arrow symbol
+}
+
+// ratio
+function ratioGap($successPercentagePrev,$successPercentage){
+
+  if($successPercentagePrev !=0 ){
+    $precentGap = ($successPercentage - $successPercentagePrev );
+    return $precentGap;
+  }else{
+    return 0;
+  }
+} 
+
+$prev = $successPercentagePrev;
+$now = $successPercentage;
+
+$gapRatio = ratioGap($prev,$now);
+
+$textColor2 = '';
+$arrowSymbol2 = '';
+
+if ($gapRatio > 0) {
+    $textColor2 = 'green';
+    $arrowSymbol2 = ' &#8593;'; // Up arrow symbol
+} elseif ($gapRatio < 0) {
+    $textColor2 = 'red';
+    $arrowSymbol2 = ' &#8595;'; // Down arrow symbol
+}
+?>
+
+        <div class="text-center">
+          <h4><?php echo "Successful Reservation Rate: ". '<span style="color: ' . $textColor . '";>' . number_format($successPercentage, 2) . "%" .$arrowSymbol. '</span>';?> <span style="font-size: 16px; margin:20px 0 0 5px;"><?php echo '<span style="color: ' . $textColor2 . '";>' . number_format( $gapRatio, 2) . "%" .$arrowSymbol2.  '</span>';?>
+</span>
+</h4>
+</div>
+          
+          <!-- <div class="text-center"> -->
+   
+          
+          
+  
+    <!-- </div> -->
+    </div>
+
+
+<!-- prev data -->
+
+<div class="text-center">
+<span><?php echo "Previous Month Success Rate: ". '<span style="color: ' . $textColor1 . '";>' . number_format($successPercentagePrev, 2) . "%" .$arrowSymbol1.  '</span>';?>
+</span>
+</div>
+
+    
+
 <div class="col-lg-12 mb-4">
   <div class="card">
  
-
-  
         <div id="multiline"></div>
  
   
@@ -587,7 +782,7 @@ $options = array(
         chart.render();
     </script> -->
 <script>
-    var colors = ['#008FFB', '#00E396', '#FEB019', '#FF4560'];
+  
   var options = {
     series: [{
       data: [<?php echo $total_apartment_count ?>, <?php echo  $total_dormitory_count ?>, <?php echo  $total_bedspace_count ?>, <?php echo  $total_boarding_house_count ?>]
@@ -601,7 +796,7 @@ $options = array(
         }
       }
     },
-    colors: colors,
+    colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560'],
     plotOptions: {
       bar: {
         borderRadius: 5,
@@ -892,11 +1087,12 @@ foreach ($rentPrices as $type => $prices) {
                 enabled: false
             }
         },
+        colors: ['#7B66FF'],
         dataLabels: {
             enabled: true
         },
         stroke: {
-            curve: 'straight'
+            curve: 'smooth'
         },
         title: {
             text: 'Pricing',
@@ -954,32 +1150,80 @@ foreach ($addressCount as $address => $count) {
 ?>
 
 <script>
-    var chartData = <?php echo json_encode($chartData); ?>;
+  var chartData = <?php echo json_encode($chartData); ?>;
 
-    var options = {
-        series: [
-            {
-                data: chartData
-            }
-        ],
-        legend: {
-            show: false
-        },
-        chart: {
-            height: 350,
-            type: 'treemap',
-        },
-        title: {
-            text: 'Competition',
-            align: 'center',
-            style: {
-                fontSize: '20px'
+var options = {
+    series: [
+        {
+            data: chartData
+        }
+    ],
+
+    legend: {
+        show: false
+    },
+    chart: {
+        height: 350,
+        type: 'treemap',
+    },
+    // colors: ['#FF6C22'],
+    title: {
+        text: 'Competition',
+        align: 'center',
+        style: {
+            fontSize: '20px'
+        }
+    },
+    plotOptions: {
+        treemap: {
+            distributed: true,
+            colorScale: {
+                ranges: [{
+                    from: 0,
+                    to: 50,
+                    color: '#1640D6'
+                }, {
+                    from: 51,
+                    to: 100,
+                    color: '#1640D6'
+                }]
             }
         }
-    };
+    }
+};
 
-    var chart = new ApexCharts(document.querySelector("#charttreemap"), options);
-    chart.render();
+var chart = new ApexCharts(document.querySelector("#charttreemap"), options);
+chart.render();
+
+    // var chartData = <?php echo json_encode($chartData); ?>;
+
+    // var options = {
+    //     series: [
+    //         {
+    //             data: chartData
+    //         }
+    //     ],
+      
+    //     legend: {
+    //         show: false
+    //     },
+    //     chart: {
+    //         height: 350,
+    //         type: 'treemap',
+            
+    //     },
+    //     colors: ['#FF6C22'],
+    //     title: {
+    //         text: 'Competition',
+    //         align: 'center',
+    //         style: {
+    //             fontSize: '20px'
+    //         }
+    //     }
+    // };
+
+    // var chart = new ApexCharts(document.querySelector("#charttreemap"), options);
+    // chart.render();
 </script>
 
     <!-- customer preferences -->
@@ -1202,7 +1446,6 @@ $chart_options_other = array(
 // Convert the options array to JSON
 $chart_options_other_json = json_encode($chart_options_other);
 ?>
-
 <script>
     var options_other = <?php echo $chart_options_other_json; ?>;
     var chart_other = new ApexCharts(document.querySelector("#chartOther"), options_other);
@@ -1220,8 +1463,8 @@ $sql = "SELECT
         LEFT JOIN listing l ON l.listing_id = a.listing_id
         LEFT JOIN payment p ON a.application_id = p.application_id
         WHERE l.owner_id = '$id' AND a.status IN ('approved', 'rejected', 'renter')
-        GROUP BY month
-        ORDER BY month";
+        GROUP BY Month
+        ORDER BY Month";
 
 // Execute the SQL query
 $result = mysqli_query($conn, $sql);
@@ -1247,10 +1490,10 @@ $jsonData = json_encode($data);
                 name: 'Rejected',
                 data: chartData.map(item => item.rejected)
             },
-            {
-                name: 'Renter',
-                data: chartData.map(item => item.renter)
-            }
+            // {
+            //     name: 'Renter',
+            //     data: chartData.map(item => item.renter)
+            // }
         ],
           chart: {
           height: 350,
@@ -1265,7 +1508,10 @@ $jsonData = json_encode($data);
           },
           toolbar: {
             show: false
-          }
+          },
+          zoom: {
+                enabled: false
+            }
         },
         colors: ['#28a745', '#dc3545','#545454'],
         dataLabels: {
@@ -1275,7 +1521,7 @@ $jsonData = json_encode($data);
           curve: 'smooth'
         },
         title: {
-          text: 'Success Vs Void',
+          text: 'Reservation vs Payment',
           align: 'left'
         },
         grid: {
@@ -1288,19 +1534,26 @@ $jsonData = json_encode($data);
         markers: {
           size: 1
         },
-     xaxis: {
-                categories: chartData.map(item => item.month),
-                title: {
-                    text: 'Month'
-                }
-            },
-        yaxis: {
-          title: {
-            text: ''
-          },
-          min: 5,
-          max: 40
-        },
+        xaxis: {
+    categories: chartData.map(item => {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return months[item.month - 1]; //  1 and 12
+    }),
+},
+
+    //  xaxis: {
+    //             categories: chartData.map(item => item.month),
+    //             title: {
+    //                 text: 'Month'
+    //             }
+    //         },
+        // yaxis: {
+        //   title: {
+        //     text: ''
+        //   },
+        //   min: 0
+       
+        // },
         legend: {
           position: 'top',
           horizontalAlign: 'right',
@@ -1313,6 +1566,8 @@ $jsonData = json_encode($data);
         var charts = new ApexCharts(document.querySelector("#multiline"), optionss);
         charts.render();
 </script>
+
+
 <?php
 // Assuming you have a database connection established ($conn)
 

@@ -1,2 +1,83 @@
-    $sql = "SELECT * FROM listing l 
-    JOIN togo t on l.listing_id = t.listing_id WHERE t.tenant_id = '$id'";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph with Year Filter</title>
+    <!-- Include any necessary libraries, such as Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- Dropdown for selecting the year -->
+<label for="yearDropdown">Select Year:</label>
+<select id="yearDropdown" onchange="updateGraph()">
+    <option value="2020">2020</option>
+    <option value="2021">2021</option>
+    <option value="2022">2022</option>
+    <option value="2023">2023</option>
+    <!-- Add more years as needed -->
+</select>
+
+<!-- Graph container -->
+<canvas id="chartContainer" width="400" height="200"></canvas>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Initial data for the graph (replace this with your actual data)
+    const initialData = {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [{
+            label: 'Sample Data',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            data: [65, 59, 80, 81, 56, 55, 40],
+        }]
+    };
+
+    // Create the initial graph
+    const ctx = document.getElementById('chartContainer').getContext('2d');
+    let myChart = new Chart(ctx, {
+        type: 'bar',
+        data: initialData,
+    });
+
+    // Function to fetch data for a specific year (replace this with your actual data fetching logic)
+    function fetchDataForYear(year) {
+        // Example data for illustration purposes (replace this with your actual data)
+        // This assumes you have data for each year, modify it accordingly
+        const dataForYear = {
+            2020: [50, 40, 30, 20, 10, 5, 15],
+            2021: [65, 59, 80, 81, 56, 55, 40],
+            2022: [70, 75, 68, 62, 80, 85, 78],
+            2023: [45, 50, 55, 60, 65, 70, 75],
+        };
+
+        return {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: 'Sample Data',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                data: dataForYear[year] || [], // Use data for the selected year or empty array if not available
+            }]
+        };
+    }
+
+    // Function to update the graph based on the selected year
+    window.updateGraph = function() {
+        // Get the selected year from the dropdown
+        const selectedYear = document.getElementById('yearDropdown').value;
+
+        // Fetch data for the selected year (replace this with your actual data fetching logic)
+        const newData = fetchDataForYear(selectedYear);
+
+        // Update the chart with the new data
+        myChart.data = newData;
+        myChart.update();
+    }
+});
+</script>
+
+</body>
+</html>

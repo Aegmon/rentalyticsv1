@@ -17,7 +17,7 @@ if (isset($_POST['addtogo'])) {
     
     // If a record is found, display an alert and don't insert again
     if ($check_result->num_rows > 0) {
-        echo '<script>alert("Already added to togo.");</script>';
+        echo '<script>alert("already added togo!")</script>';
     } else {
         // Prepare and execute the SQL statement for updating the application status
         $insert_sql = "INSERT INTO `togo`(`tenant_id`, `listing_id`) VALUES (?, ?)";
@@ -570,7 +570,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search'])) {
                                 <form method="post">
                                   <input type ="hidden" name="listing_id" value="<?php echo $listing_id;?>">
                                   
-                                <button type="submit" name="addtogo" class="btn btn-default btn-squared color-light btn-outline-light ms-lg-0 ms-0 me-2 mb-lg-10"><img src="img/svg/send.svg" alt="shopping-bag" class="svg">
+                                <button type="submit" id="addedTogo" name="addtogo" class="btn btn-default btn-squared color-light btn-outline-light ms-lg-0 ms-0 me-2 mb-lg-10"><img src="img/svg/send.svg" alt="shopping-bag" class="svg">
                                   Add To Go
                                 </button>
 
@@ -659,7 +659,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search'])) {
       </footer>
     </main>
 
-   
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
     <script src="js/plugins.min.js"></script>
     <script src="js/script.min.js"></script>
@@ -690,6 +689,7 @@ jQuery(document).on("click", ".qty-plus", function() {
     // Your click handler logic here
     // Ensure you are updating the value of the price slider as needed
 });
+
 
 </script>
   </body>

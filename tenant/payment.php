@@ -11,10 +11,10 @@ $amount = $_POST['amount']*1; // Replace with the actual amount
 
 // Define other parameters
 $currency = 'PHP'; // Replace with the appropriate currency code
-$description = 'Monthly Subscription Payment'; // Replace with the actual description
+$description = 'Payment Reservation'; // Replace with the actual description
 
 $apiKey = 'sk_test_Td7GwHpGcyarL7M7bCq3xW3w'; // Replace with your actual PayMongo secret key
-$success_url = "http://localhost/rentalytics/tenant/renter.php?application_id=" . $application_id;
+$success_url = "http://localhost/rentalyticsv2/tenant/renter.php?application_id=" . $application_id;
 
 
 try {
@@ -24,12 +24,12 @@ try {
                 'attributes' => [
                     'send_email_receipt' => true,
                     'show_description' => true,
-                    'show_line_items' => true,
+                    'show_line_items' => false,
                     'line_items' => [
                         [
                             'currency' => $currency,
                             'amount' => $amount,
-                            'name' => 'name',
+                            'name' => 'Rental Place',
                             'quantity' => 1
                         ]
                     ],

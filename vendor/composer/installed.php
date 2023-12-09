@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '4c6e21bd5a9f98731e2cf279b9b504e355a2b6fd',
+        'reference' => '9128f47bf60fe6496d565fea4dea7aa415e10daf',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '4c6e21bd5a9f98731e2cf279b9b504e355a2b6fd',
+            'reference' => '9128f47bf60fe6496d565fea4dea7aa415e10daf',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -101,8 +101,8 @@
             'dev_requirement' => false,
         ),
         'symfony/deprecation-contracts' => array(
-            'pretty_version' => 'v3.3.0',
-            'version' => '3.3.0.0',
+            'pretty_version' => 'v3.4.0',
+            'version' => '3.4.0.0',
             'reference' => '7c3aff79d10325257a001fcf92d991f24fc967cf',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/deprecation-contracts',

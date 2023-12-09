@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon.png">
     <link rel="stylesheet" href="unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
     
 
 <style>
@@ -47,7 +48,7 @@
               <!-- <img class="dark" src="img/logo-dark.png" alt="logo">
               <img class="light" src="img/logo-white.png" alt="logo"> -->
               <div>
-                <img src="/img/lOGO.png" alt="">
+                <img src="../img/lOGO.png" alt="" width="250" height="70">
               </div>
             </a> 
             <a href="#" class="sidebar-toggle">

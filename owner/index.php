@@ -125,7 +125,7 @@ if (isset($_POST['add_dormitory'])) {
               <div class="breadcrumb-main user-member justify-content-sm-between ">
                 <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
                   <div class="d-flex align-items-center user-member__title justify-content-center me-sm-25">
-                    <h2 class="text-capitalize fw-500 breadcrumb-title text-decoration-underline ">Listing</h2>
+                    <h2 class="text-capitalize fw-500 breadcrumb-title">Listing</h2>
                   </div>
                   
                 

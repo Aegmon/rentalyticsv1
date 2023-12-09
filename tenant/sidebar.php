@@ -7,12 +7,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Rentalytics | Tenant</title>
+    <title>Rentalytics | Renter</title>
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/plugin.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon.png">
     <link rel="stylesheet" href="unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="sweetalert2.min.css">
   </head>
   <body class="layout-light side-menu">
     <div class="mobile-search">
@@ -29,7 +30,9 @@
             <a class="navbar-brand" href="index-2.html">
               <!-- <img class="dark" src="img/logo-dark.png" alt="logo">
               <img class="light" src="img/logo-white.png" alt="logo"> -->
-              <h3>Rentalytics Logo</h3>
+              <div>
+          <img src="../img/lOGO.png" alt="" width="250" height="70">
+              </div>
             </a> 
             <a href="#" class="sidebar-toggle">
               <img class="svg" src="img/svg/align-center-alt.svg" alt="img"></a>

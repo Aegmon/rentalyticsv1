@@ -1,5 +1,7 @@
 <?php
 include('sidebar.php');
+
+$application_id = $row['application_id'];
 $listing_id = isset($_GET['listing_id']) ? $_GET['listing_id'] : null;
 if(isset($_POST['approved']) || isset($_POST['rejected'])) {
 
@@ -24,13 +26,13 @@ if(isset($_POST['approved']) || isset($_POST['rejected'])) {
         echo "Error updating status: " . $conn->error;
     }
 }
-if (isset($_POST['endstay'])) {
-    $application_id = $_POST['application_id'];
-    $sql = "UPDATE application SET status = ?, date_of_application = NOW() WHERE application_id = ?";
-    $stmt = $conn->prepare($sql);
-    $status = 'renter';
-    $stmt->bind_param("si", $status, $application_id);
-    $stmt->execute();
+if (isset($_REQUEST['endstay'])) {
+  $application_id = $_POST['application_id'];
+  $sql = "UPDATE application SET status = ?, date_of_application = NOW() WHERE application_id = ?";
+  $stmt = $conn->prepare($sql);
+  $status = 'renter';
+  $stmt->bind_param("si", $status, $application_id);
+  $stmt->execute();
 }
 if (isset($_POST['void'])) {
     $application_id = $_POST['application_id'];
@@ -123,6 +125,7 @@ if ($listing_id !== null) {
 
 $result = $conn->query($sql);
 
+
 if ($result->num_rows > 0) {
     // output data of each row
     while ($row = $result->fetch_assoc()) {
@@ -130,13 +133,11 @@ if ($result->num_rows > 0) {
         $currentDate = time();
         $threeDaysLater = strtotime('+3 days', $applicationDate);
 
-        if ($currentDate > $threeDaysLater && $row["status"] != 'approved' && $row["status"] != 'rejected') {
-            // Update the status to 'rejected'
-            $applicationId = $row["application_id"];
-            $updateStatusQuery = "UPDATE application SET status = 'rejected' WHERE application_id = '$applicationId'";
-            $conn->query($updateStatusQuery);
-            // Optionally, you can log or notify about the status change.
-        }
+        if ($currentDate > $threeDaysLater && $row["status"] != 'approved' && $row["status"] != 'rejected' && $row["status"] != 'renter') {
+          $applicationId = $row["application_id"];
+          $updateStatusQuery = "UPDATE application SET status = 'rejected' WHERE application_id = '$applicationId'";
+          $conn->query($updateStatusQuery);
+      }
 
         echo "<tr>";
         echo "<td><div class='userDatatable-content'>" . $row["email"] . "</div></td>";
@@ -167,7 +168,7 @@ if ($result->num_rows > 0) {
             </td>
             <td>
             <div class='userDatatable-content'>
-               <form action='' method='POST'>
+               <form action='' method='POST' id='endStayForm'>
             <input type='hidden' value='" . $row["application_id"] . "' name='application_id'>
             <button type='submit' name='endstay' value='endstay' class='btn btn-success'>End Stay</button>
             <button type='submit' name='void' value='void' class='btn btn-danger'>Void</button>
@@ -183,8 +184,8 @@ if ($result->num_rows > 0) {
         echo "</tr>";
     }
 }
-?>
 
+?>
                   
         </tbody>
       </table>
@@ -303,9 +304,12 @@ if ($result->num_rows > 0) {
         </div>
       </div>
     </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
     <script src="js/plugins.min.js"></script>
     <script src="js/script.min.js"></script>
+   
 <script>
     $((function() {
         $(".adv-table1").footable({
