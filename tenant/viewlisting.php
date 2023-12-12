@@ -8,27 +8,28 @@ if (isset($_POST['rentnow'])) {
     // Retrieve the listing_id and tenant_id from the POST data
     $listing_id = $_POST['listing_id'];
 
-    
-    // Check if the record already exists
-    $check_sql = "SELECT * FROM `application` WHERE `tenant_id` = ? AND `listing_id` = ?";
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
+
+    // Check if the record already exists with the same start and end date
+    $check_sql = "SELECT * FROM `application` WHERE `tenant_id` = ? AND `listing_id` = ? AND `start_date` = ? AND `end_date` = ?";
     $check_stmt = $conn->prepare($check_sql);
-    $check_stmt->bind_param("ii",$id, $listing_id);
+    $check_stmt->bind_param("iiss", $id, $listing_id, $start_date, $end_date);
     $check_stmt->execute();
     $check_result = $check_stmt->get_result();
-    
+
     // If a record is found, display an alert and don't insert again
     if ($check_result->num_rows > 0) {
-        echo '<script>alert("Already sent your application.");</script>';
+        echo '<script>alert("Application with the same start and end date already exists.");</script>';
     } else {
         // Prepare and execute the SQL statement for inserting the new application
-        $insert_sql = "INSERT INTO `application`(`tenant_id`, `listing_id`) VALUES (?, ?)";
+        $insert_sql = "INSERT INTO `application`(`tenant_id`, `listing_id`,`start_date`, `end_date`) VALUES (?, ?,?,?)";
         $insert_stmt = $conn->prepare($insert_sql);
-        $insert_stmt->bind_param("ii",$id, $listing_id);
+        $insert_stmt->bind_param("iiss", $id, $listing_id, $start_date, $end_date);
         $insert_stmt->execute();
         echo '<script>window.location.href = "renter.php";</script>';
     }
 }
-
 if (isset($_POST['send'])) {
     $msg = $_POST['msg'];
     $owner_id = $_POST['owner_id'];
@@ -304,9 +305,31 @@ if ($result->num_rows > 0) {
 
      <div class="product-item__button mt-lg-30 mt-sm-25 mt-20 d-flex flex-wrap">
                             <div class=" d-flex flex-wrap product-item__action align-items-center">
-                               <a href="viewcalendar.php?listing_id=<?php echo $listing_id;?>"class="btn btn-gray fs-6 text-white btn-default btn-squared border-0 ms-0">View Calendar
-                                </a>
-             
+                               <!-- <a href="viewcalendar.php?listing_id=<?php echo $listing_id;?>"class="btn btn-gray fs-6 text-white btn-default btn-squared border-0 ms-0">View Calendar
+                                </a> -->
+                <form method="post">
+        <input type="hidden" name="listing_id" value="<?php echo $listing_id; ?>">
+        
+        <div class="input-group mb-3">
+            <label for="start_date" class="form-label m-2">Start Date</label>
+
+            <input type="date" class="form-control" name="start_date" id="start_date" placeholder="Start Date"req style="background-color: transparent;" required>
+
+        
+
+    
+            <label for="end_date" class="form-label  m-2">End Date</label>
+
+            <input type="date" class="form-control" name="end_date" id="end_date" placeholder="End Date" style="background-color: transparent;"required>
+
+       
+
+        </div>
+
+        <div class="input-group">
+            <button type="submit" name="rentnow" class="btn btn-success fs-6 text-white btn-default btn-squared border-1=0 ms-0">Rent Now</button>
+        </div>
+    </form>
                               <button class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2" 
                               data-bs-toggle="modal" data-bs-target="#editModal<?php echo $owner_id;?>">Message Owner</button>
                            
@@ -352,6 +375,11 @@ if ($result->num_rows > 0) {
                 </div>
                 
 <hr>
+  <div class="card card-default card-md mb-4">
+                  <div class="card-body">
+                    <div id="full-calendar"></div>
+                  </div>
+                </div>
 <div style="text-align: center; margin-bottom: 5px;height:50px">
     <span style="background-color: #ffffff; padding: 0 10px;">
         <h3 style="display: inline;">Feedback And Rating</h3>
@@ -537,6 +565,94 @@ if ($result->num_rows > 0) {
 
      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDo6VqHn6BDlQ4PWMTPsHo1fDai1xQgHEQ&libraries=places&callback=initMap"
     async defer></script>
+ <?php 
+    
+    $sql = "SELECT 
+    a.tenant_id,
+    t.name AS tenant_name,
+    a.status as status,
+    l.listing_id,
+    l.listing_name,
+    l.rentprice,
+    l.reservationfee,
+    a.application_id,
+    a.date_of_application,
+    a.start_date,
+    a.end_date
+FROM application a
+LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
+LEFT JOIN listing l ON l.listing_id = a.listing_id
+WHERE l.listing_id = '$listing_id' AND a.status = 'approved'";
+$result = $conn->query($sql);
+    ?>
+
+<script>
+    var eventsData = <?php echo json_encode($result->fetch_all(MYSQLI_ASSOC)); ?>;
+
+    console.log("Events Data:", eventsData);
+
+    function getColorBasedOnApplication(application_id) {
+        // Assuming you have a predefined set of colors
+        var colors = ['#FF33A1', '#3366FF', '#FF5733', '#FF33A1', '#33FFFF'];
+        
+        // Use the remainder of application_id to select a color
+        var colorIndex = application_id % colors.length;
+
+        console.log("Application ID:", application_id, "Color Index:", colorIndex);
+
+        return colors[colorIndex];
+    }
+
+    !(function(t) {
+        document.addEventListener("DOMContentLoaded", (function() {
+            var l = document.getElementById("full-calendar");
+            if (l) {
+                var o = new FullCalendar.Calendar(l, {
+                    headerToolbar: {
+                        left: "today,prev,title,next"
+                    },
+                    views: {
+                        listMonth: {
+                            buttonText: "Schedule",
+                            titleFormat: {
+                                month: "short",
+                                weekday: "short"
+                            }
+                        }
+                    },
+                    listDayFormat: true,
+                    listDayAltFormat: true,
+                    allDaySlot: false,
+                    editable: false,  // Set to false to make the calendar not draggable
+                    events: eventsData.map(function(event) {
+                        return {
+                            id: event.application_id,
+                            title: event.listing_name,
+                            start: event.start_date,
+                            end: event.end_date,
+                            color: getColorBasedOnApplication(event.application_id),
+                            // Other event properties as needed
+                        };
+                    }),
+                    contentHeight: 800,
+                    initialView: "dayGridMonth",
+                    eventDidMount: function(e) {
+                        t(".fc-list-day").each((function() {}))
+                    },
+                    eventClick: function(e) {
+                        console.log(e.event.title);
+                        let n = t("#e-info-modal");
+                        n.modal("show");
+                        console.log(n.find(".e-info-title"));
+                        n.find(".e-info-title").text(e.event.title);
+                    }
+                });
+                o.render();
+                t(".fc-button-group .fc-listMonth-button").prepend('<i class="las la-list"></i>')
+            }
+        }));
+    }(jQuery));
+</script>
 
 
 
