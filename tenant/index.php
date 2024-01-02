@@ -541,7 +541,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select-search'])) {
                             <div class="product-item__content text-capitalize ">
                               <div class="d-flex mb-2 flex-wrap">
                                 <span class="text-dark ">₱ <?php echo $row['rentprice'];?></span>
-                              
+                                <!-- <span>Availability Reservation Date: <span>February 12, 2024</span></span> -->
                               
                               </div>
                               <div class="stars-rating d-flex align-items-center flex-wrap">

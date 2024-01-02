@@ -384,7 +384,9 @@ for ($i = 1; $i < count($_FILES['images']['name']); $i++) {
     </div>
 </div>
 
-
+<label for="text-rule">Others:</label>
+<textarea name="" id="text-rule" cols="15" rows="5"></textarea>
+</div>
              <div class="col-md-12">
   <div class="form-group">
     <label for="a8" class="il-gray fs-14 fw-500 align-center mb-10">Images</label>

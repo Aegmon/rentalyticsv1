@@ -14,19 +14,39 @@ if (isset($_POST['submit'])) {
     // Check if the email already exists
     $check_email_query = "SELECT COUNT(*) as count FROM credentials WHERE email = '$email'";
     $result = $conn->query($check_email_query);
+    
     $row = $result->fetch_assoc();
+    echo '<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            title: "Registration Success!",
+            text: "Please Wait for Account Verification.",
+            icon: "success"
+        });
+    });
+</script>';
     $email_count = $row['count'];
 
     if ($email_count > 0) {
         // Email already exists, display JavaScript alert
-        echo "<script>alert('Email already exists.');</script>";
+        echo '<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                title: "Email Already Exist!",
+                text: "Please Check your Email",
+                icon: "info"
+            });
+        });
+    </script>';
     } else {
+     
         // Insert into credentials table
         $sql_credentials = "INSERT INTO credentials (email, password, user_type) VALUES ('$email', '$password', '$userType')";
 
         if ($conn->query($sql_credentials) === TRUE) {
             $user_id = $conn->insert_id;
-      header('Location: index.php');
+            header('Location: index.php');
+            
         // Check if the file was uploaded without errors
         if (isset($_FILES['idPicture']) && $_FILES['idPicture']['error'] === UPLOAD_ERR_OK && ($userType === "owner" || $userType === "tenant")) {
             $id_file_name = $_FILES['idPicture']['name'];
@@ -54,7 +74,7 @@ if (isset($_POST['submit'])) {
                     $profile_pic_destination = 'uploads/' . $profile_pic_name;
 
                     if (move_uploaded_file($profile_pic_tmp, $profile_pic_destination)) {
-                        $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender, contactNumber, profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender','$contactNumber', '$profile_pic_name')";
+                        $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender, contactNumber,id_picture, profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender','$contactNumber', '$id_file_name', '$profile_pic_name')";
                         if ($conn->query($sql_tenant) !== TRUE) {
                             echo "Error: " . $sql_tenant . "<br>" . $conn->error;
                         }
@@ -74,7 +94,7 @@ if (isset($_POST['submit'])) {
             $profile_pic_destination = 'uploads/' . $profile_pic_name;
 
             if (move_uploaded_file($profile_pic_tmp, $profile_pic_destination)) {
-                $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender,contactNumber,profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender','$contactNumber', '$profile_pic_name')";
+                $sql_tenant = "INSERT INTO tenant (user_id, name, birthdate, gender,contactNumber,id_picture,profile_pic) VALUES ('$user_id', '$name', '$birthdate', '$gender','$contactNumber', '$id_file_name','$profile_pic_name')";
                 if ($conn->query($sql_tenant) !== TRUE) {
                     echo "Error: " . $sql_tenant . "<br>" . $conn->error;
                 }
@@ -89,6 +109,7 @@ if (isset($_POST['submit'])) {
     }
 
     $conn->close();
+    exit();
 }
 ?>
 
@@ -104,6 +125,7 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rentalytics</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.1/dist/sweetalert2.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/plugin.min.css">
     <link rel="stylesheet" href="style.css">
@@ -130,13 +152,14 @@ if (isset($_POST['submit'])) {
                       <h6>Sign Up Rentalytics</h6>
                     </div>
                   </div>
-  <form action="" method="post" enctype="multipart/form-data">
+  <form action="" method="post" enctype="multipart/form-data" onsubmit="return validateForm()" >
+  <!-- onsubmit="sendEmail()"-->
     <div class="card-body">
         <div class="edit-profile__body">
             <div class="edit-profile__body">
                 <div class="form-group mb-20">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" name="name" placeholder="Full Name" required>
+                    <input type="text" class="form-control" name="name" placeholder="Full Name" id="username" required>
                 </div>
                 <div class="form-group mb-20">
                     <label for="birthdate">Birthdate</label>
@@ -152,19 +175,20 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="form-group mb-20">
                     <label for="contactNumber">Contact Number</label>
-                    <input type="number" class="form-control" name="contactNumber" placeholder="01234567890">
+                    <input type="number" class="form-control" name="contactNumber" placeholder="0909209...">
                 </div>
 
                 <div class="form-group mb-20">
                     <label for="userType">User Type</label>
-                    <select class="form-control" name="userType" id="userTypeSelect">
-                  
-                        <option value="tenant">Tenant</option>
+                    <select class="form-control" name="userType" >
+                  <!-- id="userTypeSelect" -->
+                        <option value="tenant">Renter</option>
                               <option value="owner">Owner</option>
                     </select>
                 </div>
 
-                <div id="idPictureUpload" class="form-group mb-20" style="display:none;">
+                <div id="idPictureUpload" class="form-group mb-20" >
+                  <!-- style="display:none;" -->
                     <label for="idPicture">Upload ID Picture</label>
                     <input type="file" class="form-control" name="idPicture" accept="image/*">
                 </div>
@@ -174,7 +198,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="form-group mb-20">
                     <label for="email">Email Address</label>
-                    <input type="text" class="form-control" name="email" placeholder="name@example.com" required>
+                    <input type="text" class="form-control" name="email" placeholder="name@example.com" id="email" required>
                 </div>
          
 
@@ -285,6 +309,8 @@ changes by email or by posting the changes on the RENTALYTICS website.</p>
         </li>
       </ul>
     </div>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.1/dist/sweetalert2.all.min.js"></script>
     <script src="js/plugins.min.js"></script>
     <script src="js/script.min.js"></script>
     <script>
@@ -320,7 +346,43 @@ changes by email or by posting the changes on the RENTALYTICS website.</p>
     }
   }
 </script>
-  </body>
+<!-- B320693378489E984BC26F3731436011F7D9 -->
+<script>
+  function validateForm() {
+            var password = document.getElementById("password").value;
+            // Check password strength (add your own criteria)
+            if (password.length < 8) {
+              Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Password must be at least 8 characters long',
+                });
+                return false;
+            }
 
+            // Add more password strength criteria as needed
+
+            return true;
+        }
+
+        
+</script>
+      
+  </body>
+<!-- <script>
+  function sendEmail(){
+    Email.send({
+          Host : "smtp.elasticemail.com",
+          Username : "rentalyticstarlac@gmail.com",
+          Password : "B320693378489E984BC26F3731436011F7D9",
+          To  : "rentalyticstarlac@gmail.com",
+          From : "ptptplinkwifi@gmail.com",
+          Subject : "Rentalytics Registration",
+          Body : "Welcome to Rentalytics"
+        }).then(
+          message => alert(message)
+        );
+  }
+</script> -->
   <!-- Mirrored from demo.dashboardmarket.com/hexadash-html/ltr/sign-up.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 07 Oct 2023 01:06:10 GMT -->
 </html>

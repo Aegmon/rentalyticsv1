@@ -254,7 +254,10 @@ $successPercentage = successRatio($rationReserved, $rationTotal);
 $textColor = '';
 $arrowSymbol = '';
 
-if ($successPercentage > 35) {
+if($successPercentage == 0){
+  $textColor = 'black';
+  $arrowSymbol = '';
+}elseif ($successPercentage > 35) {
     $textColor = 'green';
     $arrowSymbol = ' &#8593;'; // Up arrow symbol
 } elseif ($successPercentage < 35) {
@@ -400,7 +403,7 @@ if ($gapRatio > 0) {
   
   </div>
 </div>
-<div class="col-lg-4 mb-4">
+<div class="col-sm-3 mb-4">
   <div class="card">
   <div class="card-header">Boarding house</div>
 
@@ -450,98 +453,7 @@ if ($gapRatio > 0) {
     </div>
   </div>
 </div>
-
-
-
-<div class="container-fluid">
-    <div class="social-dash-wrap">
-      <div class="row">
-        <div class="col-lg-12">
-        
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-          <div class="card-body">
-            <div class="row">
-                   <div class="mb-4 d-flex flex-row justify-content-between">
-   <div>Rental Statistics</div>
-   <div>
-
-
-   </div>
-    </div>
-<div class="col-lg-12 mb-4">
-  <div class="card">
-
-  <div class="card-header">Registered Property Types</div>
-
-   <div id="chartbar"></div>
- 
-  
-  </div>
-</div>
-<div class="col-lg-4 mb-4">
-  <div class="card">
-  <div class="card-header">Customer Preferences</div>
-
-  <div id="chartBed"></div>
-  
-  </div>
-</div>
-
-<div class="col-lg-4 mb-4">
-  <div class="card">
-  <div class="card-header">Customer Preferences</div>
-
-  <div id="chartBathroom"></div>
-  
-  </div>
-</div>
-<div class="col-lg-4 mb-4">
-  <div class="card">
-  <div class="card-header">Customer Preferences</div>
-
-  <div id="chartPrice"></div>
-  
-  </div>
-</div>
-<div class="col-lg-6 mb-4">
-  <div class="card">
-  <div class="card-header">Customer Preferences</div>
-
-  <div id="chartOther"></div>
-  
-  </div>
-</div>
-<div class="col-lg-6 mb-4">
-  <div class="card">
-  <div class="card-header">Customer Preferences</div>
-
-  <div id="chartBarangay"></div>
-  
-  </div>
-</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      
-    </div>
-  </div>
-</div>
-
-<div class="container-fluid">
-    <div class="social-dash-wrap">
-      <div class="row">
-        <div class="col-lg-12">
-        
-        </div>
-      </div>
-      <div class="row">
+<div class="row">
         <div class="col-md-12">
           <div class="card">
           <div class="card-body">
@@ -559,12 +471,91 @@ if ($gapRatio > 0) {
   
   </div>
 </div>
-<div class="col-lg-12 mb-4">
+<!-- <div class="col-lg-12 mb-4">
   <div class="card">
   <div class="card-header">TreeMap</div>
 
   <div id="charttreemap"></div>
   
+  </div>
+</div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      
+    </div>
+
+
+<div class="container-fluid">
+    <div class="social-dash-wrap">
+      <div class="row">
+        <div class="col-lg-12">
+        
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+          <div class="card-body">
+            <div class="row">
+                   <div class="mb-4 d-flex flex-row justify-content-between">
+   <!-- <div>Rental Statistics</div> -->
+   <div>
+
+
+   </div>
+    </div>
+<div class="col-lg-12 mb-4">
+  <div class="card">
+
+  <div class="card-header">Customer Preferences</div>
+
+   <!-- <div id="chartbar"></div> -->
+ 
+  
+  </div>
+</div>
+<div class="row d-flex justify-content-around">
+<div class="col-lg-3 mb-4">
+  <div class="card">
+
+  <div id="chartBed"></div>
+  
+  </div>
+</div>
+
+<div class="col-sm-3 mb-4">
+  <div class="card">
+
+  <div id="chartBathroom"></div>
+  
+  </div>
+</div>
+<div class="col-sm-3 mb-4">
+  <div class="card">
+
+  <div id="chartPrice"></div>
+  
+  </div>
+</div>
+</div>
+<div class="row d-flex justify-content-around">
+<div class="col-sm-3 mb-4">
+  <div class="card">
+
+  <div id="chartOther"></div>
+  
+  </div>
+</div>
+<div class="col-sm-3 mb-4">
+  <div class="card">
+
+  <div id="chartBarangay"></div>
+  
+  </div>
   </div>
 </div>
             </div>
@@ -575,6 +566,17 @@ if ($gapRatio > 0) {
 
       
     </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+    <div class="social-dash-wrap">
+      <div class="row">
+        <div class="col-lg-12">
+        
+        </div>
+      </div>
+    
   </div>
 </div>
 <div class="container-fluid mt-3">
@@ -893,7 +895,7 @@ $options = array(
           series: [<?php echo $total_male_count?>, <?php echo $total_female_count?>],
           chart: {
           width: 380,
-          type: 'pie',
+          type: 'donut',
         },
         labels: ['Male', 'Female'],
         responsive: [{
@@ -920,7 +922,7 @@ $options = array(
           series: [<?php echo $total_male_listing_count ;?>, <?php echo $total_female_listing_count ;?>,<?php echo $total_both_listing_count ;?>],
           chart: {
           width: 380,
-          type: 'pie',
+          type: 'donut',
         },
         labels: ['Male', 'Female', 'Both'],
         responsive: [{
@@ -950,7 +952,7 @@ $options = array(
           series: [<?php echo $total_male_boarding_house_count ;?>, <?php echo $total_female_boarding_house_count ;?>,<?php echo $total_both_boarding_house_count ;?>],
           chart: {
           width: 380,
-          type: 'pie',
+          type: 'donut',
         },
         labels: ['Male', 'Female', 'Both'],
         responsive: [{
@@ -978,7 +980,7 @@ $options = array(
          series: [<?php echo $total_male_bedspace_count ;?>, <?php echo $total_female_bedspace_count ;?>,<?php echo $total_both_bedspace_count ;?>],
           chart: {
           width: 380,
-          type: 'pie',
+          type: 'donut',
         },
         labels: ['Male', 'Female', 'Both'],
         responsive: [{
@@ -1006,7 +1008,7 @@ $options = array(
            series: [<?php echo $total_male_dormitory_count ;?>, <?php echo $total_female_dormitory_count ;?>,<?php echo $total_both_dormitory_count ;?>],
           chart: {
           width: 380,
-          type: 'pie',
+          type: 'donut',
         },
         labels: ['Male', 'Female', 'Both'],
         responsive: [{
@@ -1035,7 +1037,7 @@ $options = array(
           
           chart: {
           width: 380,
-          type: 'pie',
+          type: 'donut',
         },
         labels: ['Male', 'Female', 'Both'],
         responsive: [{

@@ -63,7 +63,8 @@ for ($year = 2020; $year <= 2023; $year++) {
 
   }      
 
-  }elseif($year == "2023"){
+  }
+  elseif($year == "2023"){
   $query_first_half = "SELECT * FROM application WHERE YEAR(date_of_application) = $year AND MONTH(date_of_application) BETWEEN 1 AND 6 and listing_id = '$listing_id'";
   $result_first_half = mysqli_query($conn, $query_first_half);
   $total_approved_2023f = 0;
@@ -81,6 +82,7 @@ for ($year = 2020; $year <= 2023; $year++) {
  
   
   }
+  
   // echo "Total Approved Count (First Half): $total_approved_count_first_half<br>";
   // echo "Total Rejected Count (First Half): $total_rejected_count_first_half<br>";
   // echo "Total Renter Count (First Half): $total_renter_count_first_half<br><br>";
@@ -174,6 +176,7 @@ for ($year = 2020; $year <= 2023; $year++) {
 
   
   }
+ 
   // Fetch data for the second half of the year
   
   
@@ -218,6 +221,9 @@ if ($result1) {
   $rate_2023f = ($total_approved_2023f / $noofbedroom) * 100;
   $rate_2023s = ($total_approved_2023s / $noofbedroom) * 100;
 
+  $rate_2024f = ($total_approved_2024f / $noofbedroom) *100;
+
+
   $rate_2024f = ($rate_2023f + $rate_2023s) / 2;
   // forecasts
   // first half of 2022
@@ -232,8 +238,13 @@ if ($result1) {
 
   $forecastRate2024 = (0.2 * $rate_2023f ) + (0.8 * $rate_2023s );
 
-}
 
+
+
+  
+
+}
+    
 //    $listing_id = $_GET['listing_id'];
 //    $currentMonth = date('m');
 // $currentYear = date('Y');
@@ -297,8 +308,8 @@ if ($result1) {
 // } 
 
 
-
 ?>
+
 <?php
 if (isset($_POST['update_listing'])) {
     $listing_id = $_POST['listing_id'];
@@ -340,13 +351,14 @@ if (isset($_POST['update_listing'])) {
         $amenityStmt->bind_param("is", $listing_id, $amenity);
         $amenityStmt->execute();
     }
-
+    // header("Location:renteredlisting.php ");
+    echo '<script>window.location.href = "renteredlisting.php";</script>';
+   
     // Close statements
     $updateListingStmt->close();
     $deleteAmenitiesStmt->close();
 
     // Redirect to the updated listing page or any other page as needed
-    header("Location:index.php ");
 
 }
 // SELECT LISTING
@@ -744,8 +756,52 @@ if ($result->num_rows > 0) {
       <div class="card">
          <div class="card-body">
 <div class="text-center">
-  Occupancy Rate 
-  <!-- <strong><?php echo $occupancy_rate?> %</strong> -->
+
+  <h2>Occupancy Rate </h2>
+  <br>
+  <br>
+  <div class=" d-flex justify-content-around">
+  <div class="col-xxl-4 col-sm-3 mb-25 border border-dark-subtle" style="box-shadow: 0px 2px 13px 7px rgb(125, 126, 234,0.5);">
+                <div class="ap-po-details ap-po-details--2 p-20 radius-xl d-flex justify-content-between">
+                  <div class="overview-content w-100">
+                    <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
+                      <div class="ap-po-details__titlebar">
+                          <h6>Current Occupancy Rate</h6>
+                        <span><?php echo number_format($rate_2023s,2)?>% </span>
+                      </div>
+                      <div class="ap-po-details__icon-area">
+                        <!-- <div class="svg-icon order-bg-opacity-warning color-warning">
+                          <i class="uil uil-users-alt"></i>
+                        </div> -->
+                      </div>
+                    </div>
+                 
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl-4 col-sm-3 mb-25 border border-dark-subtle " style="box-shadow: 0px 2px 13px 7px rgb(125, 126, 234,0.5);">
+                <div class="ap-po-details ap-po-details--2 p-20 radius-xl d-flex justify-content-between">
+                  <div class="overview-content w-100">
+                    <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
+                      <div class="ap-po-details__titlebar">
+                          <h6>Forecast Occupancy Rate</h6>
+                          <span><?php echo number_format($forecastRate2024,2)?>%</span>
+                      </div>
+                      <div class="ap-po-details__icon-area">
+                        <!-- <div class="svg-icon order-bg-opacity-warning color-warning">
+                          <i class="uil uil-users-alt"></i>
+                        </div> -->
+                      </div>
+                    </div>
+                 
+                  </div>
+                </div>
+              </div>
+
+
+
+  </div>
+
 </div>
 <div id="areaChartBasic1"></div>
 
@@ -824,6 +880,7 @@ if ($result->num_rows > 0) {
                         <?php echo $rating == intval($rating) ? number_format($rating, 0) : number_format($rating, 1); ?>
                     </span>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -947,7 +1004,7 @@ if ($result->num_rows > 0) {
         console.error("Chart container not found.");
     }
 </script> -->
-<script>
+<!-- <script>
     var options = {
         series: [
     {
@@ -957,7 +1014,9 @@ if ($result->num_rows > 0) {
         <?php echo  number_format($rate_2022s,2)?>,
         <?php echo  number_format($rate_2023f,2)?>,
         <?php echo  number_format($rate_2023s,2)?>,
-        <?php echo number_format($forecastRate2024,2)?>],
+        <?php echo number_format($forecastRate2024,2)?>,
+
+    ],
       color: '#7071E8' // Custom color for Line 2
     }],
         chart: {
@@ -985,7 +1044,7 @@ if ($result->num_rows > 0) {
         },
 
         labels: [
-           "Jan - Jun 2022","july - Dec 2022", "jan - jun 2023", "Jul - Dec 2023","Jan - Jun 2024"],
+           "Jan - Jun 2022","july - Dec 2022", "jan - jun 2023", "Jul - Dec 2023","Jan - Jun 2024","Jul - Dec 2024"," Jan - Jun 2025"],
         xaxis: {
             type: 'category', // Changed to 'category' since your labels are not timestamps
         },
@@ -1014,8 +1073,98 @@ if ($result->num_rows > 0) {
     } else {
         console.error("Chart container not found.");
     }
-</script>
+</script> -->
+<script>
+    var options = {
+        series: [
+            {
+                name: 'Occupancy Rate',
+                data:generateChartData(),
+                color: '#7071E8' // Custom color for Line 2
+            }
+        ],
+        chart: {
+            type: 'area',
+            height: 350,
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth', // Changed to 'smooth' for a smoother curve
+        },
+        title: {
+            text: 'Forecast Occupancy Rate ',
+            align: 'left'
+        },
+        forecastDataPoints: {
+            count: 1,
+            fillOpacity: 0.5,
+            strokeWidth: 5,
+            dashArray: 6,
+        },
+        labels: generateCategoryLabels(), // Dynamically generate category labels
+        xaxis: {
+            type: 'category',
+        },
+        yaxis: {
+            opposite: true,
+            labels: {
+                formatter: function (val) {
+                    return val + '%';
+                }
+            },
+            min: 0,
+            max: 100
+        },
+        legend: {
+            horizontalAlign: 'center'
+        }
+    };
+    function generateChartData() {
+        // Define an array to store dynamically generated data
+        var dynamicData = [
+            <?php echo number_format($rate_2022f, 2) ?>,
+            <?php echo number_format($rate_2022s, 2) ?>,
+            <?php echo number_format($rate_2023f, 2) ?>,
+            <?php echo number_format($rate_2023s, 2) ?>,
+            <?php echo number_format($forecastRate2024, 2) ?>
+        ];
 
+        // You can add additional data points or modify the logic as needed
+
+        return dynamicData;
+    }
+    function generateCategoryLabels() {
+        // Define an array to store dynamically generated labels
+        var dynamicLabels = [];
+
+        // Add labels for existing data
+        dynamicLabels.push("Jan - Jun 2022", "Jul - Dec 2022", "Jan - Jun 2023", "Jul - Dec 2023");
+
+        // Check if data is available for the forecast year and add labels accordingly
+        if (<?php echo $forecastRate2024 > 0 ? 'true' : 'false' ?>) {
+            dynamicLabels.push("Jan - Jun 2024","Jul - Dec 2024");
+        }
+
+        // Add labels for subsequent years as needed
+
+        return dynamicLabels;
+    }
+   
+    // Ensure the container with ID "areaChartBasic1" exists
+    var chartContainer = document.querySelector("#areaChartBasic1");
+
+    if (chartContainer) {
+        var chart = new ApexCharts(chartContainer, options);
+        chart.render();
+    } else {
+        console.error("Chart container not found.");
+    }
+</script>
 <script>
   document.getElementById('uploadInput').addEventListener('change', handleFileSelect, false);
 

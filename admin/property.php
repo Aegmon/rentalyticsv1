@@ -202,8 +202,7 @@ if ($result->num_rows > 0) {
                     
                 </div>
                 <div class="users-list__button mt-xl-0 mt-15">
-                    <a  href="viewlisting.php?listing_id='.$row["listing_id"].'"class="btn btn-secondary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow">View Place</a>
-                    <button type=button class="btn btn-danger fs-6">Delete</button>
+                    <a  href="viewlisting.php?listing_id='.$row["listing_id"].'"class="btn btn-secondary btn-default btn-squared text-capitalize px-20 mt-5 global-shadow">View Place</a>
                   <!---added po delete button--->
                     <form action="" method="post">
                         <input type="hidden" name="listing_id" value="'.$row["listing_id"].'">

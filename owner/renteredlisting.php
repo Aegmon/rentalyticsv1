@@ -46,13 +46,13 @@ if (isset($_POST['endstay'])) {
                 <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
                   <div class="d-flex align-items-center user-member__title justify-content-center me-sm-25">
                     <h4 class="text-capitalize fw-500 breadcrumb-title">Rented Listing</h4>
-                    <span class="sub-title ms-sm-25 ps-sm-25">Home</span>
+                    <!-- <span class="sub-title ms-sm-25 ps-sm-25">Home</span> -->
                   </div>
                   
-                  <form action="http://demo.dashboardmarket.com/" class="d-flex align-items-center user-member__form my-sm-0 my-2">
+                  <!-- <form action="http://demo.dashboardmarket.com/" class="d-flex align-items-center user-member__form my-sm-0 my-2">
                     <img src="img/svg/search.svg" alt="search" class="svg">
                     <input class="form-control me-sm-2 border-0 box-shadow-none" type="search" placeholder="Search by Name" aria-label="Search">
-                  </form>
+                  </form> -->
                 </div>
                 
                
@@ -106,8 +106,6 @@ echo '</div>';
 
 
     }
-} else {
-    echo "0 results";
 }
 $conn->close();
 ?>

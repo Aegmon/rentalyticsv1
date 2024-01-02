@@ -1,5 +1,6 @@
 <?php
 include('sidebar.php');
+date_default_timezone_set('Asia/Manila');
 
 ?>
 <div class="contents">
@@ -35,7 +36,7 @@ include('sidebar.php');
           <tr class="userDatatable-header">
         
             <th>
-              <span class="userDatatable-title">NAME</span>
+              <span class="userDatatable-title">Name</span>
             </th>
             <th>
               <span class="userDatatable-title">Email  </span>
@@ -43,11 +44,17 @@ include('sidebar.php');
           
          
             <th data-type="html" data-name="status">
-              <span class="userDatatable-title">renting name</span>
+              <span class="userDatatable-title">Renting name</span>
             </th>
           
             <th>
-              <span class="userDatatable-title">view payment</span>
+              <span class="userDatatable-title">Start Stay</span>
+            </th>
+            <th>
+              <span class="userDatatable-title">End Stay</span>
+            </th>
+            <th>
+              <span class="userDatatable-title">View payment</span>
             </th>
           </tr>
         </thead>
@@ -63,7 +70,9 @@ $sql = "SELECT
             l.listing_name,
             a.application_id,
             p.payment_id,
-            a.date_of_application
+            a.date_of_application,
+            a.start_date,
+            a.end_date
         FROM application a
         LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
         LEFT JOIN credentials c ON t.user_id = c.user_id
@@ -77,9 +86,11 @@ if ($result->num_rows > 0) {
     // output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td><div class='userDatatable-content'>" . $row["email"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["tenant_name"] . "</div></td>";
+        echo "<td><div class='userDatatable-content'>" . $row["email"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["listing_name"] . "</div></td>";
+        echo "<td><div class='userDatatable-content'>" . $row["start_date"] . "</div></td>";
+        echo "<td><div class='userDatatable-content'>" . $row["end_date"] . "</div></td>";
 
 
     
@@ -95,7 +106,7 @@ echo "<td>
 echo "</tr>";
 
     }
-} 
+  }
 ?>
 
 

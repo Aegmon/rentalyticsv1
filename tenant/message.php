@@ -1,7 +1,6 @@
 <?php
 include('sidebar.php');
-
-
+date_default_timezone_set('Asia/Manila');
 
 ?>
 
@@ -52,6 +51,7 @@ include('sidebar.php');
                         <ul class="user-list">
  <?php
 
+
 $sql = "SELECT m.owner_id, o.name, MAX(m.message) as message, MAX(m.date) as date ,o.profile_pic
         FROM message m
         LEFT JOIN owner o ON m.owner_id = o.owner_id
@@ -68,7 +68,7 @@ if ($result->num_rows > 0) {
                 <div class="avatar avatar-circle ms-0">
                     <img src="../uploads/<?php echo $row['profile_pic']?>" class="rounded-circle wh-46 d-flex bg-opacity-primary" alt="image">
                     <div class="badge-direction-bottom">
-                        <span class="chat-badge-dot avatar-online"></span>
+                        <!-- <span class="chat-badge-dot avatar-online"></span> -->
                     </div>
                 </div>
                 <div class="users-list-body">
@@ -79,7 +79,8 @@ if ($result->num_rows > 0) {
                         </div>
                     </div>
                     <div class="last-chat-time unread">
-                        <small><?php echo date('H:i a', strtotime($row['date'])); ?></small>
+                    
+                        <small><?php echo date('h:i a', strtotime($row['date'])); ?></small>
                     </div>
                 </div>
             </div>
@@ -204,8 +205,8 @@ if ($result->num_rows > 0) {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
-  $('.list-group-item').on('click', function() {
-    $('.list-group-item').removeClass('active');
+  $('.user-list-item').on('click', function() {
+    $('.user-list-item').removeClass('active');
     $(this).addClass('active');
     const name = $(this).find('h6').text();
     const time = $(this).find('small').text();
@@ -265,7 +266,7 @@ $(document).ready(function() {
       $.ajax({
          type: 'GET',
          url: 'get_user_messages.php',
-         data: { owner_id: owner_id },
+         data: { owner_id: owner_id},
          success: function(data) {
             // Display the user's messages in the chat area
             $('.chat-box').html(data);

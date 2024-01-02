@@ -94,30 +94,29 @@ if (isset($_POST['add_feedback'])) {
         </thead>
         <tbody>
 <?php
-$sql = "SELECT 
-            c.email,
-            a.tenant_id,
-            t.name AS tenant_name,
-                o.name AS owner_name,
-            c.email AS tenant_email,
-            a.status as status,
-            l.listing_id,
-            l.listing_name,
-            l.rentprice,
-            l.reservationfee,
-            a.application_id,
-            a.date_of_application
-        FROM application a
-        LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
-        LEFT JOIN listing l ON l.listing_id = a.listing_id
-        LEFT JOIN Owner o ON l.owner_id = o.owner_id
-       LEFT JOIN credentials c ON o.user_id = c.user_id
-        WHERE a.tenant_id = '$id'";
+$sql2 = "SELECT 
+c.email,
+a.tenant_id,
+t.name AS tenant_name,
+    o.name AS owner_name,
+c.email AS tenant_email,
+a.status as status,
+l.listing_id,
+l.listing_name,
+l.rentprice,
+l.reservationfee,
+a.application_id,
+a.date_of_application
+FROM application a
+LEFT JOIN tenant t ON a.tenant_id = t.tenant_id
+LEFT JOIN listing l ON l.listing_id = a.listing_id
+LEFT JOIN owner o ON l.owner_id = o.owner_id
+LEFT JOIN credentials c ON o.user_id = c.user_id
+WHERE a.tenant_id = '$id'";
+$result2 = $conn->query($sql2);
 
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
+if ($result2->num_rows > 0) {
+    while ($row = $result2->fetch_assoc()) {
         echo "<tr>";
                 echo "<td><div class='userDatatable-content'>" . $row["owner_name"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["email"] . "</div></td>";
@@ -130,7 +129,7 @@ if ($result->num_rows > 0) {
         $payment_result = $conn->query($payment_sql);
             if ($payment_result->num_rows > 0) {
             echo "<td>
-                <div class='userDatatable-content'>paid </div>
+                <div class='userDatatable-content'>paid</div>
             </td>
          ";
            

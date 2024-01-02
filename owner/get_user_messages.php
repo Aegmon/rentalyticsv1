@@ -21,7 +21,8 @@ if ($result->num_rows > 0) {
                           <div class="media-body">
                             <div class="chat-text-box__content">
                               <div class="chat-text-box__title d-flex align-items-center justify-content-end mb-2">
-                                <span class="chat-text-box__time fs-12 color-light fw-400"><?php echo date('H:i a', strtotime($row['date'])); ?></span>
+                                <span class="chat-text-box__time fs-12 color-light fw-400">
+                                  <?php echo date('h:i a', strtotime($row['date'])); ?></span>
                               </div>
                               <div class="d-flex align-items-center justify-content-end">
                                 <div class="chat-text-box__other d-flex">
@@ -49,7 +50,8 @@ if ($result->num_rows > 0) {
                             <div class="chat-text-box__content">
                               <div class="chat-text-box__title d-flex align-items-center">
                           
-                                <span class="chat-text-box__time fs-12 color-light fw-400 ms-15"><?php echo date('H:i a', strtotime($row['date'])); ?></span>
+                                <span class="chat-text-box__time fs-12 color-light fw-400 ms-15">
+                                <?php echo date('h:i a', strtotime($row['date'])); ?></span>
                               </div>
                               <div class="d-flex align-items-center mb-20 mt-10">
                                 <div class="chat-text-box__subtitle p-20 bg-primary">
@@ -70,7 +72,8 @@ if ($result->num_rows > 0) {
     }
 } else {
     echo "No Message";
-}}
+}
+}
 
 ?>
 

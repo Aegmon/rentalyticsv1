@@ -30,7 +30,7 @@ if (isset($_REQUEST['endstay'])) {
   $application_id = $_POST['application_id'];
   $sql = "UPDATE application SET status = ?, date_of_application = NOW() WHERE application_id = ?";
   $stmt = $conn->prepare($sql);
-  $status = 'renter';
+  $status = 'renter'; 
   $stmt->bind_param("si", $status, $application_id);
   $stmt->execute();
 }
@@ -76,7 +76,7 @@ if (isset($_POST['void'])) {
           <tr class="userDatatable-header">
         
             <th>
-              <span class="userDatatable-title">NAME</span>
+              <span class="userDatatable-title">Name</span>
             </th>
             <th>
               <span class="userDatatable-title">Email  </span>
@@ -140,8 +140,8 @@ if ($result->num_rows > 0) {
       }
 
         echo "<tr>";
-        echo "<td><div class='userDatatable-content'>" . $row["email"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["tenant_name"] . "</div></td>";
+        echo "<td><div class='userDatatable-content'>" . $row["email"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["listing_name"] . "</div></td>";
         echo "<td><div class='userDatatable-content'>" . $row["status"] . "</div></td>";
 

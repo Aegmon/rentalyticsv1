@@ -13,7 +13,7 @@ if (isset($_POST['update'])) {
 
 $email = $_POST['email'];
 $password = $_POST['password'];
-    $credentials_query = "UPDATE credentials SET email = '$email', password = '$password' user_type ='admin'";
+    $credentials_query = "UPDATE credentials SET email = '$email', password = '$password' WHERE user_type ='admin'";
     if ($conn->query($credentials_query) === true) {
         echo "Credentials updated successfully. ";
     } else {

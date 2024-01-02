@@ -5,9 +5,9 @@ if (isset($_GET['owner_id'])) {
 
 
 $sql = "SELECT m.owner_id, o.name, m.message, m.date, m.message_from ,o.profile_pic
-        FROM message m
+        FROM message m 
         LEFT JOIN owner o ON m.owner_id = o.owner_id
-        WHERE m.tenant_id = '$id' AND m.owner_id = '$owner_id'";
+        WHERE m.tenant_id = '$id' AND m.owner_id = '$owner_id'" ;
 
 $result = $conn->query($sql);
 
@@ -17,11 +17,12 @@ if ($result->num_rows > 0) {
          <?php if ($row['message_from'] == 'tenant') { ?>
     <div class="flex-1 justify-content-end d-flex outgoing-chat mt-20">
                       <div class="chat-text-box">
-                        <div class="media ">
+                        <div class="media">
                           <div class="media-body">
                             <div class="chat-text-box__content">
                               <div class="chat-text-box__title d-flex align-items-center justify-content-end mb-2">
-                                <span class="chat-text-box__time fs-12 color-light fw-400"><?php echo date('H:i a', strtotime($row['date'])); ?></span>
+                                <span class="chat-text-box__time fs-12 color-light fw-400">
+                                  <?php echo date('h:i a', strtotime($row['date'])); ?></span>
                               </div>
                               <div class="d-flex align-items-center justify-content-end">
                                 <div class="chat-text-box__other d-flex">
@@ -49,7 +50,8 @@ if ($result->num_rows > 0) {
                             <div class="chat-text-box__content">
                               <div class="chat-text-box__title d-flex align-items-center">
                           
-                                <span class="chat-text-box__time fs-12 color-light fw-400 ms-15"><?php echo date('H:i a', strtotime($row['date'])); ?></span>
+                                <span class="chat-text-box__time fs-12 color-light fw-400 ms-15">
+                                <?php echo date('h:i a', strtotime($row['date'])); ?></span>
                               </div>
                               <div class="d-flex align-items-center mb-20 mt-10">
                                 <div class="chat-text-box__subtitle p-20 bg-primary">

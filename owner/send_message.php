@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
    // Insert the message into the database
    $insertSql = "INSERT INTO message (tenant_id, owner_id, message, message_from, date) 
-                 VALUES ('$tenant_id', '$id', '$message', 'owner', NOW())";
+                 VALUES ('$tenant_id','$id','$message', 'owner', NOW())";
 
    if ($conn->query($insertSql) === TRUE) {
       // Return a success message or any response you want

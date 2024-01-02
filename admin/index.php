@@ -181,74 +181,75 @@ if ($result->num_rows > 0) {
               </div>
 
       </div>
-      <div class="row">
+
+      <!-- <div class="row">
         <div class="col-md-12">
           <div class="card">
           <div class="card-body">
             
             <div class="row">
-                   <div class="mb-4">
-   Segmentation of gender
-    </div>
+                   <div class="mb-4"> -->
+   <!-- Segmentation of gender -->
+    <!-- </div>
 <div class="col-lg-4 mb-4">
-  <div class="card">
-  <div class="card-header">Renter Gender Segmentation</div>
+  <div class="card"> -->
+  <!-- <div class="card-header">Renter Gender Segmentation</div> -->
 
   
-        <div id="chart"></div>
+        <!-- <div id="chart"></div> -->
  
   
-  </div>
+  <!-- </div>
 </div>
 <div class="col-lg-4 mb-4">
-  <div class="card">
-  <div class="card-header">Number of rental places that accept only specific gender</div>
+  <div class="card"> -->
+  <!-- <div class="card-header">Number of rental places that accept only specific gender</div> -->
 
   
-        <div id="chart1"></div>
+        <!-- <div id="chart1"></div> -->
  
   
-  </div>
+  <!-- </div>
 </div>
 <div class="col-lg-4 mb-4">
-  <div class="card">
-  <div class="card-header">Boarding house</div>
+  <div class="card"> -->
+  <!-- <div class="card-header">Boarding house</div> -->
 
   
-        <div id="chart2"></div>
+        <!-- <div id="chart2"></div> -->
  
   
-  </div>
+  <!-- </div>
 </div>
 <div class="col-lg-4 mb-4">
-  <div class="card">
-  <div class="card-header">Bed Space</div>
+  <div class="card"> -->
+  <!-- <div class="card-header">Bed Space</div> -->
 
   
-        <div id="chart3"></div>
+        <!-- <div id="chart3"></div> -->
  
   
-  </div>
+  <!-- </div>
 </div>
 <div class="col-lg-4 mb-4">
-  <div class="card">
-  <div class="card-header">Dormitory</div>
+  <div class="card"> -->
+  <!-- <div class="card-header">Dormitory</div> -->
 
   
-        <div id="chart4"></div>
+        <!-- <div id="chart4"></div> -->
  
   
-  </div>
+  <!-- </div>
 </div>
 <div class="col-lg-4 mb-4">
-  <div class="card">
-  <div class="card-header">Apartment</div>
+  <div class="card"> -->
+  <!-- <div class="card-header">Apartment</div> -->
 
   
-        <div id="chart5"></div>
+        <!-- <div id="chart5"></div> -->
  
   
-  </div>
+  <!-- </div>
 </div>
             </div>
           </div>
@@ -259,7 +260,7 @@ if ($result->num_rows > 0) {
       
     </div>
   </div>
-</div>
+</div> -->
 
 
 
@@ -452,6 +453,7 @@ GIS
   while ($row = mysqli_fetch_array($result)) {
     
    
+    
     echo '["Place Name: ' . $row['listing_name'] . '\n'. "Reservation Fee: " . $row['reservationfee'] . '\n'. $row['type'] . '' .' ",' . $row['lat'] . ',' . $row['lng'] . '],';
 
   }

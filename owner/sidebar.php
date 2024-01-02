@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rentalytics | Owner</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.1/dist/sweetalert2.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/plugin.min.css">
     <link rel="stylesheet" href="style.css">
@@ -53,6 +55,7 @@
             </a> 
             <a href="#" class="sidebar-toggle">
               <img class="svg" src="img/svg/align-center-alt.svg" alt="img"></a>
+              
           </div>
       
         </div>
@@ -158,11 +161,11 @@
             </li>
           </ul>
           <div class="navbar-right__mobileAction d-md-none">
-            <!-- <a href="#" class="btn-search">
+            <a href="#" class="btn-search">
               <img src="img/svg/search.svg" alt="search" class="svg feather-search">
               <img src="img/svg/x.svg" alt="x" class="svg feather-x"></a>
             <a href="#" class="btn-author-action">
-              <img class="svg" src="img/svg/more-vertical.svg" alt="more-vertical"></a> -->
+              <img class="svg" src="img/svg/more-vertical.svg" alt=""></a>
           </div>
         </div>
       </nav>
@@ -209,6 +212,13 @@
                  
                 </a>
                </li>
+               <li>
+                <a href="inactivelist.php" class>
+                     <span class="nav-icon uil uil-home"></span>
+                  <span class="menu-text">Inactive Listing</span>
+                 
+                </a>
+               </li>
                   <li>
                 <a href="message.php" class>
                           <span class="nav-icon uil uil-comment"></span>
@@ -220,3 +230,6 @@
           </div>
         </div>
       </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.1/dist/sweetalert2.all.min.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>

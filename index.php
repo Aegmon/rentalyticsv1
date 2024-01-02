@@ -19,24 +19,57 @@ if (isset($_POST['login']) ) {
       
             $_SESSION['user_id'] = $row['user_id'];
 
-            if ($row['user_type'] == 'owner') {
+            if ($row['user_type'] == 'owner' ) {
            
 if ($row['isVerify'] == '1') {
     header('Location: owner/index.php');
     exit(); 
 } else {
-    echo '<script>alert("Please wait for the admin to verify your account.");</script>';
+  echo '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    title: "Please wait for verification",
+                    text: "Please wait for the admin to verify your account.",
+                    icon: "info"
+                });
+            });
+        </script>';
+
 }
-            } elseif ($row['user_type'] == 'tenant') {
-              
+    }
+    elseif ($row['user_type'] == 'tenant') {
+              if( $row['isVerify'] == '1'){
                 header('Location: tenant/index.php');
-            } else {
+              }else {
+                echo '<script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        Swal.fire({
+                            title: "Please wait for verification",
+                            text: "Please wait for the admin to verify your account.",
+                            icon: "info"
+                        });
+                    });
+                </script>';
+            
+              }
+            } 
+            else {
              
               header('Location: admin/index.php');
             }
         }
-    } else {
-        echo "Invalid email or password";
+    } 
+    else{
+      echo '<script>
+      document.addEventListener("DOMContentLoaded", function() {
+          Swal.fire({
+              title: "Wrong Email and Password",
+              text: "Please Check your Email and Password.",
+              icon: "info"
+          });
+      });
+  </script>';
+
     }
 }
 
@@ -44,7 +77,7 @@ $conn->close();
 ?>
 
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="en">
 
   <!-- Mirrored from demo.dashboardmarket.com/hexadash-html/ltr/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 07 Oct 2023 01:06:10 GMT -->
   <head>
@@ -52,11 +85,18 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rentalytics</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.1/dist/sweetalert2.min.css">
+    <!-- <link rel="stylesheet" href="./sweetalert2.min.css"> -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
     <link rel="stylesheet" href="css/plugin.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon.png">
     <link rel="stylesheet" href="unicons.iconscout.com/release/v3.0.0/css/line.css">
+    <!-- <script src="./sweetalert2.all.min.js"></script> -->
+    
+
+   
   </head>
   <body>
     <main class="main-content">
@@ -66,12 +106,7 @@ $conn->close();
             <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-8">
               <div class="edit-profile">
 
-                <!-- <div class="edit-profile__logos">
-<a href="index-2.html">
-<img class="dark" src="img/logo-dark.png" alt>
-<img class="light" src="img/logo-white.png" alt>
-</a>
-</div> -->
+
                 <div class="card border-0">
                   <div class="card-header">
                     <div class="edit-profile__title">
@@ -138,8 +173,11 @@ $conn->close();
         </li>
       </ul>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.1/dist/sweetalert2.all.min.js"></script>
+    
     <script src="js/plugins.min.js"></script>
     <script src="js/script.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.1/dist/sweetalert2.all.min.js"></script>
   </body>
 
   <!-- Mirrored from demo.dashboardmarket.com/hexadash-html/ltr/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 07 Oct 2023 01:06:10 GMT -->

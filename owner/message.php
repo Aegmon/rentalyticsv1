@@ -79,7 +79,8 @@ if ($result->num_rows > 0) {
                         </div>
                     </div>
                     <div class="last-chat-time unread">
-                        <small><?php echo date('H:i a', strtotime($row['date'])); ?></small>
+
+                    <small><?php echo date('h:i a', strtotime($row['date'])); ?></small>
                     </div>
                 </div>
             </div>
@@ -222,7 +223,7 @@ $(document).ready(function() {
     $.ajax({
       type: 'GET',
       url: 'get_user_messages.php',
-      data: { tenant_id: tenant_id },
+      data: { tenant_id: tenant_id},
       success: function(data) {
         // Display the user's messages in the chat area
         $('.chat-box').append(data);

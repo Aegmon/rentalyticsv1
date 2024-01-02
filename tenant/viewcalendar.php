@@ -1,33 +1,35 @@
 <?php
 
 include('sidebar.php');
-   $listing_id = $_GET['listing_id'];
-   if (isset($_POST['rentnow'])) {
+$listing_id = $_GET['listing_id'];
+if (isset($_POST['rentnow'])) {
     // Retrieve the listing_id and tenant_id from the POST data
     $listing_id = $_POST['listing_id'];
 
     $start_date = $_POST['start_date'];
-     $end_date = $_POST['end_date'];
-    // Check if the record already exists
-    $check_sql = "SELECT * FROM `application` WHERE `tenant_id` = ? AND `listing_id` = ?";
+    $end_date = $_POST['end_date'];
+
+    // Check if the record already exists with the same start and end date
+    $check_sql = "SELECT * FROM `application` WHERE `tenant_id` = ? AND `listing_id` = ? AND `start_date` = ? AND `end_date` = ?";
     $check_stmt = $conn->prepare($check_sql);
-    $check_stmt->bind_param("ii",$id, $listing_id);
+    $check_stmt->bind_param("iiss", $id, $listing_id, $start_date, $end_date);
     $check_stmt->execute();
     $check_result = $check_stmt->get_result();
-    
+
     // If a record is found, display an alert and don't insert again
     if ($check_result->num_rows > 0) {
-        echo '<script>alert("Already sent your application.");</script>';
+        echo '<script>alert("Application with the same start and end date already exists.");</script>';
     } else {
         // Prepare and execute the SQL statement for inserting the new application
         $insert_sql = "INSERT INTO `application`(`tenant_id`, `listing_id`,`start_date`, `end_date`) VALUES (?, ?,?,?)";
         $insert_stmt = $conn->prepare($insert_sql);
-        $insert_stmt->bind_param("iiss",$id, $listing_id,$start_date,$end_date);
+        $insert_stmt->bind_param("iiss", $id, $listing_id, $start_date, $end_date);
         $insert_stmt->execute();
         echo '<script>window.location.href = "renter.php";</script>';
     }
 }
 ?>
+
 
 <div class="contents">
   <div class="container-fluid">
@@ -56,20 +58,20 @@ include('sidebar.php');
         
         <div class="input-group mb-3">
             <label for="start_date" class="form-label m-2">Start Date</label>
-<<<<<<< HEAD
+
             <input type="date" class="form-control" name="start_date" id="start_date" placeholder="Start Date"req style="background-color: transparent;" required>
-=======
-            <input type="date" class="form-control" name="start_date" id="start_date" placeholder="Start Date" style="background-color: transparent;">
->>>>>>> d285861cfefcb4e7511bd9af61dc356f829543fc
+
+        
+
         </div>
 
         <div class="input-group mb-3">
             <label for="end_date" class="form-label  m-2">End Date</label>
-<<<<<<< HEAD
+
             <input type="date" class="form-control" name="end_date" id="end_date" placeholder="End Date" style="background-color: transparent;"required>
-=======
-            <input type="date" class="form-control" name="end_date" id="end_date" placeholder="End Date" style="background-color: transparent;">
->>>>>>> d285861cfefcb4e7511bd9af61dc356f829543fc
+
+       
+
         </div>
 
         <div class="input-group">

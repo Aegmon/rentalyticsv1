@@ -1,17 +1,37 @@
 <?php
 include('sidebar.php');
+
+
 if (isset($_POST['delete_listing'])) {
-    $listing_id = $_POST['listing_id'];
-
-    // Update the status to inactive
-    $sql = "UPDATE listing SET status='inactive' WHERE listing_id=$listing_id";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Record updated successfully";
-    } else {
-        echo "Error updating record: " . $conn->error;
-    }
+  $listing_id = $_POST['listing_id'];
+  $sql = "UPDATE listing SET status='inactive' WHERE listing_id=$listing_id";
+  // $result = $conn->query($sql);
+  if( $conn->query($sql)=== TRUE){
+    echo '<script>
+    Swal.fire(
+      "Place has been Deactivated",
+      "That thing is still around.",
+     "question"
+    )
+    </script>';
+    // $sql = "UPDATE listing SET status='inactive' WHERE listing_id=$listing_id";
+  }else {
+    echo "Error updating record: " . $conn->error;
 }
+}
+ 
+
+ 
+
+  
+
+
+
+
+
+
+
+
 
 if (isset($_POST['add_dormitory'])) {
     $dormitory_name = $_POST['dormitory_name'];
@@ -250,9 +270,9 @@ if ($result->num_rows > 0) {
                     <a  href="viewlisting.php?listing_id='.$row["listing_id"].'"class="btn btn-secondary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow">View Place</a>
                 
           
-                    <form action="" method="post">
+                    <form id="deleteForm" action="" method="post">
                         <input type="hidden" name="listing_id" value="'.$row["listing_id"].'">
-                           <button type="submit" name="delete_listing"  class="btn btn-danger fs-6">Delete</button>
+                           <button type="submit" name="delete_listing"  class="btn btn-danger fs-6" onclick="confirmDelete()">Inactive</button>
                     </form>
                 </div>
             </div>
@@ -395,10 +415,30 @@ $conn->close();
         </div>
       </div>
     </div>
+    <!-- <script>
+    function confirmDelete() {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If user confirms, submit the form
+                document.getElementById("deleteForm").submit();
+            }
+        });
+    }
+</script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.1/dist/sweetalert2.all.min.js"></script>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgYKHZB_QKKLWfIRaYPCadza3nhTAbv7c"></script>
     <script src="js/plugins.min.js"></script>
     <script src="js/script.min.js"></script>
   </body>
 
-  
+ 
 </html>

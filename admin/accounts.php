@@ -33,7 +33,7 @@ if (isset($_POST['user_id']) && isset($_POST['unverify'])) {
       <div class="row">
         <div class="col-lg-12">
           <div class="breadcrumb-main">
-            <h4 class="text-capitalize breadcrumb-title">manage Accounts</h4>
+            <h4 class="text-capitalize breadcrumb-title">Manage Accounts</h4>
             <div class="breadcrumb-action justify-content-center flex-wrap">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -87,6 +87,7 @@ $sql = "SELECT
             c.user_type,
             c.isVerify,
                r.id_picture,
+               t.id_picture,
             CASE
                 WHEN r.user_id IS NOT NULL THEN r.name
                 WHEN t.user_id IS NOT NULL THEN t.name
@@ -117,9 +118,12 @@ if ($result->num_rows > 0) {
                     <button type='submit' name='verify' value='1' class='btn btn-primary btn-default btn-rounded btn-transparent-primary '>Verify</button>
                     <button type='submit' name='unverify' value='0'  class='btn btn-primary btn-default btn-rounded btn-transparent-primary '><i class='uil uil-user-times'></i></button> ";
 
-        if ($row["user_type"] == 'owner') {
+        if ($row["user_type"] == 'owner'){
             echo "<button type='button' class='btn btn-primary btn-default btn-rounded btn-transparent-primary ' data-bs-toggle='modal' data-bs-target='#ownerModal" . $row["user_id"] . "'><i class='uil uil-eye'></i></button>";
         }
+        if ($row["user_type"] == 'tenant'){
+          echo "<button type='button' class='btn btn-primary btn-default btn-rounded btn-transparent-primary ' data-bs-toggle='modal' data-bs-target='#ownerModal" . $row["user_id"] . "'><i class='uil uil-eye'></i></button>";
+      }
         
         echo "</form>
             </li>
@@ -130,9 +134,6 @@ if ($result->num_rows > 0) {
         <div class='modal-content'>
             <div class='modal-header'>
                 <h5 class='modal-title' id='ownerModalLabel'>Owner ID picture</h5>
-                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                </button>
             </div>
             <div class='modal-body'>
             <div class='text-center' style='width:50%;'>
