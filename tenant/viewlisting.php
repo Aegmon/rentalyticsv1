@@ -40,6 +40,9 @@ if (isset($_POST['rentnow'])) {
 
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
+
+
+
     // Check if the record already exists with the same start and end date
     $check_sql = "SELECT * FROM `application` WHERE `tenant_id` = ? AND `listing_id` = ? AND `start_date` = ? AND `end_date` = ?";
     $check_stmt = $conn->prepare($check_sql);
@@ -49,6 +52,7 @@ if (isset($_POST['rentnow'])) {
 
     // If a record is found, display an alert and don't insert again
     if ($check_result->num_rows > 0) {
+
       echo '<script>
         document.addEventListener("DOMContentLoaded", function() {
             Swal.fire({
@@ -58,8 +62,7 @@ if (isset($_POST['rentnow'])) {
             });
         });
     </script>';
-        // echo '<script>alert("Application with the same start and end date already exists.");</script>';
-    } else{
+       
         // Prepare and execute the SQL statement for inserting the new application
         $insert_sql = "INSERT INTO `application`(`tenant_id`, `listing_id`,`start_date`, `end_date`) VALUES (?, ?,?,?)";
         $insert_stmt = $conn->prepare($insert_sql);
@@ -68,7 +71,6 @@ if (isset($_POST['rentnow'])) {
         echo '<script>window.location.href = "renter.php";</script>';
     }
       
-}
 
 if (isset($_POST['send'])) {
     $msg = $_POST['msg'];
