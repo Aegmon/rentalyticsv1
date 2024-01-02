@@ -71,7 +71,7 @@ if (isset($_POST['rentnow'])) {
         echo '<script>window.location.href = "renter.php";</script>';
     }
       
-
+  } 
 if (isset($_POST['send'])) {
     $msg = $_POST['msg'];
     $owner_id = $_POST['owner_id'];
